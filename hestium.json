@@ -116,7 +116,7 @@
             ],
             "restrictions": [
                 "innerEllipseX 60 -",
-                "innerEllipseX _ ",
+                "innerEllipseX _",
                 "innerEllipseRX _",
                 "innerEllipseRX outerRadius -",
                 "innerEllipseRY _"

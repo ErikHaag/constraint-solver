@@ -43,3 +43,17 @@ class input_data_model:
             width = obj.get("width", 100),
             height = obj.get("height", 100)
         )
+
+@dataclass
+class dependency_data_model:
+    constraint:constraint_model
+    dependentVariables:dict[str, str]
+    evaluations: list[float]
+
+    @staticmethod
+    def from_dict(obj):
+        return dependency_data_model(
+            constraint = constraint_model(**obj.get("constraint")),
+            dependentVariables = obj.get("dependentVariables"),
+            evaluations = obj.get("evaluations") 
+        )

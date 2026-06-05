@@ -1,5 +1,6 @@
 from data_classes import *
 from wrapper_classes import *
+from dataclasses import asdict
 import json
 import math
 import random
@@ -13,7 +14,7 @@ class InsuffientArguments(ArithmeticError):
 
 variables : dict[str, str] = {}
 
-def convert_if_valid_float(potentialFloat : str) -> tuple[bool, float]:
+def convert_if_valid_float(potentialFloat:str) -> tuple[bool, float]:
         try:
             v = float(potentialFloat)
             return (True, v)
@@ -23,7 +24,7 @@ def convert_if_valid_float(potentialFloat : str) -> tuple[bool, float]:
 def evaluate_expression(expr:str, dependent:dict[str, float] = {}, max_substitutions = 1000) -> str:
     stack : list[float] = []
     commands : list[str] = [i for i in expr.strip().split(" ")]
-    outCommands : list[str] = []
+    out_commands : list[str] = []
 
     substitution_count = 0
 
@@ -153,28 +154,45 @@ def evaluate_expression(expr:str, dependent:dict[str, float] = {}, max_substitut
                         stack.insert(-i, v)
                 case _:
                     (s, v) = convert_if_valid_float(c)
-                    varExp = variables.get(c)
-                    depExp = dependent.get(c)
+                    var_exp = variables.get(c)
+                    dep_exp = dependent.get(c)
                     if s:
                         stack.append(v)
-                    elif depExp != None:
-                        stack.append(depExp)
-                    elif varExp != None:
+                    elif dep_exp != None:
+                        stack.append(dep_exp)
+                    elif var_exp != None:
                         if substitution_count >= max_substitutions:
                             raise RecursionError()
-                        commands = [j for i in [varExp.strip().split(" "), commands] for j in i]
+                        commands = [j for i in [var_exp.strip().split(" "), commands] for j in i]
                         substitution_count += 1
                     else:
                         raise NameError("Unknown variable or expression \"" + c + "\"")
         except InsuffientArguments:
-            outCommands.extend([str(i) for i in stack])
+            out_commands.extend([str(i) for i in stack])
             stack.clear()
-            outCommands.append(c)
+            out_commands.append(c)
             if c == "choice":
-                outCommands.append(commands.pop(0))
-                outCommands.append(commands.pop(0))
-    outCommands.extend([str(i) for i in stack])
-    return " ".join(outCommands)
+                out_commands.append(commands.pop(0))
+                out_commands.append(commands.pop(0))
+    out_commands.extend([str(i) for i in stack])
+    return " ".join(out_commands)
+
+
+def load_previous_solution(constraint:constraint_model) -> tuple[bool, list[float]]:
+    for cons in old_dependency_data:
+        if len(cons.constraint.variables) != len(constraint.variables)\
+            or len(cons.constraint.assertions) != len(constraint.assertions)\
+            or len(cons.constraint.restrictions) != len(constraint.restrictions):
+            continue
+        if any([s != c for (s, c) in zip(cons.constraint.variables, constraint.variables)])\
+            or any([s != c for (s, c) in zip(cons.constraint.assertions, constraint.assertions)])\
+            or any([s != c for (s, c) in zip(cons.constraint.restrictions, constraint.restrictions)]):
+            continue
+        if any([k not in variables or variables[k] != v for k, v in cons.dependentVariables.items()]):
+            continue
+        return (True, cons.evaluations)
+    return (False, [])
+
 
 # -1 -> a > b
 # 0 -> a == b
@@ -223,18 +241,41 @@ def evaluate_constraint_set(constraint:constraint_model, var_set:list[float]) ->
         assertion_result += f ** 2
     return constraint_result(2, restriction_result, assertion_result)
 
-def sort_evaluations(evalList:list[constraint_result], mirror:list)->tuple[list[constraint_result], list]:
-    if len(evalList) != len(mirror):
+def sort_evaluations(eval_list:list[constraint_result], mirror:list)->tuple[list[constraint_result], list]:
+    if len(eval_list) != len(mirror):
         raise Exception()
-    for i in range(len(evalList) - 1):
+    for i in range(len(eval_list) - 1):
         minJ = i
-        for j in range(i + 1, len(evalList)):
-            if compare_constraint_sets(evalList[minJ], evalList[j]) == -1:
+        for j in range(i + 1, len(eval_list)):
+            if compare_constraint_sets(eval_list[minJ], eval_list[j]) == -1:
                 minJ = j        
         if minJ != i:
-            (evalList[i], evalList[minJ]) = (evalList[minJ], evalList[i])
+            (eval_list[i], eval_list[minJ]) = (eval_list[minJ], eval_list[i])
             (mirror[i], mirror[minJ]) = (mirror[minJ], mirror[i])
-    return (evalList, mirror)
+    return (eval_list, mirror)
+
+def get_dependent_expressions(exprs:list[str], dependent_vars:list[str]) -> dict[str, str]:
+    output_dict:dict[str,str] = dict()
+    while len(exprs) > 0:
+        current_expr = exprs.pop()
+        for command in current_expr.split(" "):
+            command = command.strip()
+            if len(command) == 0:
+                continue
+            if command in output_dict:
+                continue
+            if command in ["+", "-", "_", "*", "/", "//", "%", "**", "atan", "choice", "cos", "compare", "drop", "dup", "sin", "sqrt", "step", "nop", "pull", "push"]:
+                continue
+            if convert_if_valid_float(command)[0]:
+                continue
+            if command in dependent_vars:
+                continue
+            if command not in variables:
+                raise Exception(f"Found unknown variable \"{command}\"")
+            subExp = variables[command]
+            output_dict[command] = subExp
+            exprs.append(subExp)
+    return output_dict
 
 data : input_data_model
 
@@ -262,6 +303,16 @@ except StopIteration:
 
 state = 0
 last_exception : NameError | None = None
+old_dependency_data:list[dependency_data_model] = []
+try:
+    with open("constraint_data.json", "r") as f:
+        # Get memoized, hard mathematics
+        old_dependency_data = [dependency_data_model.from_dict(d) for d in json.loads("\n".join(f.readlines()))]
+except:
+    pass
+
+
+dependency_data:list[dependency_data_model] = []
 
 dump_lines:list[str] = [f"Output results: {data.output}.svg"]
 
@@ -269,7 +320,6 @@ reflect_const = 1
 expand_const = 2
 contract_const = 0.5
 shrink_const = 0.5
-
 
 try:
     while True:
@@ -306,76 +356,79 @@ try:
                         raise last_exception # type: ignore
                     # end of iteration
                     break
-                # Nelder–Mead method
-                potential_solutions:list[list[float]] = []
-                potential_solutions_results:list[constraint_result] = []
-                for _ in range(50):
-                    variable_count = len(next_constraint.variables)
-                    current_amoeba:list[list[float]] = [[random.uniform(-5000, 5000) for i in range(variable_count)]]
-                    for i in range(variable_count):
-                        current_amoeba.append([current_amoeba[0][j] + (10 if j == i else 0) for j in range(variable_count)])
-                    # initial evaluation
-                    success = True
-                    current_results:list[constraint_result] = []
-                    for var_set in current_amoeba:
-                        try:
-                            current_results.append(evaluate_constraint_set(next_constraint, var_set))
-                        except ArithmeticError, RecursionError, ValueError, ZeroDivisionError:
-                            success = False
-                            break
-                    if not success:
-                        continue
-                    amoeba_steps = 0
-                    while True:
-                        #order
-                        (current_results, current_amoeba) = sort_evaluations(current_results, current_amoeba)
-                        # termination
-                        if amoeba_steps >= 100:
-                        # or (all([r[0] == 2 and r[1] == 0 for r in current_results]) and statistics.pvariance(data=[r[2] for r in current_results])) <= 0.01:
-                            break
-                        amoeba_steps += 1
-                        # calcuate centroid
-                        centroid = [statistics.mean([current_amoeba[i][j] for i in range(variable_count)]) for j in range(variable_count)]
-                        # reflect
-                        reflect = [centroid[i] + reflect_const * (centroid[i] - current_amoeba[-1][i]) for i in range(variable_count)]
-                        reflect_result = evaluate_constraint_set(next_constraint, reflect)
-                        if compare_constraint_sets(current_results[0], reflect_result) != -1 and compare_constraint_sets(reflect_result, current_results[-2]) == 1:
-                            current_amoeba[-1] = reflect
-                            current_results[-1] = reflect_result
+                (solution_found, best_solution) = load_previous_solution(next_constraint)
+                if not solution_found:
+                    # Nelder–Mead method
+                    potential_solutions:list[list[float]] = []
+                    potential_solutions_results:list[constraint_result] = []
+                    for _ in range(50):
+                        variable_count = len(next_constraint.variables)
+                        current_amoeba:list[list[float]] = [[random.uniform(-5000, 5000) for i in range(variable_count)]]
+                        for i in range(variable_count):
+                            current_amoeba.append([current_amoeba[0][j] + (10 if j == i else 0) for j in range(variable_count)])
+                        # initial evaluation
+                        success = True
+                        current_results:list[constraint_result] = []
+                        for var_set in current_amoeba:
+                            try:
+                                current_results.append(evaluate_constraint_set(next_constraint, var_set))
+                            except ArithmeticError, RecursionError, ValueError, ZeroDivisionError:
+                                success = False
+                                break
+                        if not success:
                             continue
-                        # expansion
-                        if compare_constraint_sets(reflect_result, current_results[0]) == 1:
-                            expansion = [centroid[i] + expand_const * (reflect[i] - centroid[i]) for i in range(variable_count)]
-                            expansion_result = evaluate_constraint_set(next_constraint, expansion)
-                            if compare_constraint_sets(expansion_result, reflect_result) == 1:
-                                current_amoeba[-1] = expansion
-                                current_results[-1] = expansion_result
-                            else:
+                        amoeba_steps = 0
+                        while True:
+                            #order
+                            (current_results, current_amoeba) = sort_evaluations(current_results, current_amoeba)
+                            # termination
+                            if amoeba_steps >= 100:
+                            # or (all([r[0] == 2 and r[1] == 0 for r in current_results]) and statistics.pvariance(data=[r[2] for r in current_results])) <= 0.01:
+                                break
+                            amoeba_steps += 1
+                            # calcuate centroid
+                            centroid = [statistics.mean([current_amoeba[i][j] for i in range(variable_count)]) for j in range(variable_count)]
+                            # reflect
+                            reflect = [centroid[i] + reflect_const * (centroid[i] - current_amoeba[-1][i]) for i in range(variable_count)]
+                            reflect_result = evaluate_constraint_set(next_constraint, reflect)
+                            if compare_constraint_sets(current_results[0], reflect_result) != -1 and compare_constraint_sets(reflect_result, current_results[-2]) == 1:
                                 current_amoeba[-1] = reflect
                                 current_results[-1] = reflect_result
-                            continue
-                        # contraction
-                        if compare_constraint_sets(reflect_result, current_results[-1]) == 1:
-                            contraction = [centroid[i] + contract_const * (reflect[i] - centroid[i]) for i in range(variable_count)]
-                            contraction_result = evaluate_constraint_set(next_constraint, contraction)
-                            if compare_constraint_sets(contraction_result, reflect_result) == 1:
-                                current_amoeba[-1] = contraction
-                                current_results[-1] = contraction_result
                                 continue
-                        else:
-                            contraction = [centroid[i] + contract_const * (current_amoeba[-1][i] - centroid[i]) for i in range(variable_count)]
-                            contraction_result = evaluate_constraint_set(next_constraint, contraction)
-                            if compare_constraint_sets(contraction_result, current_results[-1]) == 1:
-                                current_amoeba[-1] = contraction
-                                current_results[-1] = contraction_result
+                            # expansion
+                            if compare_constraint_sets(reflect_result, current_results[0]) == 1:
+                                expansion = [centroid[i] + expand_const * (reflect[i] - centroid[i]) for i in range(variable_count)]
+                                expansion_result = evaluate_constraint_set(next_constraint, expansion)
+                                if compare_constraint_sets(expansion_result, reflect_result) == 1:
+                                    current_amoeba[-1] = expansion
+                                    current_results[-1] = expansion_result
+                                else:
+                                    current_amoeba[-1] = reflect
+                                    current_results[-1] = reflect_result
                                 continue
-                        # shrink
-                        for i in range(1, variable_count + 1):
-                            current_amoeba[i] = [current_amoeba[0][j] + shrink_const * (current_amoeba[i][j] - current_amoeba[1][j]) for j in range(variable_count)]
-                            current_results[i] = evaluate_constraint_set(next_constraint, current_amoeba[i])
-                    potential_solutions.append(current_amoeba[0])
-                    potential_solutions_results.append(current_results[0])
-                (potential_solutions_results, potential_solutions) = sort_evaluations(potential_solutions_results, potential_solutions)
+                            # contraction
+                            if compare_constraint_sets(reflect_result, current_results[-1]) == 1:
+                                contraction = [centroid[i] + contract_const * (reflect[i] - centroid[i]) for i in range(variable_count)]
+                                contraction_result = evaluate_constraint_set(next_constraint, contraction)
+                                if compare_constraint_sets(contraction_result, reflect_result) == 1:
+                                    current_amoeba[-1] = contraction
+                                    current_results[-1] = contraction_result
+                                    continue
+                            else:
+                                contraction = [centroid[i] + contract_const * (current_amoeba[-1][i] - centroid[i]) for i in range(variable_count)]
+                                contraction_result = evaluate_constraint_set(next_constraint, contraction)
+                                if compare_constraint_sets(contraction_result, current_results[-1]) == 1:
+                                    current_amoeba[-1] = contraction
+                                    current_results[-1] = contraction_result
+                                    continue
+                            # shrink
+                            for i in range(1, variable_count + 1):
+                                current_amoeba[i] = [current_amoeba[0][j] + shrink_const * (current_amoeba[i][j] - current_amoeba[1][j]) for j in range(variable_count)]
+                                current_results[i] = evaluate_constraint_set(next_constraint, current_amoeba[i])
+                        potential_solutions.append(current_amoeba[0])
+                        potential_solutions_results.append(current_results[0])
+                    (potential_solutions_results, potential_solutions) = sort_evaluations(potential_solutions_results, potential_solutions)
+                    best_solution = potential_solutions[0]
                 if dumping:
                     for assertion in next_constraint.assertions:
                         dump_lines.append(f"{assertion} == 0")
@@ -385,15 +438,24 @@ try:
                             dump_lines.append(f"{restriction} <= 0")
                     dump_lines.append("->")
                 
-                for (varName, varValue) in zip(next_constraint.variables, potential_solutions[0]):
+                for (varName, varValue) in zip(next_constraint.variables, best_solution):
                     if dumping:
                         dump_lines.append(f"{varName} = {varValue}")
                     variables[varName] = str(varValue)
+                
+                dependency_data.append(dependency_data_model(
+                    constraint = next_constraint,
+                    dependentVariables = get_dependent_expressions([*next_constraint.assertions, *next_constraint.restrictions], next_constraint.variables),
+                    evaluations= best_solution
+                ))
+
                 try:
                     next_constraint = next(constraint_iterator)
                 except StopIteration:
                     next_constraint = None
                 state = 0
+    with open("constraint_data.json", "w+") as f:
+        json.dump([asdict(d) for d in dependency_data], f, indent=2)
     if data.output != "":
         curve_output:list[curve_data] = []
         for curve in data.curves:
@@ -438,6 +500,7 @@ try:
         current_y = 0
         start_x = 0
         start_y = 0
+        last_curve = curve_data("M", [0, 0], False)
         for curve in curve_output:
             match curve.command:
                 case "a" | "l" | "m" | "t":
@@ -465,10 +528,11 @@ try:
                     case "A":
                         debug_data.append(f"<path d=\"M {current_x} {current_y} {str(curve)}\" fill=\"none\" stroke=\"red\" />")
                         debug_data.append(f"<path d=\"M {current_x} {current_y} A {curve.params[0]} {curve.params[1]} {curve.params[2]} {1 - curve.params[3]} {1 - curve.params[4]} {curve.params[5]} {curve.params[6]}\" fill=\"none\" stroke=\"pink\" />")
-                        debug_data.append(f"<circle cx=\"{current_x}\" cy=\"{current_y}\" r=\"1\" fill=\"red\" />")
+                        debug_data.append(f"<circle cx=\"{current_x}\" cy=\"{current_y}\" r=\"1\" fill=\"lime\" />")
                         debug_data.append(f"<circle cx=\"{curve.params[5]}\" cy=\"{curve.params[6]}\" r=\"1\" fill=\"red\" />")
-                    
-
+                    case "C":
+                        debug_data.append(f"")
+            last_curve = curve_data(curve.command, curve.params, curve.debug)
             match curve.command:
                 case "A" | "C" | "L" | "S" | "T" | "Q":
                     current_x = curve.params[-2]

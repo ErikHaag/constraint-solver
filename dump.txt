@@ -1,0 +1,89 @@
+Output results: hestium_symbol.svg
+abs = dup 0 compare *
+-> dup 0.0 compare *
+addVec = 3 pull 2 pull + 2 push +
+-> 3 pull 2 pull + 2.0 push +
+TAU = 0 1 atan 4 *
+-> 6.283185307179586
+circle = dup cos 1 pull sin
+-> dup cos 1 pull sin
+dot = 2 pull * 2 push * +
+-> 2 pull * 2.0 push * +
+dupVec = dup 2 pull dup 3 push 1 push
+-> dup 2 pull dup 3.0 push 1.0 push
+multiplyVec = 3 pull 2 pull * 2 push *
+-> 3 pull 2 pull * 2.0 push *
+normalize = atan circle
+-> atan dup cos 1 pull sin
+perp = _ 1 pull
+-> _ 1 pull
+scaleVec = dup 2 pull * 2 push * 1 pull
+-> dup 2 pull * 2.0 push * 1 pull
+square = dup *
+-> dup *
+squareMag = dupVec dot
+-> dup 2 pull dup 3.0 push 1.0 push 2 pull * 2.0 push * +
+toDegrees = 360 TAU / *
+-> 57.29577951308232 *
+toRadians = TAU 360 / *
+-> 0.017453292519943295 *
+mag = squareMag sqrt
+-> dup 2 pull dup 3.0 push 1.0 push 2 pull * 2.0 push * + sqrt
+rotateVec = circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec
+-> dup cos 1 pull sin dup 2 pull dup 3.0 push 1.0 push _ 1 pull 4 pull dup 2 pull * 2.0 push * 1 pull 4.0 push 4.0 push 2 pull dup 2 pull * 2.0 push * 1 pull 3 pull 2 pull + 2.0 push +
+ellipseTest = 3 pull 3 pull -1 scaleVec addVec 2 pull _ rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -
+-> 3 pull 3 pull -1.0 -1.0 2 pull * 2.0 push * 1 pull 3 pull 2 pull + 2.0 push + 2 pull _ dup cos 1 pull sin dup 2 pull dup 3.0 push 1.0 push _ 1 pull 4 pull dup 2 pull * 2.0 push * 1 pull 4.0 push 4.0 push 2 pull dup 2 pull * 2.0 push * 1 pull 3 pull 2 pull + 2.0 push + 1 pull 3 pull / 1 pull 2 pull / dup 2 pull dup 3.0 push 1.0 push 2 pull * 2.0 push * + sqrt 1.0 -
+outerRadius = 25
+-> 25.0
+parametricWave = -60 toRadians circle 2 pull scaleVec 2 pull dup 2 * 1 - * outerRadius 1 pull TAU * sin
+-> 0.5000000000000001 -0.8660254037844386 2 pull dup 2 pull * 2.0 push * 1 pull 2 pull dup 2.0 * 1.0 - * 25.0 1 pull 6.283185307179586 * sin
+upperTip = 17 dup 30 + 30 outerRadius square 3 pull square - sqrt -
+-> 47.0 11.66969722017664
+lowerTip = upperTip 60 - _
+-> 47.0 48.330302779823356
+innerEllipseData := innerEllipseRX innerEllipseRY -20 toRadians innerEllipseX 30
+leftEllipseData = 27 27 0 47.5 30
+-> 27.0 27.0 0.0 47.5 30.0
+rightEllipseData = leftEllipseData 2 pull drop -20 toRadians 2 push 4 pull 0.8 * 4 push 3 pull 0.95 * 3 push
+-> 21.6 25.65 -0.3490658503988659 47.5 30.0
+innerEllipseData upperTip ellipseTest == 0
+innerEllipseData lowerTip ellipseTest == 0
+innerEllipseData 2 pull drop 0 2 push 30 outerRadius 0.75 * - 30 ellipseTest == 0
+under the following constraints:
+innerEllipseX 60 - <= 0
+innerEllipseX _  <= 0
+innerEllipseRX _ <= 0
+innerEllipseRX outerRadius - <= 0
+innerEllipseRY _ <= 0
+->
+innerEllipseRX = 22.53175075635277
+innerEllipseRY = 22.620675616497792
+innerEllipseX = 33.74807413977416
+innerEllipseData verticalStrokeBRX verticalStrokeBRY ellipseTest == 0
+rightEllipseData verticalStrokeBRX verticalStrokeBRY ellipseTest == 0
+under the following constraints:
+30 verticalStrokeBRY - <= 0
+->
+verticalStrokeBRX = 38.92793606774372
+verticalStrokeBRY = 52.01835369030324
+innerEllipseData verticalStrokeURX verticalStrokeURY ellipseTest == 0
+rightEllipseData verticalStrokeURX verticalStrokeURY ellipseTest == 0
+under the following constraints:
+verticalStrokeURY 30 - <= 0
+->
+verticalStrokeURX = 35.47469768957359
+verticalStrokeURY = 7.460588576929611
+innerEllipseData verticalStrokeBLX verticalStrokeBLY ellipseTest == 0
+leftEllipseData verticalStrokeBLX verticalStrokeBLY ellipseTest == 0
+under the following constraints:
+30 verticalStrokeBLY - <= 0
+->
+verticalStrokeBLX = 32.701339809344596
+verticalStrokeBLY = 52.583171977728824
+innerEllipseData verticalStrokeULX verticalStrokeULY ellipseTest == 0
+leftEllipseData verticalStrokeULX verticalStrokeULY ellipseTest == 0
+under the following constraints:
+verticalStrokeULY 30 - <= 0
+->
+verticalStrokeULX = 32.710039094064214
+verticalStrokeULY = 7.411129811186211

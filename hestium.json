@@ -1,0 +1,211 @@
+{
+    "output": "hestium_symbol",
+    "dump": "dump",
+    "definitions": [
+        {
+            "name": "abs",
+            "definition": "dup 0 compare *"
+        },
+        {
+            "name": "addVec",
+            "definition": "3 pull 2 pull + 2 push +"
+        },
+        {
+            "name": "TAU",
+            "definition": "0 1 atan 4 *"
+        },
+        {
+            "name": "circle",
+            "definition": "dup cos 1 pull sin"
+        },
+        {
+            "name": "dot",
+            "definition": "2 pull * 2 push * +"
+        },
+        {
+            "name": "dupVec",
+            "definition": "dup 2 pull dup 3 push 1 push"
+        },
+        {
+            "name": "multiplyVec",
+            "definition": "3 pull 2 pull * 2 push *"
+        },
+        {
+            "name": "normalize",
+            "definition": "atan circle"
+        },
+        {
+            "name": "perp",
+            "definition": "_ 1 pull"
+        },
+        
+        {
+            "name": "scaleVec",
+            "definition": "dup 2 pull * 2 push * 1 pull"
+        },
+        {
+            "name": "square",
+            "definition": "dup *"
+        },
+        {
+            "name": "squareMag",
+            "definition": "dupVec dot"
+        },
+        {
+            "name": "toDegrees",
+            "definition": "360 TAU / *"
+        },
+        {
+            "name": "toRadians",
+            "definition": "TAU 360 / *"
+        },
+
+
+        {
+            "name": "mag",
+            "definition": "squareMag sqrt"
+        },
+        {
+            "name": "rotateVec",
+            "definition": "circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec"
+        },
+
+
+
+        {
+            "name": "ellipseTest",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+        },
+        {
+            "name": "outerRadius",
+            "definition": "25"
+        },
+        {
+            "name": "parametricWave",
+            "definition": "-60 toRadians circle 2 pull scaleVec 2 pull dup 2 * 1 - * outerRadius 1 pull TAU * sin"
+        },
+        {
+            "name": "upperTip",
+            "definition": "17 dup 30 + 30 outerRadius square 3 pull square - sqrt -"
+        },
+        {
+            "name": "lowerTip",
+            "definition": "upperTip 60 - _"
+        },
+        {
+            "name": "innerEllipseData",
+            "definition": "innerEllipseRX innerEllipseRY -20 toRadians innerEllipseX 30",
+            "delayed": true
+        },
+        {
+            "name": "leftEllipseData",
+            "definition": "27 27 0 47.5 30"
+        },
+        {
+            "name": "rightEllipseData",
+            "definition": "leftEllipseData 2 pull drop -20 toRadians 2 push 4 pull 0.8 * 4 push 3 pull 0.95 * 3 push"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["innerEllipseRX", "innerEllipseRY", "innerEllipseX"],
+            "assertions": [
+                "innerEllipseData upperTip ellipseTest",
+                "innerEllipseData lowerTip ellipseTest",
+                "innerEllipseData 2 pull drop 0 2 push 30 outerRadius 0.75 * - 30 ellipseTest"
+            ],
+            "restrictions": [
+                "innerEllipseX 60 -",
+                "innerEllipseX _ ",
+                "innerEllipseRX _",
+                "innerEllipseRX outerRadius -",
+                "innerEllipseRY _"
+            ]
+        },
+        {
+            "variables": ["verticalStrokeBRX", "verticalStrokeBRY"],
+            "assertions": [
+                "innerEllipseData verticalStrokeBRX verticalStrokeBRY ellipseTest",
+                "rightEllipseData verticalStrokeBRX verticalStrokeBRY ellipseTest"
+            ],
+            "restrictions": [
+                "30 verticalStrokeBRY -"
+            ]
+        },
+        {
+            "variables": ["verticalStrokeURX", "verticalStrokeURY"],
+            "assertions": [
+                "innerEllipseData verticalStrokeURX verticalStrokeURY ellipseTest",
+                "rightEllipseData verticalStrokeURX verticalStrokeURY ellipseTest"
+            ],
+            "restrictions": [
+                "verticalStrokeURY 30 -"
+            ]
+        },
+        {
+            "variables": ["verticalStrokeBLX", "verticalStrokeBLY"],
+            "assertions": [
+                "innerEllipseData verticalStrokeBLX verticalStrokeBLY ellipseTest",
+                "leftEllipseData verticalStrokeBLX verticalStrokeBLY ellipseTest"
+            ],
+            "restrictions": [
+                "30 verticalStrokeBLY -"
+            ]
+        },
+        {
+            "variables": ["verticalStrokeULX", "verticalStrokeULY"],
+            "assertions": [
+                "innerEllipseData verticalStrokeULX verticalStrokeULY ellipseTest",
+                "leftEllipseData verticalStrokeULX verticalStrokeULY ellipseTest"
+            ],
+            "restrictions": [
+                "verticalStrokeULY 30 -"
+            ]
+        }
+    ],
+    "curves": [
+        {
+            "type": "M",
+            "params": "upperTip"
+        },
+        {
+            "type": "A",
+            "params": "outerRadius dup 0 1 0 lowerTip"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 verticalStrokeBRX verticalStrokeBRY"
+        },
+        {
+            "type": "A",
+            "params": "rightEllipseData drop drop 0 1 verticalStrokeURX verticalStrokeURY"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 upperTip"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "verticalStrokeBLX verticalStrokeBLY"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 verticalStrokeULX verticalStrokeULY"
+        },
+        {
+            "type": "A",
+            "params": "leftEllipseData drop drop 0 0 verticalStrokeBLX verticalStrokeBLY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+
+    ],
+    "width": 60,
+    "height": 60
+}

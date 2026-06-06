@@ -1,0 +1,45 @@
+{
+    "output": "debugTest",
+    "dump": "dump",
+    "definitions": [],
+    "constraints": [],
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type":"M",
+            "params": "5 20",
+            "debug": true
+        },
+        {
+            "type": "c",
+            "params": "-5 0 10 7.5 5 10",
+            "debug": true
+        },
+        {
+            "type": "s",
+            "params": "-5 10 9 10",
+            "debug": true
+        },
+        {
+            "type": "q",
+            "params": "10 0 5 -5",
+            "debug": true
+        },
+        {
+            "type": "t",
+            "params": "7 -10",
+            "debug": true
+        },
+        {
+            "type": "a",
+            "params": "5 10 -45 0 0 -12 -15",
+            "debug": true
+        },
+        {
+            "type": "z",
+            "params": "",
+            "debug": true
+        }
+    ]
+} 

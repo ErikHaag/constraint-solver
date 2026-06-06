@@ -361,7 +361,7 @@ try:
                     # Nelder–Mead method
                     potential_solutions:list[list[float]] = []
                     potential_solutions_results:list[constraint_result] = []
-                    for _ in range(50):
+                    for _ in range(100):
                         variable_count = len(next_constraint.variables)
                         current_amoeba:list[list[float]] = [[random.uniform(-5000, 5000) for i in range(variable_count)]]
                         for i in range(variable_count):
@@ -382,7 +382,7 @@ try:
                             #order
                             (current_results, current_amoeba) = sort_evaluations(current_results, current_amoeba)
                             # termination
-                            if amoeba_steps >= 100:
+                            if amoeba_steps >= 200:
                             # or (all([r[0] == 2 and r[1] == 0 for r in current_results]) and statistics.pvariance(data=[r[2] for r in current_results])) <= 0.01:
                                 break
                             amoeba_steps += 1
@@ -455,6 +455,7 @@ try:
                     next_constraint = None
                 state = 0
     with open("constraint_data.json", "w+") as f:
+        # write the memos
         json.dump([asdict(d) for d in dependency_data], f, indent=2)
     if data.output != "":
         curve_output:list[curve_data] = []
@@ -469,7 +470,7 @@ try:
                     param_count = 6
                 case "S" | "s" | "Q" | "q":
                     param_count = 4
-                case "L" | "l" | "M" | "m" | "T" | "t":
+                case "dot" | "L" | "l" | "M" | "m" | "T" | "t":
                     param_count = 2
                 case "H" | "h" | "V" | "v":
                     param_count = 1
@@ -493,15 +494,21 @@ try:
                     else:
                         params.append(f)
             curve_output.append(curve_data(curve.type, params, curve.debug))
-        svg_output = f"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{data.minX} {data.minY} {data.width} {data.height}\" >\n"
         path_d:list[str] = []
         debug_data:list[str] = []
         current_x = 0
         current_y = 0
         start_x = 0
         start_y = 0
-        last_curve = curve_data("M", [0, 0], False)
-        for curve in curve_output:
+        i = 0
+        while i < len(curve_output):
+            curve = curve_output[i]
+            if curve.command == "dot":
+                [cx, cy] = curve_output.pop(i).params
+                debug_data.append(f"<circle cx=\"{cx}\" cy=\"{cy}\" r=\"1\" fill=\"magenta\" />")
+                continue
+
+            # Convert to absolute
             match curve.command:
                 case "a" | "l" | "m" | "t":
                     curve.params[-1] += current_y
@@ -522,17 +529,68 @@ try:
                     curve.params[3] += current_y
                 case "v":
                     curve.params[0] += current_y
+                case _:
+                    pass
             curve.command = curve.command.upper()
+            curve.carry_over()
+            # create discrete
+            match curve.discrete_command:
+                case "H":
+                    curve.discrete_command = "L"
+                    curve.discrete_params.append(current_y)
+                case "S":
+                    c1X = current_x
+                    c1Y = current_y
+                    if curve_output[i - 1].discrete_command == "C":
+                        c1X += current_x - curve_output[i - 1].discrete_params[2]
+                        c1Y += current_y - curve_output[i - 1].discrete_params[3]
+                    curve.discrete_command = "C"
+                    curve.discrete_params.insert(0, c1Y)
+                    curve.discrete_params.insert(0, c1X)
+                case "T":
+                    c1X = current_x
+                    c1Y = current_y
+                    if curve_output[i - 1].discrete_command == "Q":
+                        c1X += current_x - curve_output[i - 1].discrete_params[0]
+                        c1Y += current_y - curve_output[i - 1].discrete_params[1]
+                    curve.discrete_command = "Q"
+                    curve.discrete_params.insert(0, c1Y)
+                    curve.discrete_params.insert(0, c1X)
+                case "V":
+                    curve.discrete_command = "L"
+                    curve.discrete_params.insert(0, current_x)
+                case "Z":
+                    curve.discrete_command = "L"
+                    curve.discrete_params = [start_x, start_y]
             if curve.debug:
-                match curve.command:
+                match curve.discrete_command:
                     case "A":
-                        debug_data.append(f"<path d=\"M {current_x} {current_y} {str(curve)}\" fill=\"none\" stroke=\"red\" />")
-                        debug_data.append(f"<path d=\"M {current_x} {current_y} A {curve.params[0]} {curve.params[1]} {curve.params[2]} {1 - curve.params[3]} {1 - curve.params[4]} {curve.params[5]} {curve.params[6]}\" fill=\"none\" stroke=\"pink\" />")
+                        debug_data.append(f"<path d=\"M {current_x} {current_y} A {curve.discrete_params[0]} {curve.discrete_params[1]} {curve.discrete_params[2]} {curve.discrete_params[3]} {curve.discrete_params[4]} {curve.discrete_params[5]} {curve.discrete_params[6]}\" fill=\"none\" stroke=\"red\" />")
+                        debug_data.append(f"<path d=\"M {current_x} {current_y} A {curve.discrete_params[0]} {curve.discrete_params[1]} {curve.discrete_params[2]} {1 - curve.discrete_params[3]} {1 - curve.discrete_params[4]} {curve.discrete_params[5]} {curve.discrete_params[6]}\" fill=\"none\" stroke=\"pink\" />")
                         debug_data.append(f"<circle cx=\"{current_x}\" cy=\"{current_y}\" r=\"1\" fill=\"lime\" />")
-                        debug_data.append(f"<circle cx=\"{curve.params[5]}\" cy=\"{curve.params[6]}\" r=\"1\" fill=\"red\" />")
+                        debug_data.append(f"<circle cx=\"{curve.discrete_params[5]}\" cy=\"{curve.discrete_params[6]}\" r=\"1\" fill=\"red\" />")
                     case "C":
-                        debug_data.append(f"")
-            last_curve = curve_data(curve.command, curve.params, curve.debug)
+                        debug_data.append(f"<path d=\"M {current_x} {current_y} C {curve.discrete_params[0]} {curve.discrete_params[1]} {curve.discrete_params[2]} {curve.discrete_params[3]} {curve.discrete_params[4]} {curve.discrete_params[5]}\" fill=\"none\" stroke=\"red\" />")
+                        debug_data.append(f"<line x1=\"{current_x}\" y1=\"{current_y}\" x2=\"{curve.discrete_params[0]}\" y2=\"{curve.discrete_params[1]}\" stroke=\"pink\" {" stroke-dasharray=\"0.5\" " if curve.command == "S" else ""}/>")
+                        debug_data.append(f"<line x1=\"{curve.discrete_params[2]}\" y1=\"{curve.discrete_params[3]}\" x2=\"{curve.discrete_params[4]}\" y2=\"{curve.discrete_params[5]}\" stroke=\"pink\" />")
+                        debug_data.append(f"<circle cx=\"{current_x}\" cy=\"{current_y}\" r=\"1\" fill=\"lime\" />")
+                        debug_data.append(f"<circle cx=\"{curve.discrete_params[0]}\" cy=\"{curve.discrete_params[1]}\" r=\"1\" fill=\"#b3c700\" />")
+                        debug_data.append(f"<circle cx=\"{curve.discrete_params[2]}\" cy=\"{curve.discrete_params[3]}\" r=\"1\" fill=\"#e58700\" />")
+                        debug_data.append(f"<circle cx=\"{curve.discrete_params[4]}\" cy=\"{curve.discrete_params[5]}\" r=\"1\" fill=\"red\" />")
+                    case "L":
+                        debug_data.append(f"<line x1=\"{current_x}\" y1=\"{current_y}\" x2=\"{curve.discrete_params[0]}\" y2=\"{curve.discrete_params[1]}\" stroke=\"red\" />")
+                        debug_data.append(f"<circle cx=\"{current_x}\" cy=\"{current_y}\" r=\"1\" fill=\"lime\" />")
+                        debug_data.append(f"<circle cx=\"{curve.discrete_params[0]}\" cy=\"{curve.discrete_params[1]}\" r=\"1\" fill=\"red\" />")
+                    case "M":
+                        debug_data.append(f"<line x1=\"{current_x}\" y1=\"{current_y}\" x2=\"{curve.discrete_params[0]}\" y2=\"{curve.discrete_params[1]}\" stroke=\"red\" stroke-dasharray=\"0.4 0.6\" />")
+                        debug_data.append(f"<circle cx=\"{current_x}\" cy=\"{current_y}\" r=\"1\" fill=\"lime\" />")
+                        debug_data.append(f"<circle cx=\"{curve.discrete_params[0]}\" cy=\"{curve.discrete_params[1]}\" r=\"1\" fill=\"red\" />")
+                    case "Q":
+                        debug_data.append(f"<path d=\"M {current_x} {current_y} Q {curve.discrete_params[0]} {curve.discrete_params[1]} {curve.discrete_params[2]} {curve.discrete_params[3]}\" fill=\"none\" stroke=\"red\" />")
+                        debug_data.append(f"<path d=\"M {current_x} {current_y} L {curve.discrete_params[0]} {curve.discrete_params[1]} L {curve.discrete_params[2]} {curve.discrete_params[3]}\" fill=\"none\" stroke=\"pink\" {" stroke-dasharray=\"0.5\" " if curve.command == "T" else ""}/>")
+                        debug_data.append(f"<circle cx=\"{current_x}\" cy=\"{current_y}\" r=\"1\" fill=\"lime\" />")
+                        debug_data.append(f"<circle cx=\"{curve.discrete_params[0]}\" cy=\"{curve.discrete_params[1]}\" r=\"1\" fill=\"#d0a800\" />")
+                        debug_data.append(f"<circle cx=\"{curve.discrete_params[2]}\" cy=\"{curve.discrete_params[3]}\" r=\"1\" fill=\"red\" />")
             match curve.command:
                 case "A" | "C" | "L" | "S" | "T" | "Q":
                     current_x = curve.params[-2]
@@ -551,6 +609,8 @@ try:
                 case "Z" | "z":
                     current_x = start_x
                     current_y = start_y
+            i += 1
+        svg_output = f"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{data.minX} {data.minY} {data.width} {data.height}\" >\n"
         svg_output += "<path d=\"" + " ".join([str(c) for c in curve_output]) +"\" />\n"
         svg_output += "\n".join(debug_data) + "\n"
         svg_output += "</svg>"

@@ -74,7 +74,7 @@
 
         {
             "name": "ellipseTest",
-            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
         },
         {
             "name": "outerRadius",
@@ -82,7 +82,11 @@
         },
         {
             "name": "parametricWave",
-            "definition": "-60 toRadians circle 2 pull scaleVec 2 pull dup 2 * 1 - * outerRadius 1 pull TAU * sin"
+            "definition": "120 toRadians circle 2 pull scaleVec 2 pull dup 2 * 1 - outerRadius * 30 + 1 pull TAU * sin 30 + addVec"
+        },
+        {
+            "name": "parametricWaveVel",
+            "definition": "drop dup 2 outerRadius * 1 pull TAU * cos TAU *"
         },
         {
             "name": "upperTip",
@@ -94,7 +98,7 @@
         },
         {
             "name": "innerEllipseData",
-            "definition": "innerEllipseRX innerEllipseRY -20 toRadians innerEllipseX 30",
+            "definition": "innerEllipseRX innerEllipseRY -20 innerEllipseX 30",
             "delayed": true
         },
         {
@@ -103,7 +107,15 @@
         },
         {
             "name": "rightEllipseData",
-            "definition": "leftEllipseData 2 pull drop -20 toRadians 2 push 4 pull 0.8 * 4 push 3 pull 0.95 * 3 push"
+            "definition": "leftEllipseData 2 pull drop -20 2 push 4 pull 0.8 * 4 push 3 pull 0.95 * 3 push"
+        },
+        {
+            "name": "waveWidth",
+            "definition": "3"
+        },
+        {
+            "name": "",
+            "definition": "0.5 1 parametricWave"
         }
     ],
     "constraints": [
@@ -161,8 +173,30 @@
             "restrictions": [
                 "verticalStrokeULY 30 -"
             ]
+        },
+        {
+            "variables": ["waveIUT"],
+            "assertions": [
+                "innerEllipseData waveIUT waveWidth -2 / parametricWave ellipseTest"
+            ],
+            "restrictions": [
+                "waveIUT _",
+                "waveIUT waveWidth -2 / parametricWave drop innerEllipseX -"
+            ]
+        },
+        {
+            "variables": ["waveIBT"],
+            "assertions": [
+                "innerEllipseData waveIBT waveWidth 2 / parametricWave ellipseTest"
+            ],
+            "restrictions": [
+                "waveIBT _",
+                "waveIBT waveWidth 2 / parametricWave drop innerEllipseX -"
+            ]
         }
     ],
+    "width": 60,
+    "height": 60,
     "curves": [
         {
             "type": "M",
@@ -194,6 +228,11 @@
         },
         {
             "type": "A",
+            "params": "innerEllipseData drop drop 0 1 waveIBT waveWidth 2 / parametricWave",
+            "debug": true
+        },
+        {
+            "type": "A",
             "params": "innerEllipseData drop drop 0 1 verticalStrokeULX verticalStrokeULY"
         },
         {
@@ -204,8 +243,5 @@
             "type": "Z",
             "params": ""
         }
-
-    ],
-    "width": 60,
-    "height": 60
+    ]
 }

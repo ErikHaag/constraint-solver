@@ -8,7 +8,13 @@ class curve_data:
     def __init__(self, command:str, params:list[float], debug:bool) -> None:
         self.command = command
         self.params = params
+        self.discrete_command:str = command
+        self.discrete_params = params
         self.debug = debug
     
+    def carry_over(self):
+        self.discrete_command = self.command
+        self.discrete_params = [*self.params]
+
     def __str__(self) -> str:
         return self.command + " " + " ".join([f"{p:z.4g}" if type(p) == float else str(p) for p in self.params])

@@ -456,10 +456,6 @@
             "params": "arrowHead arrowHeadControl _ addVec arrowHead"
         },
         {
-            "type": "L",
-            "params": "arrowHead"
-        },
-        {
             "type": "q",
             "params": "arrowHeadControl arrowHeadTip"
         },
@@ -497,59 +493,15 @@
         },
         {
             "type": "M",
-            "params": "waveRTT waveWidth -2 / parametricWave"
+            "params": "hStrokeIUX hStrokeWidth -2 /"
         },
         {
             "type": "A",
-            "params": "rightEllipseData drop drop 0 1 hStrokeRBX hStrokeWidth 2 /"
-        },
-        {
-            "type": "H",
-            "params": "waveH0TT waveWidth -2 / parametricWave drop"
-        },
-        {
-            "type": "C",
-            "params": "waveH0TT waveWidth -2 / waveRTT waveH0TT - 3 / parametricWaveControlPoint waveRTT waveWidth -2 / waveH0TT waveRTT - 3 / parametricWaveControlPoint waveRTT waveWidth -2 / parametricWave"
-        },
-        {
-            "type": "Z",
-            "params": ""
-        },
-        {
-            "type": "M",
-            "params": "waveH2BT waveWidth 2 / parametricWave"
-        },
-        {
-            "type": "H",
-            "params": "waveH1BT waveWidth 2 / parametricWave drop"
-        },
-        {
-            "type": "C",
-            "params": "waveH1BT waveWidth 2 / waveH2BT waveH1BT - 6 / parametricWaveControlPoint waveH1BT waveH2BT + 2 / waveWidth 2 / waveH1BT waveH2BT - 6 / parametricWaveControlPoint waveH1BT waveH2BT + 2 / waveWidth 2 / parametricWave"
-        },
-        {
-            "type": "S",
-            "params": "waveH2BT waveWidth 2 / waveH1BT waveH2BT - 6 / parametricWaveControlPoint waveH2BT waveWidth 2 / parametricWave"
-        },
-        {
-            "type": "Z",
-            "params": ""
-        },
-        {
-            "type": "M",
-            "params": "verticalStrokeLBX verticalStrokeLBY"
+            "params": "innerEllipseData drop drop 0 1 verticalStrokeLTX verticalStrokeLTY"
         },
         {
             "type": "A",
-            "params": "innerEllipseData drop drop 0 1 waveIBT waveWidth 2 / parametricWave"
-        },
-        {
-            "type": "C",
-            "params": "waveIBT waveWidth 2 / waveLBT waveIBT - 3 / parametricWaveControlPoint waveLBT waveWidth 2 / waveIBT waveLBT - 3 / parametricWaveControlPoint waveLBT waveWidth 2 / parametricWave"
-        },
-        {
-            "type": "A",
-            "params": "leftEllipseData drop drop 0 0 verticalStrokeLBX verticalStrokeLBY"
+            "params": "leftEllipseData drop drop 0 0 hStrokeLTX hStrokeWidth -2 /"
         },
         {
             "type": "Z",
@@ -581,15 +533,55 @@
         },
         {
             "type": "M",
-            "params": "hStrokeIUX hStrokeWidth -2 /"
+            "params": "verticalStrokeLBX verticalStrokeLBY"
         },
         {
             "type": "A",
-            "params": "innerEllipseData drop drop 0 1 verticalStrokeLTX verticalStrokeLTY"
+            "params": "innerEllipseData drop drop 0 1 waveIBT waveWidth 2 / parametricWave"
+        },
+        {
+            "type": "C",
+            "params": "waveIBT waveWidth 2 / waveLBT waveIBT - 3 / parametricWaveControlPoint waveLBT waveWidth 2 / waveIBT waveLBT - 3 / parametricWaveControlPoint waveLBT waveWidth 2 / parametricWave"
         },
         {
             "type": "A",
-            "params": "leftEllipseData drop drop 0 0 hStrokeLTX hStrokeWidth -2 /"
+            "params": "leftEllipseData drop drop 0 0 verticalStrokeLBX verticalStrokeLBY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "waveRTT waveWidth -2 / parametricWave"
+        },
+        {
+            "type": "A",
+            "params": "rightEllipseData drop drop 0 1 hStrokeRBX hStrokeWidth 2 /"
+        },
+        {
+            "type": "H",
+            "params": "waveH0TT waveWidth -2 / parametricWave drop"
+        },
+        {
+            "type": "C",
+            "params": "waveH0TT waveWidth -2 / waveRTT waveH0TT - 3 / parametricWaveControlPoint waveRTT waveWidth -2 / waveH0TT waveRTT - 3 / parametricWaveControlPoint waveRTT waveWidth -2 / parametricWave"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "waveH1BT waveWidth 2 / parametricWave"
+        },
+        {
+            "type": "C",
+            "params": "waveH1BT waveWidth 2 / waveH2BT waveH1BT - 6 / parametricWaveControlPoint waveH1BT waveH2BT + 2 / waveWidth 2 / waveH1BT waveH2BT - 6 / parametricWaveControlPoint waveH1BT waveH2BT + 2 / waveWidth 2 / parametricWave"
+        },
+        {
+            "type": "S",
+            "params": "waveH2BT waveWidth 2 / waveH1BT waveH2BT - 6 / parametricWaveControlPoint waveH2BT waveWidth 2 / parametricWave"
         },
         {
             "type": "Z",

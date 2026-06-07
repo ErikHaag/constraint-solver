@@ -3,16 +3,16 @@
     "dump": "dump",
     "definitions": [
         {
+            "name": "TAU",
+            "definition": "0 1 atan 4 *"
+        },
+        {
             "name": "abs",
             "definition": "dup 0 compare *"
         },
         {
             "name": "addVec",
             "definition": "3 pull 2 pull + 2 push +"
-        },
-        {
-            "name": "TAU",
-            "definition": "0 1 atan 4 *"
         },
         {
             "name": "circle",
@@ -25,6 +25,14 @@
         {
             "name": "dupVec",
             "definition": "dup 2 pull dup 3 push 1 push"
+        },
+        {
+            "name": "lerp",
+            "definition": "1 pull 2 pull dup 3 push - * +"
+        },
+        {
+            "name": "min",
+            "definition": "dupVec compare dup dup * + 2 / lerp"
         },
         {
             "name": "multiplyVec",
@@ -68,120 +76,220 @@
         {
             "name": "rotateVec",
             "definition": "circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec"
-        },
-
-
-
+        },       
         {
-            "name": "ellipseTest",
-            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+            "name": "hStrokeWidth",
+            "definition": "1.5"
         },
         {
             "name": "outerRadius",
             "definition": "25"
         },
         {
-            "name": "parametricWave",
-            "definition": "120 toRadians circle 2 pull scaleVec 2 pull dup 2 * 1 - outerRadius * 30 + 1 pull TAU * sin 30 + addVec"
+            "name": "waveWidth",
+            "definition": "3.2"
+        },       
+        {
+            "name": "arrowHead",
+            "definition": "arrowLength 0",
+            "delayed": true
         },
         {
-            "name": "parametricWaveVel",
-            "definition": "drop dup 2 outerRadius * 1 pull TAU * cos TAU *"
+            "name": "arrowHeadControl",
+            "definition": "-7.5 -2"
+        },
+        {
+            "name": "arrowHeadTip",
+            "definition": "-13 -10"
+        },
+        {
+            "name": "arrowBarbData",
+            "definition": "arrowHead -13 -8 addVec arrowHead -8 0 addVec",
+            "delayed": true
+        },
+        {
+            "name": "arrowHeadBaseWidth",
+            "definition": "arrowBarbData drop 2 push drop drop",
+            "delayed": true
         },
         {
             "name": "upperTip",
-            "definition": "17 dup 30 + 30 outerRadius square 3 pull square - sqrt -"
+            "definition": "17 dup outerRadius square 2 pull square - sqrt _"
         },
         {
             "name": "lowerTip",
-            "definition": "upperTip 60 - _"
+            "definition": "upperTip _"
+        },
+        {
+            "name": "ellipseTest",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+        },
+        {
+            "name": "lineTest",
+            "definition": "5 pull 5 pull -1 scaleVec dupVec 7 pull 7 pull addVec perp 5 push 5 push addVec dot"
+        },
+        {
+            "name": "arrowHead",
+            "definition": "arrowLength 0"
+        },
+        {
+            "name": "arrowBarbData",
+            "definition": "arrowHead -13 -8 addVec arrowHead -8 0 addVec"
+        },
+        {
+            "name": "arrowHeadBaseWidth",
+            "definition": "arrowBarbData drop 2 push drop drop"
+        },
+        {
+            "name": "parametricWave",
+            "definition": "120 toRadians circle 2 pull scaleVec 2 pull dup dup arrowHeadBaseWidth outerRadius + * outerRadius - 1 pull TAU * sin 10 3 pull 4 * - * addVec"
+        },
+        {
+            "name": "",
+            "definition": "0.1 0 parametricWave"
+        },
+        {
+            "name": "parametricWaveVel",
+            "definition": "arrowHeadBaseWidth outerRadius + 1 pull dup dup TAU * cos TAU * 1 pull -4 * 10 + * 1 pull TAU * sin 4 * -"
+        },
+        {
+            "name": "parametricWaveControlPoint",
+            "definition": "2 pull dup 3 pull parametricWave 2 pull parametricWaveVel 4 pull scaleVec addVec"
         },
         {
             "name": "innerEllipseData",
-            "definition": "innerEllipseRX innerEllipseRY -20 innerEllipseX 30",
+            "definition": "innerEllipseRX innerEllipseRY -20 innerEllipseX 0",
             "delayed": true
         },
         {
             "name": "leftEllipseData",
-            "definition": "27 27 0 47.5 30"
+            "definition": "27 27 0 17.5 0"
         },
         {
             "name": "rightEllipseData",
             "definition": "leftEllipseData 2 pull drop -20 2 push 4 pull 0.8 * 4 push 3 pull 0.95 * 3 push"
-        },
-        {
-            "name": "waveWidth",
-            "definition": "3"
-        },
-        {
-            "name": "",
-            "definition": "0.5 1 parametricWave"
         }
     ],
     "constraints": [
+        {
+            "variables": ["arrowLength"],
+            "assertions": [
+                "arrowHead arrowHeadControl addVec arrowHead arrowHeadTip addVec upperTip lineTest"
+            ]
+        },
         {
             "variables": ["innerEllipseRX", "innerEllipseRY", "innerEllipseX"],
             "assertions": [
                 "innerEllipseData upperTip ellipseTest",
                 "innerEllipseData lowerTip ellipseTest",
-                "innerEllipseData 2 pull drop 0 2 push 30 outerRadius 0.75 * - 30 ellipseTest"
+                "innerEllipseData 2 pull drop 0 2 push outerRadius -0.75 * 0 ellipseTest"
             ],
             "restrictions": [
-                "innerEllipseX 60 -",
-                "innerEllipseX _",
+                "innerEllipseX 30 -",
+                "-30 innerEllipseX -",
                 "innerEllipseRX _",
                 "innerEllipseRX outerRadius -",
                 "innerEllipseRY _"
             ]
         },
         {
-            "variables": ["verticalStrokeBRX", "verticalStrokeBRY"],
+            "variables": ["verticalStrokeRBX", "verticalStrokeRBY"],
             "assertions": [
-                "innerEllipseData verticalStrokeBRX verticalStrokeBRY ellipseTest",
-                "rightEllipseData verticalStrokeBRX verticalStrokeBRY ellipseTest"
+                "innerEllipseData verticalStrokeRBX verticalStrokeRBY ellipseTest",
+                "rightEllipseData verticalStrokeRBX verticalStrokeRBY ellipseTest"
             ],
             "restrictions": [
-                "30 verticalStrokeBRY -"
+                "verticalStrokeRBY _"
             ]
         },
         {
-            "variables": ["verticalStrokeURX", "verticalStrokeURY"],
+            "variables": ["verticalStrokeRTX", "verticalStrokeRTY"],
             "assertions": [
-                "innerEllipseData verticalStrokeURX verticalStrokeURY ellipseTest",
-                "rightEllipseData verticalStrokeURX verticalStrokeURY ellipseTest"
+                "innerEllipseData verticalStrokeRTX verticalStrokeRTY ellipseTest",
+                "rightEllipseData verticalStrokeRTX verticalStrokeRTY ellipseTest"
             ],
             "restrictions": [
-                "verticalStrokeURY 30 -"
+                "verticalStrokeRTY"
             ]
         },
         {
-            "variables": ["verticalStrokeBLX", "verticalStrokeBLY"],
+            "variables": ["verticalStrokeLBX", "verticalStrokeLBY"],
             "assertions": [
-                "innerEllipseData verticalStrokeBLX verticalStrokeBLY ellipseTest",
-                "leftEllipseData verticalStrokeBLX verticalStrokeBLY ellipseTest"
+                "innerEllipseData verticalStrokeLBX verticalStrokeLBY ellipseTest",
+                "leftEllipseData verticalStrokeLBX verticalStrokeLBY ellipseTest"
             ],
             "restrictions": [
-                "30 verticalStrokeBLY -"
+                "verticalStrokeLBY _"
             ]
         },
         {
-            "variables": ["verticalStrokeULX", "verticalStrokeULY"],
+            "variables": ["verticalStrokeLTX", "verticalStrokeLTY"],
             "assertions": [
-                "innerEllipseData verticalStrokeULX verticalStrokeULY ellipseTest",
-                "leftEllipseData verticalStrokeULX verticalStrokeULY ellipseTest"
+                "innerEllipseData verticalStrokeLTX verticalStrokeLTY ellipseTest",
+                "leftEllipseData verticalStrokeLTX verticalStrokeLTY ellipseTest"
             ],
             "restrictions": [
-                "verticalStrokeULY 30 -"
+                "verticalStrokeLTY"
             ]
         },
         {
-            "variables": ["waveIUT"],
+            "variables": ["hStrokeIBX"],
             "assertions": [
-                "innerEllipseData waveIUT waveWidth -2 / parametricWave ellipseTest"
+                "innerEllipseData hStrokeIBX hStrokeWidth 2 / ellipseTest"
             ],
             "restrictions": [
-                "waveIUT _",
-                "waveIUT waveWidth -2 / parametricWave drop innerEllipseX -"
+                "hStrokeIBX innerEllipseX -"
+            ]
+        },
+        {
+            "variables": ["hStrokeIUX"],
+            "assertions": [
+                "innerEllipseData hStrokeIUX hStrokeWidth -2 / ellipseTest"
+            ],
+            "restrictions": [
+                "hStrokeIUX innerEllipseX -"
+            ]
+        },
+        {
+            "variables": ["hStrokeLBX"],
+            "assertions": [
+                "leftEllipseData hStrokeLBX hStrokeWidth 2 / ellipseTest"
+            ],
+            "restrictions": [
+                "hStrokeLBX leftEllipseData drop 3 push drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["hStrokeLTX"],
+            "assertions": [
+                "leftEllipseData hStrokeLTX hStrokeWidth -2 / ellipseTest"
+            ],
+            "restrictions": [
+                "hStrokeLTX leftEllipseData drop 3 push drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["hStrokeRBX"],
+            "assertions": [
+                "rightEllipseData hStrokeRBX hStrokeWidth 2 / ellipseTest"
+            ],
+            "restrictions": [
+                "hStrokeRBX rightEllipseData drop 3 push drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["hStrokeRTX"],
+            "assertions": [
+                "rightEllipseData hStrokeRTX hStrokeWidth -2 / ellipseTest"
+            ],
+            "restrictions": [
+                "hStrokeRTX rightEllipseData drop 3 push drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["hStrokeATX"],
+            "assertions": [
+                "arrowBarbData hStrokeATX hStrokeWidth -2 / lineTest"
             ]
         },
         {
@@ -193,8 +301,120 @@
                 "waveIBT _",
                 "waveIBT waveWidth 2 / parametricWave drop innerEllipseX -"
             ]
+        },
+        {
+            "variables": ["waveITT"],
+            "assertions": [
+                "innerEllipseData waveITT waveWidth -2 / parametricWave ellipseTest"
+            ],
+            "restrictions": [
+                "waveITT _",
+                "waveITT waveWidth -2 / parametricWave drop innerEllipseX -"
+            ]
+        },
+        {
+            "variables": ["waveLBT"],
+            "assertions": [
+                "leftEllipseData waveLBT waveWidth 2 / parametricWave ellipseTest"
+            ],
+            "restrictions": [
+                "waveLBT _",
+                "waveLBT waveWidth 2 / parametricWave drop leftEllipseData drop 3 push drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["waveLTT"],
+            "assertions": [
+                "leftEllipseData waveLTT waveWidth -2 / parametricWave ellipseTest"
+            ],
+            "restrictions": [
+                "waveLTT _",
+                "waveLTT waveWidth -2 / parametricWave drop leftEllipseData drop 3 push drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["waveRBT"],
+            "assertions": [
+                "rightEllipseData waveRBT waveWidth 2 / parametricWave ellipseTest"
+            ],
+            "restrictions": [
+                "waveRBT _",
+                "waveRBT waveWidth 2 / parametricWave drop rightEllipseData drop 3 push drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["waveRTT"],
+            "assertions": [
+                "rightEllipseData waveRTT waveWidth -2 / parametricWave ellipseTest"
+            ],
+            "restrictions": [
+                "waveRTT _",
+                "waveRTT waveWidth -2 / parametricWave drop rightEllipseData drop 3 push drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["waveH0BT"],
+            "assertions": [
+                "waveH0BT waveWidth 2 / parametricWave 1 pull drop hStrokeWidth 2 / -"
+            ],
+            "restrictions": [
+                "waveH0BT _",
+                "waveH0BT 0.8 -"
+            ]
+        },
+        {
+            "variables": ["waveH0TT"],
+            "assertions": [
+                "waveH0TT waveWidth -2 / parametricWave 1 pull drop hStrokeWidth 2 / -"
+            ],
+            "restrictions": [
+                "waveH0TT _",
+                "waveH0TT 0.8 -"
+            ]
+        },
+        {
+            "variables": ["waveH1BT"],
+            "assertions": [
+                "waveH1BT waveWidth 2 / parametricWave 1 pull drop hStrokeWidth -2 / -"
+            ],
+            "restrictions": [
+                "waveH1BT _",
+                "waveH1BT 0.8 -"
+            ]
+        },
+        {
+            "variables": ["waveH1TT"],
+            "assertions": [
+                "waveH1TT waveWidth -2 / parametricWave 1 pull drop hStrokeWidth -2 / -"
+            ],
+            "restrictions": [
+                "waveH1TT _",
+                "waveH1TT 0.8 -"
+            ]
+        },
+        {
+            "variables": ["waveH2BT"],
+            "assertions": [
+                "waveH2BT waveWidth 2 / parametricWave 1 pull drop hStrokeWidth -2 / -"
+            ],
+            "restrictions": [
+                "0.8 waveH2BT -",
+                "waveH2BT 1.5 -"
+            ]
+        },
+        {
+            "variables": ["waveH2TT"],
+            "assertions": [
+                "arrowBarbData waveH2TT waveWidth -2 / parametricWave lineTest"
+            ],
+            "restrictions": [
+                "0.8 waveH2TT -",
+                "waveH2TT 1.5 -"
+            ]
         }
     ],
+    "minX": -30,
+    "minY": -30,
     "width": 60,
     "height": 60,
     "curves": [
@@ -208,11 +428,64 @@
         },
         {
             "type": "A",
-            "params": "innerEllipseData drop drop 0 1 verticalStrokeBRX verticalStrokeBRY"
+            "params": "innerEllipseData drop drop 0 1 verticalStrokeRBX verticalStrokeRBY"
         },
         {
             "type": "A",
-            "params": "rightEllipseData drop drop 0 1 verticalStrokeURX verticalStrokeURY"
+            "params": "rightEllipseData drop drop 0 1 waveRBT waveWidth 2 / parametricWave"
+        },
+        {
+            "type": "C",
+            "params": "waveRBT waveWidth 2 / waveH0BT waveRBT - 3 / parametricWaveControlPoint waveH0BT waveWidth 2 / waveRBT waveH0BT - 3 / parametricWaveControlPoint waveH0BT waveWidth 2 / parametricWave"
+        },
+        {
+            "type": "H",
+            "params": "hStrokeATX"
+        },
+        
+        {
+            "type": "L",
+            "params":"arrowBarbData drop drop _"
+        },
+        {
+            "type": "L",
+            "params": "arrowHead arrowHeadTip _ addVec"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHead arrowHeadControl _ addVec arrowHead"
+        },
+        {
+            "type": "L",
+            "params": "arrowHead"
+        },
+        {
+            "type": "q",
+            "params": "arrowHeadControl arrowHeadTip"
+        },
+        {
+            "type": "L",
+            "params": "arrowBarbData drop drop"
+        },
+        {
+            "type": "L",
+            "params": "waveH2TT waveWidth -2 / parametricWave"
+        },
+        {
+            "type": "C",
+            "params": "waveH2TT waveWidth -2 / waveH1TT waveH2TT - 6 / parametricWaveControlPoint waveH1TT waveH2TT + 2 / waveWidth -2 / waveH2TT waveH1TT - 6 / parametricWaveControlPoint waveH1TT waveH2TT + 2 / waveWidth -2 / parametricWave"
+        },
+        {
+            "type": "S",
+            "params": "waveH1TT waveWidth -2 / waveH2TT waveH1TT - 6 / parametricWaveControlPoint waveH1TT waveWidth -2 / parametricWave"
+        },
+        {
+            "type": "H",
+            "params": "hStrokeRTX"
+        },
+        {
+            "type": "A",
+            "params": "rightEllipseData drop drop 0 1 verticalStrokeRTX verticalStrokeRTY"
         },
         {
             "type": "A",
@@ -224,20 +497,99 @@
         },
         {
             "type": "M",
-            "params": "verticalStrokeBLX verticalStrokeBLY"
+            "params": "waveRTT waveWidth -2 / parametricWave"
         },
         {
             "type": "A",
-            "params": "innerEllipseData drop drop 0 1 waveIBT waveWidth 2 / parametricWave",
-            "debug": true
+            "params": "rightEllipseData drop drop 0 1 hStrokeRBX hStrokeWidth 2 /"
+        },
+        {
+            "type": "H",
+            "params": "waveH0TT waveWidth -2 / parametricWave drop"
+        },
+        {
+            "type": "C",
+            "params": "waveH0TT waveWidth -2 / waveRTT waveH0TT - 3 / parametricWaveControlPoint waveRTT waveWidth -2 / waveH0TT waveRTT - 3 / parametricWaveControlPoint waveRTT waveWidth -2 / parametricWave"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "waveH2BT waveWidth 2 / parametricWave"
+        },
+        {
+            "type": "H",
+            "params": "waveH1BT waveWidth 2 / parametricWave drop"
+        },
+        {
+            "type": "C",
+            "params": "waveH1BT waveWidth 2 / waveH2BT waveH1BT - 6 / parametricWaveControlPoint waveH1BT waveH2BT + 2 / waveWidth 2 / waveH1BT waveH2BT - 6 / parametricWaveControlPoint waveH1BT waveH2BT + 2 / waveWidth 2 / parametricWave"
+        },
+        {
+            "type": "S",
+            "params": "waveH2BT waveWidth 2 / waveH1BT waveH2BT - 6 / parametricWaveControlPoint waveH2BT waveWidth 2 / parametricWave"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "verticalStrokeLBX verticalStrokeLBY"
         },
         {
             "type": "A",
-            "params": "innerEllipseData drop drop 0 1 verticalStrokeULX verticalStrokeULY"
+            "params": "innerEllipseData drop drop 0 1 waveIBT waveWidth 2 / parametricWave"
+        },
+        {
+            "type": "C",
+            "params": "waveIBT waveWidth 2 / waveLBT waveIBT - 3 / parametricWaveControlPoint waveLBT waveWidth 2 / waveIBT waveLBT - 3 / parametricWaveControlPoint waveLBT waveWidth 2 / parametricWave"
         },
         {
             "type": "A",
-            "params": "leftEllipseData drop drop 0 0 verticalStrokeBLX verticalStrokeBLY"
+            "params": "leftEllipseData drop drop 0 0 verticalStrokeLBX verticalStrokeLBY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "waveITT waveWidth -2 / parametricWave"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 hStrokeIBX hStrokeWidth 2 /"
+        },
+        {
+            "type": "H",
+            "params": "hStrokeLBX"
+        },
+        {
+            "type": "A",
+            "params": "leftEllipseData drop drop 0 0 waveLTT waveWidth -2 / parametricWave"
+        },
+        {
+            "type": "C",
+            "params": "waveLTT waveWidth -2 / waveITT waveLTT - 3 / parametricWaveControlPoint waveITT waveWidth -2 / waveLTT waveITT - 3 / parametricWaveControlPoint waveITT waveWidth -2 / parametricWave"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "hStrokeIUX hStrokeWidth -2 /"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 verticalStrokeLTX verticalStrokeLTY"
+        },
+        {
+            "type": "A",
+            "params": "leftEllipseData drop drop 0 0 hStrokeLTX hStrokeWidth -2 /"
         },
         {
             "type": "Z",

@@ -117,6 +117,9 @@ def evaluate_expression(expr:str, dependent:dict[str, float] = {}, max_substitut
                     if len(stack) < 1:
                         raise InsuffientArguments()
                     stack.append(stack[-1])
+                case "halt":
+                    commands = []
+                    break
                 case "sin":
                     if len(stack) < 1:
                         raise InsuffientArguments()
@@ -143,15 +146,11 @@ def evaluate_expression(expr:str, dependent:dict[str, float] = {}, max_substitut
                     if len(stack) < 2:
                         raise InsuffientArguments()
                     i = int(stack.pop())
-                    v = stack.pop()
-                    if len(stack) < i:
-                        stack.append(v)
+                    if len(stack) <= i:
                         stack.append(i)
                         raise InsuffientArguments()
-                    if i == 0:
-                        stack.append(v)
-                    else:
-                        stack.insert(-i, v)
+                    if i != 0:
+                        stack.insert(-i, stack.pop())
                 case _:
                     (s, v) = convert_if_valid_float(c)
                     var_exp = variables.get(c)
@@ -238,7 +237,7 @@ def evaluate_constraint_set(constraint:constraint_model, var_set:list[float]) ->
         (s, f) = convert_if_valid_float(o)
         if not s:
             raise RuntimeError(f"Evaluation of the following assertion resulted in an expression\n{assertion}\n" + "\n".join([f"{k} >> {v}" for [k,v] in zip(constraint.variables, var_set)]) + f"\n\n-> {o}")
-        assertion_result += f ** 2
+        assertion_result += abs(f)
     return constraint_result(2, restriction_result, assertion_result)
 
 def sort_evaluations(eval_list:list[constraint_result], mirror:list)->tuple[list[constraint_result], list]:
@@ -342,9 +341,9 @@ try:
                 if next_definition.name != "":
                     variables[next_definition.name] = d
                     if dumping:
-                        dump_lines.append(f"{next_definition.name} := {variables[next_definition.name]}" if next_definition.delayed else f"{next_definition.name} = {next_definition.definition}\n-> {variables[next_definition.name]}")
+                        dump_lines.append(f"{next_definition.name} := {variables[next_definition.name]}\n" if next_definition.delayed else f"{next_definition.name} = {next_definition.definition}\n-> {variables[next_definition.name]}\n")
                 elif dumping and not next_definition.delayed:
-                    dump_lines.append(f"{next_definition.definition}\n-> {d}")
+                    dump_lines.append(f"{next_definition.definition}\n-> {d}\n")
                 try:
                     next_definition = next(definition_iterator)
                 except StopIteration:
@@ -363,9 +362,9 @@ try:
                     potential_solutions_results:list[constraint_result] = []
                     for _ in range(100):
                         variable_count = len(next_constraint.variables)
-                        current_amoeba:list[list[float]] = [[random.uniform(-5000, 5000) for i in range(variable_count)]]
+                        current_amoeba:list[list[float]] = [[random.uniform(-500, 500) for i in range(variable_count)]]
                         for i in range(variable_count):
-                            current_amoeba.append([current_amoeba[0][j] + (10 if j == i else 0) for j in range(variable_count)])
+                            current_amoeba.append([current_amoeba[0][j] + (25 if j == i else 0) for j in range(variable_count)])
                         # initial evaluation
                         success = True
                         current_results:list[constraint_result] = []
@@ -442,6 +441,8 @@ try:
                     if dumping:
                         dump_lines.append(f"{varName} = {varValue}")
                     variables[varName] = str(varValue)
+                if dumping:
+                    dump_lines[-1] += "\n"
                 
                 dependency_data.append(dependency_data_model(
                     constraint = next_constraint,
@@ -479,8 +480,12 @@ try:
                 case _:
                     raise Exception("Unknown path type " + curve.type)
             params:list[float | int] = []
+            if dumping:
+                    dump_lines.append(f"{curve.type} {curve.params}")
             if param_count != 0:
                 o = evaluate_expression(curve.params).split(" ")
+                if dumping:
+                    dump_lines.append(f"-> {curve.type} {" ".join(o)}\n")
                 if len(o) < param_count:
                     raise Exception(f"Insuffient arguments in curve; got {len(o)}, require {param_count}")
                 if len(o) > param_count:
@@ -493,6 +498,8 @@ try:
                         params.append(int(f))
                     else:
                         params.append(f)
+            elif dumping:
+                dump_lines[-1] += "\n"
             curve_output.append(curve_data(curve.type, params, curve.debug))
         path_d:list[str] = []
         debug_data:list[str] = []

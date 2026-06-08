@@ -29,11 +29,12 @@ class input_data_model:
     minY:float
     width:float
     height:float
+    transform:str
 
     @staticmethod
     def from_dict(obj):
         return input_data_model(
-            output = obj.get("output"),
+            output = obj.get("output", ""),
             dump = obj.get("dump", ""),
             definitions = [definition_model(**i) for i in obj.get("definitions")],
             constraits = [constraint_model(**i) for i in obj.get("constraints")],
@@ -41,7 +42,8 @@ class input_data_model:
             minX = obj.get("minX", 0),
             minY = obj.get("minY", 0),
             width = obj.get("width", 100),
-            height = obj.get("height", 100)
+            height = obj.get("height", 100),
+            transform = obj.get("transform", "")
         )
 
 @dataclass

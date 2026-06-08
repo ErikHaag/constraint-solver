@@ -30,7 +30,7 @@ def evaluate_expression(expr:str, dependent:dict[str, float] = {}, max_substitut
 
     while len(commands) > 0:
         c = commands.pop(0)
-        
+
         try:
             match c:
                 case "+":
@@ -176,7 +176,6 @@ def evaluate_expression(expr:str, dependent:dict[str, float] = {}, max_substitut
     out_commands.extend([str(i) for i in stack])
     return " ".join(out_commands)
 
-
 def load_previous_solution(constraint:constraint_model) -> tuple[bool, list[float]]:
     for cons in old_dependency_data:
         if len(cons.constraint.variables) != len(constraint.variables)\
@@ -278,10 +277,14 @@ def get_dependent_expressions(exprs:list[str], dependent_vars:list[str]) -> dict
 
 data : input_data_model
 
-with open(sys.argv[1] if len(sys.argv) == 2 else "constraint_input.json", "r") as f:
+data_file_location = sys.argv[1] if len(sys.argv) == 2 else "constraint_input.json"
+with open(data_file_location, "r") as f:
+    print(f.name)
     data = input_data_model.from_dict(json.loads("\n".join(f.readlines())))
 
 dumping = data.dump != ""
+
+constraint_data_location = f"constraint_data.json"
 
 definition_iterator = iter(data.definitions)
 constraint_iterator = iter(data.constraits)
@@ -304,7 +307,7 @@ state = 0
 last_exception : NameError | None = None
 old_dependency_data:list[dependency_data_model] = []
 try:
-    with open("constraint_data.json", "r") as f:
+    with open(constraint_data_location, "r") as f:
         # Get memoized, hard mathematics
         old_dependency_data = [dependency_data_model.from_dict(d) for d in json.loads("\n".join(f.readlines()))]
 except:
@@ -455,7 +458,7 @@ try:
                 except StopIteration:
                     next_constraint = None
                 state = 0
-    with open("constraint_data.json", "w+") as f:
+    with open(constraint_data_location, "w+") as f:
         # write the memos
         json.dump([asdict(d) for d in dependency_data], f, indent=2)
     if data.output != "":
@@ -617,15 +620,25 @@ try:
                     current_x = start_x
                     current_y = start_y
             i += 1
-        svg_output = f"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{data.minX} {data.minY} {data.width} {data.height}\" >\n"
-        svg_output += "<path d=\"" + " ".join([str(c) for c in curve_output]) +"\" />\n"
-        svg_output += "\n".join(debug_data) + "\n"
+        svg_output = f"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{data.minX} {data.minY} {data.width} {data.height}\" width=\"{data.width}\">\n"
+        transform = ""
+        if data.transform != "":
+            if dumping:
+                dump_lines.append(f"Transform = {data.transform}")
+            o = evaluate_expression(data.transform)
+            if dumping:
+                dump_lines.append(f"-> {o}")
+        svg_output += "<path d=\"" + " ".join([str(c) for c in curve_output]) +"\""
+        if len(debug_data) == 0:
+            if data.transform != "":
+                svg_output += f" transform=\"matrix({o})\" "
+            svg_output += " />"
+        else:
+            svg_output += " />\n"
+            svg_output += "\n".join(debug_data) + "\n"
         svg_output += "</svg>"
         with open(data.output + ".svg", "w+") as f:
             f.write(svg_output)
-
-
-    
 except Exception as e:
     if dumping:
         dump_lines.append("")

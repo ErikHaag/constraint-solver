@@ -19,6 +19,14 @@
             "definition": "dup cos 1 pull sin"
         },
         {
+            "name": "distDup",
+            "definition": "1 + dup pull dup 2 pull push"
+        },
+        {
+            "name": "",
+            "definition": "100 0 100 100 100 3 distDup "
+        },
+        {
             "name": "dot",
             "definition": "2 pull * 2 push * +"
         },
@@ -35,6 +43,10 @@
             "definition": "dupVec compare dup dup * + 2 / lerp"
         },
         {
+            "name": "multiplyMat",
+            "definition": "5 pull 5 pull dupVec 13 distDup 12 distDup dot 12 push 10 distDup 9 distDup dot 10 push 3 pull 3 pull dupVec 11 distDup 10 distDup dot 10 push 8 distDup 7 distDup dot 8 push dupVec 9 pull 8 pull dot 6 push 5 pull 5 pull dot 2 push addVec"
+        },
+        {
             "name": "multiplyVec",
             "definition": "3 pull 2 pull * 2 push *"
         },
@@ -46,7 +58,6 @@
             "name": "perp",
             "definition": "_ 1 pull"
         },
-        
         {
             "name": "scaleVec",
             "definition": "dup 2 pull * 2 push * 1 pull"
@@ -587,5 +598,6 @@
             "type": "Z",
             "params": ""
         }
-    ]
+    ],
+    "transform": "50 outerRadius arrowLength + / 0 0 2 distDup 0 0 1 0 0 1 outerRadius arrowLength - 2 / 0 multiplyMat"
 }

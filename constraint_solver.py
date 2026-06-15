@@ -620,7 +620,10 @@ try:
                     current_x = start_x
                     current_y = start_y
             i += 1
-        svg_output = f"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{data.minX} {data.minY} {data.width} {data.height}\" width=\"{data.width}\">\n"
+        svg_output = f"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{data.minX} {data.minY} {data.width} {data.height}\""
+        if data.export:
+            svg_output += f" width=\"{data.width}\" height=\"{data.height}\""
+        svg_output += ">\n"
         transform = ""
         if data.transform != "":
             if dumping:
@@ -629,11 +632,11 @@ try:
             if dumping:
                 dump_lines.append(f"-> {o}")
         svg_output += "<path d=\"" + " ".join([str(c) for c in curve_output]) +"\""
-        if len(debug_data) == 0:
+        if data.export or len(debug_data) == 0:
             if data.transform != "":
                 svg_output += f" transform=\"matrix({o})\" "
             svg_output += " />"
-        else:
+        elif len(debug_data) != 0 :
             svg_output += " />\n"
             svg_output += "\n".join(debug_data) + "\n"
         svg_output += "</svg>"

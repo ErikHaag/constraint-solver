@@ -156,10 +156,6 @@
             "definition": "120 toRadians circle 2 pull scaleVec 2 pull dup dup arrowHeadBaseWidth outerRadius + * outerRadius - 1 pull TAU * sin 10 3 pull 4 * - * addVec"
         },
         {
-            "name": "",
-            "definition": "0.1 0 parametricWave"
-        },
-        {
             "name": "parametricWaveVel",
             "definition": "arrowHeadBaseWidth outerRadius + 1 pull dup dup TAU * cos TAU * 1 pull -4 * 10 + * 1 pull TAU * sin 4 * -"
         },
@@ -453,7 +449,6 @@
             "type": "H",
             "params": "hStrokeATX"
         },
-        
         {
             "type": "L",
             "params":"arrowBarbData drop drop _"
@@ -599,5 +594,6 @@
             "params": ""
         }
     ],
-    "transform": "50 outerRadius arrowLength + / 0 0 2 distDup 0 0 1 0 0 1 outerRadius arrowLength - 2 / 0 multiplyMat"
+    "transform": "35 outerRadius arrowLength + / 0 0 2 distDup 0 0",
+    "export": true
 }

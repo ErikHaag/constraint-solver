@@ -30,6 +30,7 @@ class input_data_model:
     width:float
     height:float
     transform:str
+    export:bool
 
     @staticmethod
     def from_dict(obj):
@@ -43,7 +44,8 @@ class input_data_model:
             minY = obj.get("minY", 0),
             width = obj.get("width", 100),
             height = obj.get("height", 100),
-            transform = obj.get("transform", "")
+            transform = obj.get("transform", ""),
+            export = obj.get("export", False)
         )
 
 @dataclass

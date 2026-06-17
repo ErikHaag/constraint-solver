@@ -1,0 +1,540 @@
+{
+    "output": "frix_and_gel_symbol",
+    "dump": "dump",
+    "definitions": [
+        {
+            "name": "TAU",
+            "definition": "0 1 atan 4 *"
+        },
+        {
+            "name": "abs",
+            "definition": "dup 0 compare *"
+        },
+        {
+            "name": "addVec",
+            "definition": "3 pull 2 pull + 2 push +"
+        },
+        {
+            "name": "circle",
+            "definition": "dup cos 1 pull sin"
+        },
+        {
+            "name": "distDup",
+            "definition": "1 + dup pull dup 2 pull push"
+        },
+        {
+            "name": "dot",
+            "definition": "2 pull * 2 push * +"
+        },
+        {
+            "name": "dupVec",
+            "definition": "dup 2 pull dup 3 push 1 push"
+        },
+        {
+            "name": "lerp",
+            "definition": "1 pull 2 pull dup 3 push - * +"
+        },
+        {
+            "name": "min",
+            "definition": "dupVec compare dup dup * + 2 / lerp"
+        },
+        {
+            "name": "multiplyMat",
+            "definition": "5 pull 5 pull dupVec 13 distDup 12 distDup dot 12 push 10 distDup 9 distDup dot 10 push 3 pull 3 pull dupVec 11 distDup 10 distDup dot 10 push 8 distDup 7 distDup dot 8 push dupVec 9 pull 8 pull dot 6 push 5 pull 5 pull dot 2 push addVec"
+        },
+        {
+            "name": "multiplyVec",
+            "definition": "3 pull 2 pull * 2 push *"
+        },
+        {
+            "name": "normalize",
+            "definition": "atan circle"
+        },
+        {
+            "name": "perp",
+            "definition": "_ 1 pull"
+        },
+        {
+            "name": "scaleVec",
+            "definition": "dup 2 pull * 2 push * 1 pull"
+        },
+        {
+            "name": "square",
+            "definition": "dup *"
+        },
+        {
+            "name": "squareMag",
+            "definition": "dupVec dot"
+        },
+        {
+            "name": "toDegrees",
+            "definition": "360 TAU / *"
+        },
+        {
+            "name": "toRadians",
+            "definition": "TAU 360 / *"
+        },
+
+
+        {
+            "name": "lineTest",
+            "definition": "5 pull 5 pull -1 scaleVec dupVec 7 pull 7 pull addVec perp 5 push 5 push addVec dot"
+        },
+        {
+            "name": "lineLineIntersection",
+            "definition": "7 distDup 6 distDup _ 6 distDup 9 distDup dot 4 distDup 3 distDup _ 3 distDup 6 distDup dot dupVec 7 distDup 6 distDup - 10 distDup 13 distDup - dot 2 push 5 distDup 4 distDup - 8 distDup 11 distDup - dot 9 pull 8 pull - 6 pull 5 pull - 5 pull 5 pull - 5 pull 6 pull - dot dup 3 pull 1 pull / 2 push /"
+        },
+        {
+            "name": "mag",
+            "definition": "squareMag sqrt"
+        },
+        {
+            "name": "rotateVec",
+            "definition": "circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurvePos",
+            "definition": "dup dup _ 1 + dup 9 pull 9 pull 2 pull square scaleVec 8 pull 8 pull 5 pull 5 pull 2 * * scaleVec addVec 4 push 4 push square scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurveVel",
+            "definition": "dup dup 1 - 8 pull 8 pull 2 pull scaleVec 7 pull 7 pull 1 5 pull 2 * - scaleVec addVec 4 push 4 push scaleVec addVec 2 scaleVec"
+        },
+        {
+            "name": "ellipseCenter",
+            "definition": "4 push 4 push drop drop drop"
+        },
+        {
+            "name": "ellipseCenterX",
+            "definition": "ellipseCenter drop"
+        },
+        {
+            "name": "ellipseCenterY",
+            "definition": "ellipseCenter 1 pull drop"
+        },
+        {
+            "name": "ellipseTest",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+        },
+        
+        
+        
+        
+        {
+            "name": "stemWidth",
+            "definition": "4"
+        },
+        {
+            "name": "outerHeadEllipseData",
+            "definition": "12.5 12.5 0 0 -25 12.5 +"
+        },
+        {
+            "name": "innerHeadEllipseData",
+            "definition": "outerHeadEllipseData 4 pull 4 - 4 push 3 pull 1.5 - 3 push 2 pull drop -20 2 push"
+        },
+        {
+            "name": "bowlBottomEllipseData",
+            "definition": "20 20 0 0 -25 12.5 +"
+        },
+        {
+            "name": "bowlTopEllipseData",
+            "definition": "22 24 -20 -0.2 -18.5"
+        },
+        {
+            "name": "rightArrowTransform",
+            "definition": "10.7 - TAU 4 / rotateVec outerHeadEllipseData ellipseCenter addVec"
+        },
+        {
+            "name": "leftArrowTransform",
+            "definition": "1 pull _ 1 push 10.7 - TAU -4 / rotateVec outerHeadEllipseData ellipseCenter addVec"
+        },
+        {
+            "name": "arrowBackData",
+            "definition": "0 0 -4.25 6"
+        },
+        {
+            "name": "rightInnerArrowBackData",
+            "definition": "arrowBackData 3 pull 3 pull rightArrowTransform 3 pull 3 pull rightArrowTransform"
+        },
+        {
+            "name": "rightOuterArrowBackData",
+            "definition": "arrowBackData 3 pull 3 pull _ rightArrowTransform 3 pull 3 pull _ rightArrowTransform"
+        },
+        {
+            "name": "leftInnerArrowBackData",
+            "definition": "arrowBackData 3 pull 3 pull leftArrowTransform 3 pull 3 pull leftArrowTransform"
+        },
+        {
+            "name": "leftOuterArrowBackData",
+            "definition": "arrowBackData 3 pull 3 pull _ leftArrowTransform 3 pull 3 pull _ leftArrowTransform"
+        },
+        {
+            "name": "arrowBarbEnd",
+            "definition": "-4.25 7.5"
+        },
+        {
+            "name": "arrowBarbControl",
+            "definition": "0.375 1.5"
+        },
+        {
+            "name": "arrowTip",
+            "definition": "6 0"
+        },
+        {
+            "name": "stemBottom",
+            "definition": "25"
+        },
+        {
+            "name": "baseSerifData",
+            "definition": "0 5 2.5 5"
+        },
+        {
+            "name": "baseSerifFoot",
+            "definition": "1"
+        },
+        {
+            "name": "crossbarPosition",
+            "definition": "bowlBCY stemBottom baseSerifData 3 push drop drop drop baseSerifFoot + - + 2 /"
+        },
+        {
+            "name": "crossbarHeight",
+            "definition": "1"
+        },
+        {
+            "name": "crossbarWidth",
+            "definition": "20"
+        },
+        {
+            "name": "crossbarSerifData",
+            "definition": "2.5 0 2.5 1.5"
+        },
+        {
+            "name": "crossbarSerifFoot",
+            "definition": "0.75"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["rightOuterBarbT"],
+            "assertions": [
+                "outerHeadEllipseData arrowBarbEnd arrowBarbControl arrowTip rightOuterBarbT quadraticCurvePos _ rightArrowTransform ellipseTest"
+            ],
+            "restrictions": [
+                "rightOuterBarbT _",
+                "rightOuterBarbT 1 -"
+            ]
+        },
+        {
+            "variables": ["rightOuterArrowJoinX", "rightOuterArrowJoinY"],
+            "assertions": [
+                "outerHeadEllipseData rightOuterArrowJoinX rightOuterArrowJoinY ellipseTest",
+                "rightOuterArrowBackData rightOuterArrowJoinX rightOuterArrowJoinY lineTest"
+            ],
+            "restrictions": [
+                "rightOuterArrowJoinY outerHeadEllipseData ellipseCenterY -"
+            ]
+        },
+        {
+            "variables": ["leftOuterArrowJoinX", "leftOuterArrowJoinY"],
+            "assertions": [
+                "outerHeadEllipseData leftOuterArrowJoinX leftOuterArrowJoinY ellipseTest",
+                "leftOuterArrowBackData leftOuterArrowJoinX leftOuterArrowJoinY lineTest"
+            ],
+            "restrictions": [
+                "leftOuterArrowJoinY outerHeadEllipseData ellipseCenterY -"
+            ]
+        },
+        {
+            "variables": ["leftOuterBarbT"],
+            "assertions": [
+                "outerHeadEllipseData arrowBarbEnd arrowBarbControl arrowTip leftOuterBarbT quadraticCurvePos _ leftArrowTransform ellipseTest"
+            ],
+            "restrictions": [
+                "leftOuterBarbT _",
+                "leftOuterBarbT 1 -"
+            ]
+        },
+        {
+            "variables": ["rightInnerArrowJoinX", "rightInnerArrowJoinY"],
+            "assertions": [
+                "innerHeadEllipseData rightInnerArrowJoinX rightInnerArrowJoinY ellipseTest",
+                "rightInnerArrowBackData rightInnerArrowJoinX rightInnerArrowJoinY lineTest"
+            ],
+            "restrictions": [
+                "innerHeadEllipseData ellipseCenterX rightInnerArrowJoinX -"
+            ]
+        },
+        {
+            "variables": ["rightInnerBarbT"],
+            "assertions": [
+                "innerHeadEllipseData arrowBarbEnd arrowBarbControl arrowTip rightInnerBarbT quadraticCurvePos rightArrowTransform ellipseTest"
+            ],
+            "restrictions": [
+                "rightInnerBarbT _",
+                "rightInnerBarbT 1 -"
+            ]
+        },
+        {
+            "variables": ["leftInnerBarbT"],
+            "assertions": [
+                "innerHeadEllipseData arrowBarbEnd arrowBarbControl arrowTip leftInnerBarbT quadraticCurvePos leftArrowTransform ellipseTest"
+            ],
+            "restrictions": [
+                "leftInnerBarbT _",
+                "leftInnerBarbT 1 -"
+            ]
+        },
+        {
+            "variables": ["leftInnerArrowJoinX", "leftInnerArrowJoinY"],
+            "assertions": [
+                "innerHeadEllipseData leftInnerArrowJoinX leftInnerArrowJoinY ellipseTest",
+                "leftInnerArrowBackData leftInnerArrowJoinX leftInnerArrowJoinY lineTest"
+            ],
+            "restrictions": [
+                "leftInnerArrowJoinX innerHeadEllipseData ellipseCenterX -"
+            ]
+        },
+        
+        {
+            "variables": ["bowlTLCY"],
+            "assertions": [
+                "bowlTopEllipseData stemWidth -2 / bowlTLCY ellipseTest"
+            ],
+            "restrictions": [
+                "bowlTLCY bowlTopEllipseData 5 push drop drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["bowlLX", "bowlLY"],
+            "assertions": [
+                "bowlBottomEllipseData bowlLX bowlLY ellipseTest",
+                "bowlTopEllipseData bowlLX bowlLY ellipseTest"
+            ],
+            "restrictions": [
+                "bowlLX"
+            ]
+        },
+        {
+            "variables": ["bowlBLCY"],
+            "assertions": [
+                "bowlBottomEllipseData stemWidth -2 / bowlBLCY ellipseTest"
+            ],
+            "restrictions": [
+                "bowlBLCY bowlBottomEllipseData 5 push drop drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["bowlBRCY"],
+            "assertions": [
+                "bowlBottomEllipseData stemWidth 2 / bowlBRCY ellipseTest"
+            ],
+            "restrictions": [
+                "bowlBRCY bowlBottomEllipseData 5 push drop drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["bowlRX", "bowlRY"],
+            "assertions": [
+                "bowlBottomEllipseData bowlRX bowlRY ellipseTest",
+                "bowlTopEllipseData bowlRX bowlRY ellipseTest"
+            ],
+            "restrictions": [
+                "bowlRX _"
+            ]
+        },
+        {
+            "variables": ["bowlTRCY"],
+            "assertions": [
+                "bowlTopEllipseData stemWidth 2 / bowlTRCY ellipseTest"
+            ],
+            "restrictions": [
+                "bowlTRCY bowlTopEllipseData 5 push drop drop drop drop -"
+            ]
+        },
+        {
+            "variables": ["bowlBCY"],
+            "assertions": [
+                "bowlBottomEllipseData 0 bowlBCY ellipseTest"
+            ],
+            "restrictions": [
+                "bowlBCY bowlBottomEllipseData 5 push drop drop drop drop -"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "outerHeadEllipseData 2 pull drop 2 pull drop stemWidth 2 / dup 4 pull square 1 pull square - sqrt addVec"
+        },
+        {
+            "type": "A",
+            "params": "outerHeadEllipseData drop drop 0 0 arrowBarbEnd arrowBarbControl arrowTip rightOuterBarbT quadraticCurvePos _ rightArrowTransform"
+        },
+        {
+            "type": "Q",
+            "params": "arrowBarbEnd arrowBarbControl arrowTip rightOuterBarbT quadraticCurvePos dupVec arrowBarbEnd arrowBarbControl arrowTip rightOuterBarbT quadraticCurveVel addVec arrowBarbEnd arrowBarbControl lineLineIntersection _ rightArrowTransform arrowBarbEnd _ rightArrowTransform"
+        },
+        {
+            "type": "L",
+            "params": "rightOuterArrowBackData 3 pull 3 pull drop drop"
+        },
+        {
+            "type": "L",
+            "params": "rightOuterArrowJoinX rightOuterArrowJoinY"
+        },
+        {
+            "type": "A",
+            "params": "outerHeadEllipseData drop drop 0 0 leftOuterArrowJoinX leftOuterArrowJoinY"
+        },
+        {
+            "type": "L",
+            "params": "leftOuterArrowBackData 3 pull 3 pull drop drop"
+        },
+        {
+            "type": "L",
+            "params": "arrowBarbEnd _ leftArrowTransform"
+        },
+        {
+            "type": "Q",
+            "params": "arrowBarbEnd arrowBarbControl arrowTip leftOuterBarbT quadraticCurvePos dupVec dupVec arrowBarbEnd arrowBarbControl arrowTip leftOuterBarbT quadraticCurveVel addVec arrowBarbEnd arrowBarbControl lineLineIntersection _ leftArrowTransform 3 pull 3 pull _ leftArrowTransform"
+        },
+        {
+            "type": "A",
+            "params": "outerHeadEllipseData drop drop 0 0 outerHeadEllipseData 2 pull drop 2 pull drop stemWidth -2 / dup 4 pull square 1 pull square - sqrt addVec"
+        },
+        {
+            "type": "V",
+            "params": "bowlTLCY"
+        },
+        {
+            "type": "A",
+            "params": "bowlTopEllipseData drop drop 0 1 bowlLX bowlLY"
+        },
+        {
+            "type": "A",
+            "params": "bowlBottomEllipseData drop drop 0 0 stemWidth -2 / bowlBLCY"
+        },
+        {
+            "type": "V",
+            "params": "crossbarPosition crossbarHeight 2 / -"
+        },
+        {
+            "type": "h",
+            "params": "stemWidth crossbarWidth - 2 /"
+        },
+        {
+            "type": "v",
+            "params": "crossbarHeight"
+        },
+        {
+            "type": "h",
+            "params": "crossbarWidth stemWidth - 2 /"
+        },
+        {
+            "type": "V",
+            "params": "stemBottom baseSerifFoot baseSerifData 3 push drop drop drop + -"
+        },
+        {
+            "type": "q",
+            "params": "baseSerifData 3 pull _ 3 push 1 pull _ 1 push"
+        },
+        {
+            "type": "v",
+            "params": "baseSerifFoot"
+        },
+        {
+            "type": "H",
+            "params": "stemWidth 2 / baseSerifData 1 pull 3 push drop drop drop +"
+        },          
+        {
+            "type": "v",
+            "params": "baseSerifFoot _"
+        },
+        {
+            "type": "q",
+            "params": "baseSerifData -1 scaleVec addVec baseSerifData 2 pull drop 2 pull drop -1 scaleVec"
+        },
+        {
+            "type": "V",
+            "params": "crossbarPosition crossbarHeight 2 / +"
+        },
+        {
+            "type": "h",
+            "params": "crossbarWidth stemWidth - 2 / crossbarSerifFoot crossbarSerifData drop 2 push drop drop + -"
+        },
+        {
+            "type": "q",
+            "params": "crossbarSerifData"
+        },
+        {
+            "type": "h",
+            "params": "crossbarSerifFoot"
+        },
+        {
+            "type": "v",
+            "params": "crossbarHeight crossbarSerifData 3 push drop drop drop + _"
+        },
+        {
+            "type": "h",
+            "params": "stemWidth crossbarWidth - 2 /"
+        },
+        {
+            "type": "V",
+            "params": "bowlBRCY"
+        },
+        {
+            "type": "A",
+            "params": "bowlBottomEllipseData drop drop 0 0 bowlRX bowlRY"
+        },
+        {
+            "type": "A",
+            "params": "bowlTopEllipseData drop drop 0 1 stemWidth 2 / bowlTRCY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "leftInnerArrowJoinX leftInnerArrowJoinY"
+        },
+        {
+            "type": "A",
+            "params": "innerHeadEllipseData drop drop 0 1 rightInnerArrowJoinX rightInnerArrowJoinY"
+        },
+        {
+            "type": "L",
+            "params": "rightInnerArrowBackData 3 pull 3 pull drop drop"
+        },
+        {
+            "type": "L",
+            "params": "arrowBarbEnd rightArrowTransform"
+        },
+        {
+            "type": "Q",
+            "params": "arrowBarbEnd arrowBarbControl arrowTip rightInnerBarbT quadraticCurvePos dupVec dupVec arrowBarbEnd arrowBarbControl arrowTip rightInnerBarbT quadraticCurveVel addVec arrowBarbEnd arrowBarbControl lineLineIntersection rightArrowTransform 3 pull 3 pull rightArrowTransform"
+        },
+        {
+            "type": "A",
+            "params": "innerHeadEllipseData drop drop 0 1 arrowBarbEnd arrowBarbControl arrowTip leftInnerBarbT quadraticCurvePos leftArrowTransform"
+        },
+        {
+            "type": "Q",
+            "params": "arrowBarbEnd arrowBarbControl arrowTip leftInnerBarbT quadraticCurvePos dupVec arrowBarbEnd arrowBarbControl arrowTip leftInnerBarbT quadraticCurveVel addVec arrowBarbEnd arrowBarbControl lineLineIntersection leftArrowTransform arrowBarbEnd leftArrowTransform"
+        },
+        {
+            "type": "L",
+            "params": "leftInnerArrowBackData 3 pull 3 pull drop drop"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": false
+}

@@ -134,7 +134,7 @@
         },
         {
             "name": "outerHeadEllipseData",
-            "definition": "18 18 0 0 -22.5 18 +"
+            "definition": "18 18 0 0 -23 18 +"
         },
         {
             "name": "innerHeadEllipseData",
@@ -142,7 +142,7 @@
         },
         {
             "name": "stemBottom",
-            "definition": "22.5"
+            "definition": "23"
         },
         {
             "name": "baseSerifData",
@@ -153,12 +153,12 @@
             "definition": "outerHeadEllipseData 2 push 3 pull drop drop drop 1 pull square stemWidth 2 / square - sqrt +"
         },
         {
-            "name": "angleOut",
-            "definition": "TAU 8 /"
+            "name": "angleInner",
+            "definition": "TAU 9 64 / *"
         },
         {
-            "name": "angleSpread",
-            "definition": "TAU 64 /"
+            "name": "angleOuter",
+            "definition": "TAU 3 32 / *"
         },
         {
             "name": "mirrorX",
@@ -170,7 +170,7 @@
         },
         {
             "name": "C0",
-            "definition": "outerHeadEllipseData angleOut angleSpread + ellipseCurvePos"
+            "definition": "outerHeadEllipseData angleInner ellipseCurvePos"
         },
         {
             "name": "C1",
@@ -186,7 +186,7 @@
         },
         {
             "name": "C4",
-            "definition": "6.6 6"
+            "definition": "7 6.5"
         },
         {
             "name": "C5",
@@ -194,11 +194,11 @@
         },
         {
             "name": "C6",
-            "definition": "4.5 -0.5"
+            "definition": "5 -0.5"
         },
         {
             "name": "C7",
-            "definition": "outerHeadEllipseData angleOut angleSpread - ellipseCurvePos"
+            "definition": "outerHeadEllipseData angleOuter ellipseCurvePos"
         }
     ],
     "constraints": [],

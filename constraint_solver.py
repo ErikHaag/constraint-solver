@@ -359,6 +359,7 @@ try:
                     # end of iteration
                     break
                 (solution_found, best_solution) = load_previous_solution(next_constraint)
+                best_solution_result:constraint_result = constraint_result(0, 0, 0)
                 if not solution_found:
                     # Nelder–Mead method
                     potential_solutions:list[list[float]] = []
@@ -431,6 +432,9 @@ try:
                         potential_solutions_results.append(current_results[0])
                     (potential_solutions_results, potential_solutions) = sort_evaluations(potential_solutions_results, potential_solutions)
                     best_solution = potential_solutions[0]
+                    best_solution_result = potential_solutions_results[0]
+                else:
+                    best_solution_result = evaluate_constraint_set(next_constraint, best_solution)
                 if dumping:
                     for assertion in next_constraint.assertions:
                         dump_lines.append(f"{assertion} == 0")
@@ -445,7 +449,8 @@ try:
                         dump_lines.append(f"{varName} = {varValue}")
                     variables[varName] = str(varValue)
                 if dumping:
-                    dump_lines[-1] += "\n"
+                    dump_lines.append("-- Score --")
+                    dump_lines.append(f"{best_solution_result.success_count}, {best_solution_result.assertion_result}, {best_solution_result.restriction_result}\n")
                 
                 dependency_data.append(dependency_data_model(
                     constraint = next_constraint,

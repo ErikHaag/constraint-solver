@@ -1,0 +1,289 @@
+{
+    "output": "mitrum_symbol",
+    "dump": "dump",
+    "definitions": [
+        {
+            "name": "TAU",
+            "definition": "0 1 atan 4 *"
+        },
+        {
+            "name": "abs",
+            "definition": "dup 0 compare *"
+        },
+        {
+            "name": "addVec",
+            "definition": "3 pull 2 pull + 2 push +"
+        },
+        {
+            "name": "circle",
+            "definition": "dup cos 1 pull sin"
+        },
+        {
+            "name": "distDup",
+            "definition": "1 + dup pull dup 2 pull push"
+        },
+        {
+            "name": "dot",
+            "definition": "2 pull * 2 push * +"
+        },
+        {
+            "name": "dupVec",
+            "definition": "dup 2 pull dup 3 push 1 push"
+        },
+        {
+            "name": "lerp",
+            "definition": "1 pull 2 pull dup 3 push - * +"
+        },
+        {
+            "name": "min",
+            "definition": "dupVec compare dup dup * + 2 / lerp"
+        },
+        {
+            "name": "multiplyMat",
+            "definition": "5 pull 5 pull dupVec 13 distDup 12 distDup dot 12 push 10 distDup 9 distDup dot 10 push 3 pull 3 pull dupVec 11 distDup 10 distDup dot 10 push 8 distDup 7 distDup dot 8 push dupVec 9 pull 8 pull dot 6 push 5 pull 5 pull dot 2 push addVec"
+        },
+        {
+            "name": "multiplyVec",
+            "definition": "3 pull 2 pull * 2 push *"
+        },
+        {
+            "name": "normalize",
+            "definition": "atan circle"
+        },
+        {
+            "name": "perp",
+            "definition": "_ 1 pull"
+        },
+        {
+            "name": "scaleVec",
+            "definition": "dup 2 pull * 2 push * 1 pull"
+        },
+        {
+            "name": "square",
+            "definition": "dup *"
+        },
+        {
+            "name": "squareMag",
+            "definition": "dupVec dot"
+        },
+        {
+            "name": "toDegrees",
+            "definition": "360 TAU / *"
+        },
+        {
+            "name": "toRadians",
+            "definition": "TAU 360 / *"
+        },
+
+
+        {
+            "name": "lineTest",
+            "definition": "5 pull 5 pull -1 scaleVec dupVec 7 pull 7 pull addVec perp 5 push 5 push addVec dot"
+        },
+        {
+            "name": "lineLineIntersection",
+            "definition": "7 distDup 6 distDup _ 6 distDup 9 distDup dot 4 distDup 3 distDup _ 3 distDup 6 distDup dot dupVec 7 distDup 6 distDup - 10 distDup 13 distDup - dot 2 push 5 distDup 4 distDup - 8 distDup 11 distDup - dot 9 pull 8 pull - 6 pull 5 pull - 5 pull 5 pull - 5 pull 6 pull - dot dup 3 pull 1 pull / 2 push /"
+        },
+        {
+            "name": "mag",
+            "definition": "squareMag sqrt"
+        },
+        {
+            "name": "rotateVec",
+            "definition": "circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurvePos",
+            "definition": "dup dup _ 1 + dup 9 pull 9 pull 2 pull square scaleVec 8 pull 8 pull 5 pull 5 pull 2 * * scaleVec addVec 4 push 4 push square scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurveVel",
+            "definition": "dup dup 1 - 8 pull 8 pull 2 pull scaleVec 7 pull 7 pull 1 5 pull 2 * - scaleVec addVec 4 push 4 push scaleVec addVec 2 scaleVec"
+        },
+        {
+            "name": "ellipseCenter",
+            "definition": "4 push 4 push drop drop drop"
+        },
+        {
+            "name": "ellipseCenterX",
+            "definition": "ellipseCenter drop"
+        },
+        {
+            "name": "ellipseCenterY",
+            "definition": "ellipseCenter 1 pull drop"
+        },
+        {
+            "name": "ellipseCurvePos",
+            "definition": "circle 6 pull 6 pull multiplyVec 4 pull toRadians rotateVec addVec"
+        },
+        {
+            "name": "ellipseCurveVel",
+            "definition": "2 push drop drop circle perp 4 pull 4 pull multiplyVec 2 pull toRadians rotateVec"
+        },
+        {
+            "name": "ellipseTest",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+        },
+        
+        
+        
+        
+        {
+            "name": "stemWidth",
+            "definition": "6"
+        },
+        {
+            "name": "outerHeadEllipseData",
+            "definition": "18 18 0 0 -22.5 18 +"
+        },
+        {
+            "name": "innerHeadEllipseData",
+            "definition": "outerHeadEllipseData 4 pull 6 - 4 push 3 pull 1.5 - 3 push 2 pull drop -20 2 push"
+        },
+        {
+            "name": "stemBottom",
+            "definition": "22.5"
+        },
+        {
+            "name": "baseSerifData",
+            "definition": "0 5 2.5 5"
+        },
+        {
+            "name": "stemTopY",
+            "definition": "outerHeadEllipseData 2 push 3 pull drop drop drop 1 pull square stemWidth 2 / square - sqrt +"
+        },
+        {
+            "name": "angleOut",
+            "definition": "TAU 8 /"
+        },
+        {
+            "name": "angleSpread",
+            "definition": "TAU 64 /"
+        },
+        {
+            "name": "mirrorX",
+            "definition": "1 pull _ 1 push"
+        },
+        {
+            "name": "reflectControl",
+            "definition": "-2 scaleVec addVec -1 scaleVec"
+        },
+        {
+            "name": "C0",
+            "definition": "outerHeadEllipseData angleOut angleSpread + ellipseCurvePos"
+        },
+        {
+            "name": "C1",
+            "definition": "3 1"
+        },
+        {
+            "name": "C2",
+            "definition": "4.5 4"
+        },
+        {
+            "name": "C3",
+            "definition": "5 7"
+        },
+        {
+            "name": "C4",
+            "definition": "6.6 6"
+        },
+        {
+            "name": "C5",
+            "definition": "6.5 4"
+        },
+        {
+            "name": "C6",
+            "definition": "4.5 -0.5"
+        },
+        {
+            "name": "C7",
+            "definition": "outerHeadEllipseData angleOut angleSpread - ellipseCurvePos"
+        }
+    ],
+    "constraints": [],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "stemWidth 2 / stemTopY"
+        },
+        {
+            "type": "A",
+            "params": "outerHeadEllipseData drop drop 0 0 C0"
+        },
+        {
+            "type": "C",
+            "params": "C1 C0 addVec C2 C0 addVec C3 C0 addVec"
+        },
+        {
+            "type": "S",
+            "params": "C4 C0 addVec C5 C0 addVec"
+        },
+        {
+            "type": "S",
+            "params": "C6 C0 addVec C7"
+        },
+        {
+            "type": "A",
+            "params": "outerHeadEllipseData drop drop 1 0 C7 mirrorX"
+        },
+        {
+            "type": "C",
+            "params": "C6 C0 addVec mirrorX C4 C5 reflectControl C0 addVec mirrorX C5 C0 addVec mirrorX"
+        },
+        {
+            "type": "S",
+            "params": "C2 C3 reflectControl C0 addVec mirrorX C3 C0 addVec mirrorX"
+        },
+        {
+            "type": "S",
+            "params": "C1 C0 addVec mirrorX C0 mirrorX"
+        },
+        {
+            "type": "A",
+            "params": "outerHeadEllipseData drop drop 0 0 stemWidth -2 / stemTopY"
+        },
+        {
+            "type": "V",
+            "params": "stemBottom baseSerifData 3 push drop drop drop -"
+        },
+        {
+            "type": "q",
+            "params": "baseSerifData 3 pull _ 3 push 1 pull _ 1 push"
+        },
+        {
+            "type": "H",
+            "params": "stemWidth 2 / baseSerifData 1 pull 3 push drop drop drop +"
+        },
+        {
+            "type": "q",
+            "params": "baseSerifData -1 scaleVec addVec baseSerifData 2 pull drop 2 pull drop -1 scaleVec"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "innerHeadEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "innerHeadEllipseData drop drop 0 1 innerHeadEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "innerHeadEllipseData drop drop 0 1 innerHeadEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "0.6 0 0 0.6 0 0",
+    "export": true
+}

@@ -1,0 +1,306 @@
+{
+    "output": "taceum_symbol",
+    "dump": "dump",
+    "definitions": [
+        {
+            "name": "TAU",
+            "definition": "0 1 atan 4 *"
+        },
+        {
+            "name": "abs",
+            "definition": "dup 0 compare *"
+        },
+        {
+            "name": "addVec",
+            "definition": "3 pull 2 pull + 2 push +"
+        },
+        {
+            "name": "circle",
+            "definition": "dup cos 1 pull sin"
+        },
+        {
+            "name": "distDup",
+            "definition": "1 + dup pull dup 2 pull push"
+        },
+        {
+            "name": "dot",
+            "definition": "2 pull * 2 push * +"
+        },
+        {
+            "name": "dupVec",
+            "definition": "dup 2 pull dup 3 push 1 push"
+        },
+        {
+            "name": "lerp",
+            "definition": "1 pull 2 pull dup 3 push - * +"
+        },
+        {
+            "name": "min",
+            "definition": "dupVec compare dup dup * + 2 / lerp"
+        },
+        {
+            "name": "mirrorX",
+            "definition": "1 pull _ 1 push"
+        },
+        {
+            "name": "multiplyMat",
+            "definition": "5 pull 5 pull dupVec 13 distDup 12 distDup dot 12 push 10 distDup 9 distDup dot 10 push 3 pull 3 pull dupVec 11 distDup 10 distDup dot 10 push 8 distDup 7 distDup dot 8 push dupVec 9 pull 8 pull dot 6 push 5 pull 5 pull dot 2 push addVec"
+        },
+        {
+            "name": "multiplyVec",
+            "definition": "3 pull 2 pull * 2 push *"
+        },
+        {
+            "name": "normalize",
+            "definition": "atan circle"
+        },
+        {
+            "name": "perp",
+            "definition": "_ 1 pull"
+        },
+        {
+            "name": "scaleVec",
+            "definition": "dup 2 pull * 2 push * 1 pull"
+        },
+        {
+            "name": "square",
+            "definition": "dup *"
+        },
+        {
+            "name": "squareMag",
+            "definition": "dupVec dot"
+        },
+        {
+            "name": "toDegrees",
+            "definition": "360 TAU / *"
+        },
+        {
+            "name": "toRadians",
+            "definition": "TAU 360 / *"
+        },
+
+
+        {
+            "name": "lineTest",
+            "definition": "5 pull 5 pull -1 scaleVec dupVec 7 pull 7 pull addVec perp 5 push 5 push addVec dot"
+        },
+        {
+            "name": "lineLineIntersection",
+            "definition": "7 distDup 6 distDup _ 6 distDup 9 distDup dot 4 distDup 3 distDup _ 3 distDup 6 distDup dot dupVec 7 distDup 6 distDup - 10 distDup 13 distDup - dot 2 push 5 distDup 4 distDup - 8 distDup 11 distDup - dot 9 pull 8 pull - 6 pull 5 pull - 5 pull 5 pull - 5 pull 6 pull - dot dup 3 pull 1 pull / 2 push /"
+        },
+        {
+            "name": "mag",
+            "definition": "squareMag sqrt"
+        },
+        {
+            "name": "rotateVec",
+            "definition": "circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurvePos",
+            "definition": "dup dup _ 1 + dup 9 pull 9 pull 2 pull square scaleVec 8 pull 8 pull 5 pull 5 pull 2 * * scaleVec addVec 4 push 4 push square scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurveVel",
+            "definition": "dup dup 1 - 8 pull 8 pull 2 pull scaleVec 7 pull 7 pull 1 5 pull 2 * - scaleVec addVec 4 push 4 push scaleVec addVec 2 scaleVec"
+        },
+        {
+            "name": "ellipseCenter",
+            "definition": "4 push 4 push drop drop drop"
+        },
+        {
+            "name": "ellipseCenterX",
+            "definition": "ellipseCenter drop"
+        },
+        {
+            "name": "ellipseCenterY",
+            "definition": "ellipseCenter 1 pull drop"
+        },
+        {
+            "name": "ellipseCurvePos",
+            "definition": "circle 6 pull 6 pull multiplyVec 4 pull toRadians rotateVec addVec"
+        },
+        {
+            "name": "ellipseCurveVel",
+            "definition": "2 push drop drop circle perp 4 pull 4 pull multiplyVec 2 pull toRadians rotateVec"
+        },
+        {
+            "name": "ellipseTest",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+        },
+        {
+            "name": "leftOuterEllipseData",
+            "definition": "10 10 0 -9.5 -10"
+        },
+        {
+            "name": "triangleTopY",
+            "definition": "leftOuterEllipseData ellipseCenterY"
+        },
+        {
+            "name": "leftInnerEllipseData",
+            "definition": "leftOuterEllipseData 4 pull 4 - 4 push 3 pull 2 - 3 push 2 pull drop -20 2 push"
+        },
+        {
+            "name": "rightOuterEllipseData",
+            "definition": "leftOuterEllipseData mirrorX"
+        },
+        {
+            "name": "rightInnerEllipseData",
+            "definition": "leftInnerEllipseData mirrorX"
+        },
+        {
+            "name": "triangleSideLength",
+            "definition": "30"
+        },
+        {
+            "name": "hollowBeamWidth",
+            "definition": "1.25"
+        },
+        {
+            "name": "leftSideWidth",
+            "definition": "2"
+        },
+        {
+            "name": "rightSideWidth",
+            "definition": "4"
+        },
+        {
+            "name": "bottomSideWidth",
+            "definition": "1.5"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["ellipseIntersectX", "ellipseIntersectY"],
+            "assertions": [
+                "leftOuterEllipseData ellipseIntersectX ellipseIntersectY ellipseTest",
+                "rightOuterEllipseData ellipseIntersectX ellipseIntersectY ellipseTest"
+            ],
+            "restrictions": [
+                "ellipseIntersectY triangleTopY -"
+            ]
+        },
+        {
+            "variables": ["triangleLeftPeekT"],
+            "assertions": [
+                "leftOuterEllipseData TAU 3 / circle triangleLeftPeekT scaleVec triangleTopY + ellipseTest"
+            ],
+            "restrictions": [
+                "triangleLeftPeekT _"
+            ]
+        },
+        {
+            "variables": ["triangleRightPeekT"],
+            "assertions": [
+                "rightOuterEllipseData TAU 6 / circle triangleRightPeekT scaleVec triangleTopY + ellipseTest"
+            ],
+            "restrictions": [
+                "triangleRightPeekT _"
+            ]
+        },
+        {
+            "variables": ["leftInnerBottomX"],
+            "assertions": [
+                "leftInnerEllipseData leftInnerBottomX triangleTopY hollowBeamWidth + ellipseTest"
+            ],
+            "restrictions": [
+                "leftInnerEllipseData ellipseCenterX leftInnerBottomX -"
+            ]
+        },
+        {
+            "variables": ["leftInnerTopX"],
+            "assertions": [
+                "leftInnerEllipseData leftInnerTopX triangleTopY hollowBeamWidth - ellipseTest"
+            ],
+            "restrictions": [
+                "leftInnerEllipseData ellipseCenterX leftInnerTopX -"
+            ]
+        },
+        {
+            "variables": ["rightInnerBottomX"],
+            "assertions": [
+                "rightInnerEllipseData rightInnerBottomX triangleTopY hollowBeamWidth + ellipseTest"
+            ],
+            "restrictions": [
+                "rightInnerBottomX rightInnerEllipseData ellipseCenterX -"
+            ]
+        },
+        {
+            "variables": ["rightInnerTopX"],
+            "assertions": [
+                "rightInnerEllipseData rightInnerTopX triangleTopY hollowBeamWidth - ellipseTest"
+            ],
+            "restrictions": [
+                "rightInnerTopX rightInnerEllipseData ellipseCenterX -"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "TAU 6 / circle triangleRightPeekT scaleVec triangleTopY +"
+        },
+        {
+            "type": "A",
+            "params": "rightOuterEllipseData drop drop 1 0 ellipseIntersectX ellipseIntersectY"
+        },
+        {
+            "type": "A",
+            "params": "leftOuterEllipseData drop drop 1 0 TAU 3 / circle triangleLeftPeekT scaleVec triangleTopY +"
+        },
+        {
+            "type": "L",
+            "params": "TAU 3 / circle triangleSideLength scaleVec triangleTopY +"
+        },
+        {
+            "type": "H",
+            "params": "TAU 6 / cos triangleSideLength *"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "leftInnerBottomX triangleTopY hollowBeamWidth +"
+        },
+        {
+            "type": "A",
+            "params": "leftInnerEllipseData drop drop 1 1 leftInnerTopX triangleTopY hollowBeamWidth -"
+        },
+        {
+            "type": "H",
+            "params": "rightInnerTopX"
+        },
+        {
+            "type": "A",
+            "params": "rightInnerEllipseData drop drop 1 1 rightInnerBottomX triangleTopY hollowBeamWidth +"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "TAU 6 / circle dupVec perp rightSideWidth scaleVec triangleTopY + dupVec 5 pull 5 pull addVec 0 TAU 3 / sin triangleSideLength * triangleTopY + bottomSideWidth - dup 1 1 push lineLineIntersection"
+        },
+        {
+            "type": "H",
+            "params": "TAU 3 / circle dupVec perp -1 scaleVec leftSideWidth scaleVec triangleTopY + dupVec 5 pull 5 pull addVec 0 TAU 3 / sin triangleSideLength * triangleTopY + bottomSideWidth - dup 1 1 push lineLineIntersection drop"
+        },
+        {
+            "type": "L",
+            "params": "TAU 6 / circle dupVec perp rightSideWidth scaleVec triangleTopY + dupVec 5 pull 5 pull addVec TAU 3 / circle dupVec perp -1 scaleVec leftSideWidth scaleVec triangleTopY + dupVec 5 pull 5 pull addVec lineLineIntersection"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "0.6 0 0 0.6 0 0",
+    "export": true
+}

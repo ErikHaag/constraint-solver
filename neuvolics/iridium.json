@@ -1,0 +1,479 @@
+{
+    "output": "iridium_symbol",
+    "dump": "dump",
+    "definitions": [
+        {
+            "name": "TAU",
+            "definition": "0 1 atan 4 *"
+        },
+        {
+            "name": "abs",
+            "definition": "dup 0 compare *"
+        },
+        {
+            "name": "addVec",
+            "definition": "3 pull 2 pull + 2 push +"
+        },
+        {
+            "name": "circle",
+            "definition": "dup cos 1 pull sin"
+        },
+        {
+            "name": "distDup",
+            "definition": "1 + dup pull dup 2 pull push"
+        },
+        {
+            "name": "dot",
+            "definition": "2 pull * 2 push * +"
+        },
+        {
+            "name": "dupVec",
+            "definition": "dup 2 pull dup 3 push 1 push"
+        },
+        {
+            "name": "lerp",
+            "definition": "1 pull 2 pull dup 3 push - * +"
+        },
+        {
+            "name": "lerpVec",
+            "definition": "dup 5 pull 4 pull 2 pull lerp 3 push lerp"
+        },
+        {
+            "name": "min",
+            "definition": "dupVec compare dup dup * + 2 / lerp"
+        },
+        {
+            "name": "mirrorX",
+            "definition": "1 pull _ 1 push"
+        },
+        {
+            "name": "multiplyMat",
+            "definition": "5 pull 5 pull dupVec 13 distDup 12 distDup dot 12 push 10 distDup 9 distDup dot 10 push 3 pull 3 pull dupVec 11 distDup 10 distDup dot 10 push 8 distDup 7 distDup dot 8 push dupVec 9 pull 8 pull dot 6 push 5 pull 5 pull dot 2 push addVec"
+        },
+        {
+            "name": "multiplyVec",
+            "definition": "3 pull 2 pull * 2 push *"
+        },
+        {
+            "name": "normalize",
+            "definition": "atan circle"
+        },
+        {
+            "name": "perp",
+            "definition": "_ 1 pull"
+        },
+        {
+            "name": "scaleVec",
+            "definition": "dup 2 pull * 2 push * 1 pull"
+        },
+        {
+            "name": "square",
+            "definition": "dup *"
+        },
+        {
+            "name": "squareMag",
+            "definition": "dupVec dot"
+        },
+        {
+            "name": "toDegrees",
+            "definition": "360 TAU / *"
+        },
+        {
+            "name": "toRadians",
+            "definition": "TAU 360 / *"
+        },
+
+
+        {
+            "name": "lineTest",
+            "definition": "5 pull 5 pull -1 scaleVec dupVec 7 pull 7 pull addVec perp 5 push 5 push addVec dot"
+        },
+        {
+            "name": "lineLineIntersection",
+            "definition": "7 distDup 6 distDup _ 6 distDup 9 distDup dot 4 distDup 3 distDup _ 3 distDup 6 distDup dot dupVec 7 distDup 6 distDup - 10 distDup 13 distDup - dot 2 push 5 distDup 4 distDup - 8 distDup 11 distDup - dot 9 pull 8 pull - 6 pull 5 pull - 5 pull 5 pull - 5 pull 6 pull - dot dup 3 pull 1 pull / 2 push /"
+        },
+        {
+            "name": "mag",
+            "definition": "squareMag sqrt"
+        },
+        {
+            "name": "rotateVec",
+            "definition": "circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurvePos",
+            "definition": "dup dup _ 1 + dup 9 pull 9 pull 2 pull square scaleVec 8 pull 8 pull 5 pull 5 pull 2 * * scaleVec addVec 4 push 4 push square scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurveVel",
+            "definition": "dup dup 1 - 8 pull 8 pull 2 pull scaleVec 7 pull 7 pull 1 5 pull 2 * - scaleVec addVec 4 push 4 push scaleVec addVec 2 scaleVec"
+        },
+        {
+            "name": "ellipseCenter",
+            "definition": "4 push 4 push drop drop drop"
+        },
+        {
+            "name": "ellipseCenterX",
+            "definition": "ellipseCenter drop"
+        },
+        {
+            "name": "ellipseCenterY",
+            "definition": "ellipseCenter 1 pull drop"
+        },
+        {
+            "name": "ellipseCurvePos",
+            "definition": "circle 6 pull 6 pull multiplyVec 4 pull toRadians rotateVec addVec"
+        },
+        {
+            "name": "ellipseCurveVel",
+            "definition": "2 push drop drop circle perp 4 pull 4 pull multiplyVec 2 pull toRadians rotateVec"
+        },
+        {
+            "name": "ellipseTest",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+        },
+        {
+            "name": "toInnerEllipse",
+            "definition": "4 pull 3 - 4 push 3 pull 1.5 - 3 push 2 pull drop -20 2 push"
+        },
+        {
+            "name": "ellipseShrink",
+            "definition": "4 pull 6 - 4 push 3 pull 6 - 3 push"
+        },
+        {
+            "name": "largeOuterArc",
+            "definition": "24 24 0 0 0"
+        },
+        {
+            "name": "largeInnerArc",
+            "definition": "largeOuterArc toInnerEllipse"
+        },
+        {
+            "name": "mediumOuterArc",
+            "definition": "largeOuterArc ellipseShrink"
+        },
+        {
+            "name": "mediumInnerArc",
+            "definition": "mediumOuterArc toInnerEllipse"
+        },
+        {
+            "name": "smallOuterArc",
+            "definition": "mediumOuterArc ellipseShrink"
+        },
+        {
+            "name": "smallInnerArc",
+            "definition": "smallOuterArc toInnerEllipse"
+        },
+        {
+            "name": "serifOffsetY",
+            "definition": "4"
+        },
+        {
+            "name": "arcSerifControlLength",
+            "definition": "2"
+        },
+        {
+            "name": "arcSerifTip",
+            "definition": "-3 3"
+        },
+        {
+            "name": "arcOuterBottomLine",
+            "definition": "0 largeOuterArc ellipseCenterY serifOffsetY + dup 1 1 push"
+        },
+        {
+            "name": "arcInnerBottomLine",
+            "definition": "0 largeOuterArc ellipseCenterY serifOffsetY + arcSerifTip 1 push drop + dup 1 1 push"
+        },
+        {
+            "name": "starTransform",
+            "definition": "TAU 6 / * rotateVec largeOuterArc ellipseCenter addVec"
+        },
+        {
+            "name": "starRoot",
+            "definition": "TAU 6 / circle 2 scaleVec"
+        },
+        {
+            "name": "starTip",
+            "definition": "starRoot 0.5 5 addVec"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["largeOuterArcLeftX"],
+            "assertions": [
+                "largeOuterArc arcOuterBottomLine largeOuterArcLeftX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "largeOuterArcLeftX"
+            ]
+        },
+        {
+            "variables": ["largeOuterArcRightX"],
+            "assertions": [
+                "largeOuterArc arcOuterBottomLine largeOuterArcRightX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "largeOuterArcRightX _"
+            ]
+        },
+        {
+            "variables": ["largeInnerArcLeftX"],
+            "assertions": [
+                "largeInnerArc arcInnerBottomLine largeInnerArcLeftX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "largeInnerArcLeftX"
+            ]
+        },
+        {
+            "variables": ["largeInnerArcRightX"],
+            "assertions": [
+                "largeInnerArc arcInnerBottomLine largeInnerArcRightX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "largeInnerArcRightX _"
+            ]
+        },
+        {
+            "variables": ["mediumOuterArcLeftX"],
+            "assertions": [
+                "mediumOuterArc arcOuterBottomLine mediumOuterArcLeftX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "mediumOuterArcLeftX"
+            ]
+        },
+        {
+            "variables": ["mediumOuterArcRightX"],
+            "assertions": [
+                "mediumOuterArc arcOuterBottomLine mediumOuterArcRightX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "mediumOuterArcRightX _"
+            ]
+        },
+        {
+            "variables": ["mediumInnerArcLeftX"],
+            "assertions": [
+                "mediumInnerArc arcInnerBottomLine mediumInnerArcLeftX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "mediumInnerArcLeftX"
+            ]
+        },
+        {
+            "variables": ["mediumInnerArcRightX"],
+            "assertions": [
+                "mediumInnerArc arcInnerBottomLine mediumInnerArcRightX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "mediumInnerArcRightX _"
+            ]
+        },
+
+        {
+            "variables": ["smallOuterArcLeftX"],
+            "assertions": [
+                "smallOuterArc arcOuterBottomLine smallOuterArcLeftX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "smallOuterArcLeftX"
+            ]
+        },
+        {
+            "variables": ["smallOuterArcRightX"],
+            "assertions": [
+                "smallOuterArc arcOuterBottomLine smallOuterArcRightX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "smallOuterArcRightX _"
+            ]
+        },
+        {
+            "variables": ["smallInnerArcLeftX"],
+            "assertions": [
+                "smallInnerArc arcInnerBottomLine smallInnerArcLeftX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "smallInnerArcLeftX"
+            ]
+        },
+        {
+            "variables": ["smallInnerArcRightX"],
+            "assertions": [
+                "smallInnerArc arcInnerBottomLine smallInnerArcRightX lerpVec ellipseTest "
+            ],
+            "restrictions": [
+                "smallInnerArcRightX _"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "arcOuterBottomLine largeOuterArcLeftX lerpVec arcSerifTip addVec"
+        },
+        {
+            "type": "Q",
+            "params": "arcOuterBottomLine largeOuterArcLeftX lerpVec dupVec dupVec perp normalize arcSerifControlLength _ scaleVec addVec 3 pull 3 pull"
+        },
+        {
+            "type": "A",
+            "params": "largeOuterArc drop drop 1 1 arcOuterBottomLine largeOuterArcRightX lerpVec"
+        },
+        {
+            "type": "Q",
+            "params": "arcOuterBottomLine largeOuterArcRightX lerpVec dupVec dupVec perp normalize arcSerifControlLength scaleVec addVec 3 pull 3 pull arcSerifTip mirrorX addVec"
+        },
+        {
+            "type": "H",
+            "params": "arcInnerBottomLine largeInnerArcRightX lerpVec drop"
+        },
+        {
+            "type": "A",
+            "params": "largeInnerArc drop drop 1 0 arcInnerBottomLine largeInnerArcLeftX lerpVec"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "arcOuterBottomLine mediumOuterArcLeftX lerpVec arcSerifTip addVec"
+        },
+        {
+            "type": "Q",
+            "params": "arcOuterBottomLine mediumOuterArcLeftX lerpVec dupVec dupVec perp normalize arcSerifControlLength _ scaleVec addVec 3 pull 3 pull"
+        },
+        {
+            "type": "A",
+            "params": "mediumOuterArc drop drop 1 1 arcOuterBottomLine mediumOuterArcRightX lerpVec"
+        },
+        {
+            "type": "Q",
+            "params": "arcOuterBottomLine mediumOuterArcRightX lerpVec dupVec dupVec perp normalize arcSerifControlLength scaleVec addVec 3 pull 3 pull arcSerifTip mirrorX addVec"
+        },
+        {
+            "type": "H",
+            "params": "arcInnerBottomLine mediumInnerArcRightX lerpVec drop"
+        },
+        {
+            "type": "A",
+            "params": "mediumInnerArc drop drop 1 0 arcInnerBottomLine mediumInnerArcLeftX lerpVec"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "arcOuterBottomLine smallOuterArcLeftX lerpVec arcSerifTip addVec"
+        },
+        {
+            "type": "Q",
+            "params": "arcOuterBottomLine smallOuterArcLeftX lerpVec dupVec dupVec perp normalize arcSerifControlLength _ scaleVec addVec 3 pull 3 pull"
+        },
+        {
+            "type": "A",
+            "params": "smallOuterArc drop drop 1 1 arcOuterBottomLine smallOuterArcRightX lerpVec"
+        },
+        {
+            "type": "Q",
+            "params": "arcOuterBottomLine smallOuterArcRightX lerpVec dupVec dupVec perp normalize arcSerifControlLength scaleVec addVec 3 pull 3 pull arcSerifTip mirrorX addVec"
+        },
+        {
+            "type": "H",
+            "params": "arcInnerBottomLine smallInnerArcRightX lerpVec drop"
+        },
+        {
+            "type": "A",
+            "params": "smallInnerArc drop drop 1 0 arcInnerBottomLine smallInnerArcLeftX lerpVec"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "starRoot 0 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip 0 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip mirrorX 0 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starRoot 1 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip 1 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip mirrorX 1 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starRoot 2 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip 2 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip mirrorX 2 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starRoot 3 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip 3 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip mirrorX 3 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starRoot 4 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip 4 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip mirrorX 4 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starRoot 5 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip 5 starTransform"
+        },
+        {
+            "type": "L",
+            "params": "starTip mirrorX 5 starTransform"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "0.7 0 0 0.7 0 0 1 0 0 1 0 mediumOuterArc drop drop drop drop serifOffsetY arcSerifTip 1 push drop + - 2 / multiplyMat",
+    "export": true
+}

@@ -17,4 +17,4 @@ class curve_data:
         self.discrete_params = [*self.params]
 
     def __str__(self) -> str:
-        return self.command + " " + " ".join([f"{p:z.4g}" if type(p) == float else str(p) for p in self.params])
+        return self.command + " " + " ".join([f"{round(p, 4):z.4g}" if type(p) == float else str(p) for p in self.params])

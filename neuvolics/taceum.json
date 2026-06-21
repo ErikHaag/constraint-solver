@@ -134,7 +134,7 @@
         },
         {
             "name": "triangleTopY",
-            "definition": "leftOuterEllipseData ellipseCenterY"
+            "definition": "leftOuterEllipseData ellipseCenterY 0.5 -"
         },
         {
             "name": "leftInnerEllipseData",
@@ -154,7 +154,7 @@
         },
         {
             "name": "hollowBeamWidth",
-            "definition": "1.25"
+            "definition": "1.5"
         },
         {
             "name": "leftSideWidth",
@@ -162,7 +162,7 @@
         },
         {
             "name": "rightSideWidth",
-            "definition": "4"
+            "definition": "3.5"
         },
         {
             "name": "bottomSideWidth",
@@ -301,6 +301,6 @@
             "params": ""
         }
     ],
-    "transform": "0.6 0 0 0.6 0 0",
+    "transform": "0.75 0 0 0.75 0 0",
     "export": true
 }

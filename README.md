@@ -1,0 +1,3 @@
+This repository has custom build and debug tasks.  
+To use these, open this repository as the base workspace, then open any properly schemed .json file, and do CTRL+Shift+B. depending on how many constraints must be evaluated, this could take a minute to evaluate.  
+Don't worry all the results are cached to a file, so modifications will only re-evaluate constraints that depend on said modified values.

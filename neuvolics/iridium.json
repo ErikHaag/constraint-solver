@@ -23,6 +23,10 @@
             "definition": "1 + dup pull dup 2 pull push"
         },
         {
+            "name": "divideVec",
+            "definition": "3 pull 2 pull / 2 push /"
+        },
+        {
             "name": "dot",
             "definition": "2 pull * 2 push * +"
         },
@@ -129,20 +133,24 @@
             "definition": "2 push drop drop circle perp 4 pull 4 pull multiplyVec 2 pull toRadians rotateVec"
         },
         {
+            "name": "ellipseCurveVelFromPos",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull toRadians dup 5 push _ rotateVec 3 distDup 3 distDup divideVec perp multiplyVec 2 pull rotateVec"
+        },
+        {
             "name": "ellipseTest",
             "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
         },
         {
             "name": "toInnerEllipse",
-            "definition": "4 pull 3 - 4 push 3 pull 1.5 - 3 push 2 pull drop -20 2 push"
+            "definition": "4 pull 3 - 4 push 3 pull 2 - 3 push 2 pull drop -20 2 push"
         },
         {
             "name": "ellipseShrink",
-            "definition": "4 pull 6 - 4 push 3 pull 6 - 3 push"
+            "definition": "4 pull 7 - 4 push 3 pull 7 - 3 push 3 -"
         },
         {
             "name": "largeOuterArc",
-            "definition": "24 24 0 0 0"
+            "definition": "27 30 0 0 -3"
         },
         {
             "name": "largeInnerArc",
@@ -186,7 +194,7 @@
         },
         {
             "name": "starTransform",
-            "definition": "TAU 6 / * rotateVec largeOuterArc ellipseCenter addVec"
+            "definition": "TAU 6 / * rotateVec smallOuterArc ellipseCenter addVec"
         },
         {
             "name": "starRoot",
@@ -319,7 +327,7 @@
         },
         {
             "type": "Q",
-            "params": "arcOuterBottomLine largeOuterArcLeftX lerpVec dupVec dupVec perp normalize arcSerifControlLength _ scaleVec addVec 3 pull 3 pull"
+            "params": "arcOuterBottomLine largeOuterArcLeftX lerpVec dupVec dupVec largeOuterArc 6 pull 6 pull ellipseCurveVelFromPos normalize arcSerifControlLength _ scaleVec addVec 3 pull 3 pull"
         },
         {
             "type": "A",
@@ -327,7 +335,7 @@
         },
         {
             "type": "Q",
-            "params": "arcOuterBottomLine largeOuterArcRightX lerpVec dupVec dupVec perp normalize arcSerifControlLength scaleVec addVec 3 pull 3 pull arcSerifTip mirrorX addVec"
+            "params": "arcOuterBottomLine largeOuterArcRightX lerpVec dupVec dupVec largeOuterArc 6 pull 6 pull ellipseCurveVelFromPos normalize arcSerifControlLength scaleVec addVec 3 pull 3 pull arcSerifTip mirrorX addVec"
         },
         {
             "type": "H",
@@ -347,7 +355,7 @@
         },
         {
             "type": "Q",
-            "params": "arcOuterBottomLine mediumOuterArcLeftX lerpVec dupVec dupVec perp normalize arcSerifControlLength _ scaleVec addVec 3 pull 3 pull"
+            "params": "arcOuterBottomLine mediumOuterArcLeftX lerpVec dupVec dupVec mediumOuterArc 6 pull 6 pull ellipseCurveVelFromPos normalize arcSerifControlLength _ scaleVec addVec 3 pull 3 pull"
         },
         {
             "type": "A",
@@ -355,7 +363,7 @@
         },
         {
             "type": "Q",
-            "params": "arcOuterBottomLine mediumOuterArcRightX lerpVec dupVec dupVec perp normalize arcSerifControlLength scaleVec addVec 3 pull 3 pull arcSerifTip mirrorX addVec"
+            "params": "arcOuterBottomLine mediumOuterArcRightX lerpVec dupVec dupVec mediumOuterArc 6 pull 6 pull ellipseCurveVelFromPos normalize arcSerifControlLength scaleVec addVec 3 pull 3 pull arcSerifTip mirrorX addVec"
         },
         {
             "type": "H",
@@ -375,7 +383,7 @@
         },
         {
             "type": "Q",
-            "params": "arcOuterBottomLine smallOuterArcLeftX lerpVec dupVec dupVec perp normalize arcSerifControlLength _ scaleVec addVec 3 pull 3 pull"
+            "params": "arcOuterBottomLine smallOuterArcLeftX lerpVec dupVec dupVec smallOuterArc 6 pull 6 pull ellipseCurveVelFromPos normalize arcSerifControlLength _ scaleVec addVec 3 pull 3 pull"
         },
         {
             "type": "A",
@@ -383,7 +391,7 @@
         },
         {
             "type": "Q",
-            "params": "arcOuterBottomLine smallOuterArcRightX lerpVec dupVec dupVec perp normalize arcSerifControlLength scaleVec addVec 3 pull 3 pull arcSerifTip mirrorX addVec"
+            "params": "arcOuterBottomLine smallOuterArcRightX lerpVec dupVec dupVec smallOuterArc 6 pull 6 pull ellipseCurveVelFromPos normalize arcSerifControlLength scaleVec addVec 3 pull 3 pull arcSerifTip mirrorX addVec"
         },
         {
             "type": "H",
@@ -474,6 +482,6 @@
             "params": ""
         }
     ],
-    "transform": "0.7 0 0 0.7 0 0 1 0 0 1 0 mediumOuterArc drop drop drop drop serifOffsetY arcSerifTip 1 push drop + - 2 / multiplyMat",
+    "transform": "0.7 0 0 0.7 0 0 1 0 0 1 0 mediumOuterArc drop drop drop 1 push drop serifOffsetY arcSerifTip 1 push drop + - 2 / multiplyMat",
     "export": true
 }

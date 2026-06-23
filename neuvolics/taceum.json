@@ -153,10 +153,6 @@
             "definition": "30"
         },
         {
-            "name": "hollowBeamWidth",
-            "definition": "1.5"
-        },
-        {
             "name": "leftSideWidth",
             "definition": "2"
         },
@@ -197,42 +193,6 @@
             "restrictions": [
                 "triangleRightPeekT _"
             ]
-        },
-        {
-            "variables": ["leftInnerBottomX"],
-            "assertions": [
-                "leftInnerEllipseData leftInnerBottomX triangleTopY hollowBeamWidth + ellipseTest"
-            ],
-            "restrictions": [
-                "leftInnerEllipseData ellipseCenterX leftInnerBottomX -"
-            ]
-        },
-        {
-            "variables": ["leftInnerTopX"],
-            "assertions": [
-                "leftInnerEllipseData leftInnerTopX triangleTopY hollowBeamWidth - ellipseTest"
-            ],
-            "restrictions": [
-                "leftInnerEllipseData ellipseCenterX leftInnerTopX -"
-            ]
-        },
-        {
-            "variables": ["rightInnerBottomX"],
-            "assertions": [
-                "rightInnerEllipseData rightInnerBottomX triangleTopY hollowBeamWidth + ellipseTest"
-            ],
-            "restrictions": [
-                "rightInnerBottomX rightInnerEllipseData ellipseCenterX -"
-            ]
-        },
-        {
-            "variables": ["rightInnerTopX"],
-            "assertions": [
-                "rightInnerEllipseData rightInnerTopX triangleTopY hollowBeamWidth - ellipseTest"
-            ],
-            "restrictions": [
-                "rightInnerTopX rightInnerEllipseData ellipseCenterX -"
-            ]
         }
     ],
     "minX": -30,
@@ -266,19 +226,31 @@
         },
         {
             "type": "M",
-            "params": "leftInnerBottomX triangleTopY hollowBeamWidth +"
+            "params": "leftInnerEllipseData 0 ellipseCurvePos"
         },
         {
             "type": "A",
-            "params": "leftInnerEllipseData drop drop 1 1 leftInnerTopX triangleTopY hollowBeamWidth -"
-        },
-        {
-            "type": "H",
-            "params": "rightInnerTopX"
+            "params": "leftInnerEllipseData drop drop 0 1 leftInnerEllipseData TAU 2 / ellipseCurvePos"
         },
         {
             "type": "A",
-            "params": "rightInnerEllipseData drop drop 1 1 rightInnerBottomX triangleTopY hollowBeamWidth +"
+            "params": "leftInnerEllipseData drop drop 0 1 leftInnerEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "rightInnerEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "rightInnerEllipseData drop drop 0 1 rightInnerEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "rightInnerEllipseData drop drop 0 1 rightInnerEllipseData 0 ellipseCurvePos"
         },
         {
             "type": "Z",

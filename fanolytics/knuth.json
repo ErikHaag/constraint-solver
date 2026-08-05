@@ -1,0 +1,266 @@
+{
+    "output": "knuth_symbol",
+    "dump": "dump",
+    "definitions": [
+        {
+            "name": "TAU",
+            "definition": "0 1 atan 4 *"
+        },
+        {
+            "name": "abs",
+            "definition": "dup 0 compare *"
+        },
+        {
+            "name": "addVec",
+            "definition": "3 pull 2 pull + 2 push +"
+        },
+        {
+            "name": "circle",
+            "definition": "dup cos 1 pull sin"
+        },
+        {
+            "name": "distDup",
+            "definition": "1 + dup pull dup 2 pull push"
+        },
+        {
+            "name": "dot",
+            "definition": "2 pull * 2 push * +"
+        },
+        {
+            "name": "dupVec",
+            "definition": "dup 2 pull dup 3 push 1 push"
+        },
+        {
+            "name": "lerp",
+            "definition": "1 pull 2 pull dup 3 push - * +"
+        },
+        {
+            "name": "min",
+            "definition": "dupVec compare dup dup * + 2 / lerp"
+        },
+        {
+            "name": "multiplyMat",
+            "definition": "5 pull 5 pull dupVec 13 distDup 12 distDup dot 12 push 10 distDup 9 distDup dot 10 push 3 pull 3 pull dupVec 11 distDup 10 distDup dot 10 push 8 distDup 7 distDup dot 8 push dupVec 9 pull 8 pull dot 6 push 5 pull 5 pull dot 2 push addVec"
+        },
+        {
+            "name": "multiplyVec",
+            "definition": "3 pull 2 pull * 2 push *"
+        },
+        {
+            "name": "normalize",
+            "definition": "atan circle"
+        },
+        {
+            "name": "perp",
+            "definition": "_ 1 pull"
+        },
+        {
+            "name": "scaleVec",
+            "definition": "dup 2 pull * 2 push * 1 pull"
+        },
+        {
+            "name": "square",
+            "definition": "dup *"
+        },
+        {
+            "name": "squareMag",
+            "definition": "dupVec dot"
+        },
+        {
+            "name": "toDegrees",
+            "definition": "360 TAU / *"
+        },
+        {
+            "name": "toRadians",
+            "definition": "TAU 360 / *"
+        },
+
+
+        {
+            "name": "lineTest",
+            "definition": "5 pull 5 pull -1 scaleVec dupVec 7 pull 7 pull addVec perp 5 push 5 push addVec dot"
+        },
+        {
+            "name": "lineLineIntersection",
+            "definition": "7 distDup 6 distDup _ 6 distDup 9 distDup dot 4 distDup 3 distDup _ 3 distDup 6 distDup dot dupVec 7 distDup 6 distDup - 10 distDup 13 distDup - dot 2 push 5 distDup 4 distDup - 8 distDup 11 distDup - dot 9 pull 8 pull - 6 pull 5 pull - 5 pull 5 pull - 5 pull 6 pull - dot dup 3 pull 1 pull / 2 push /"
+        },
+        {
+            "name": "mag",
+            "definition": "squareMag sqrt"
+        },
+        {
+            "name": "rotateVec",
+            "definition": "circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurvePos",
+            "definition": "dup dup _ 1 + dup 9 pull 9 pull 2 pull square scaleVec 8 pull 8 pull 5 pull 5 pull 2 * * scaleVec addVec 4 push 4 push square scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurveVel",
+            "definition": "dup dup 1 - 8 pull 8 pull 2 pull scaleVec 7 pull 7 pull 1 5 pull 2 * - scaleVec addVec 4 push 4 push scaleVec addVec 2 scaleVec"
+        },
+        {
+            "name": "ellipseCenter",
+            "definition": "4 push 4 push drop drop drop"
+        },
+        {
+            "name": "ellipseCenterX",
+            "definition": "ellipseCenter drop"
+        },
+        {
+            "name": "ellipseCenterY",
+            "definition": "ellipseCenter 1 pull drop"
+        },
+        {
+            "name": "ellipseCurvePos",
+            "definition": "circle 6 pull 6 pull multiplyVec 4 pull toRadians rotateVec addVec"
+        },
+        {
+            "name": "ellipseCurveVel",
+            "definition": "2 push drop drop circle perp 4 pull 4 pull multiplyVec 2 pull toRadians rotateVec"
+        },
+        {
+            "name": "ellipseTest",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+        },
+        {
+            "name": "turnedAs",
+            "definition": "3 distDup 3 distDup 3 pull scaleVec 4 pull 4 pull perp 4 pull scaleVec addVec"
+        },
+
+        {
+            "name": "sideLength",
+            "definition": "30"
+        },
+        {
+            "name": "longScale",
+            "definition": "3 sqrt 3 /"
+        },
+        {
+            "name": "shortScale",
+            "definition": "longScale -2 /"
+        },
+        {
+            "name": "serifWidth",
+            "definition": "3.5"
+        },
+        {
+            "name": "serifFootHeight",
+            "definition": "0.75"
+        },
+        {
+            "name": "serifHeight",
+            "definition": "4"
+        },
+        {
+            "name": "towardsVertical",
+            "definition": "0 -1"
+        },
+        {
+            "name": "towardsLeft",
+            "definition": "TAU 3 4 / 1 3 / - * circle"
+        },
+        {
+            "name": "towardsRight",
+            "definition": "towardsLeft 1 pull _ 1 pull"
+        },
+        {
+            "name": "verticalCenterWidth",
+            "definition": "2.5"
+        },
+        {
+            "name": "leftSideWidth",
+            "definition": "1"
+        },
+        {
+            "name": "leftCenterWidth",
+            "definition": "1.5"
+        },
+        {
+            "name": "bottomSideWidth",
+            "definition": "1.75"
+        },
+        {
+            "name": "rightCenterWidth",
+            "definition": "2"
+        },
+        {
+            "name": "rightSideWidth",
+            "definition": "3.5"
+        },
+        {
+            "name": "outerEllipseData",
+            "definition": "sideLength shortScale _ * dup 0 0 0"
+        },
+        {
+            "name": "innerEllipseData",
+            "definition":"sideLength shortScale _ * dup -2.5 -1 addVec -20 0 0"
+        }
+    ],
+    "constraints": [],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "0 rightCenterWidth 2 / towardsRight turnedAs dupVec towardsRight addVec towardsVertical bottomSideWidth 2 / scaleVec dupVec towardsVertical perp addVec lineLineIntersection towardsRight sideLength longScale * scaleVec addVec"
+        },
+        {
+            "type": "L",
+            "params": "sideLength shortScale * serifHeight + rightCenterWidth 2 / towardsRight turnedAs"
+        },
+        {
+            "type": "q",
+            "params": "towardsRight serifFootHeight serifHeight - scaleVec dupVec towardsRight perp serifWidth scaleVec addVec"
+        },
+        {
+            "type": "l",
+            "params": "towardsRight serifFootHeight _ scaleVec"
+        },
+        {
+            "type": "L",
+            "params": "sideLength shortScale * rightCenterWidth -2 / serifWidth - towardsRight turnedAs"
+        },
+        {
+            "type": "l",
+            "params": "towardsRight serifFootHeight scaleVec"
+        },
+        {
+            "type": "q",
+            "params": "towardsRight perp serifWidth scaleVec dupVec towardsRight serifHeight serifFootHeight - scaleVec addVec"
+        }   ,
+        {
+            "type": "L",
+            "params": "0 rightCenterWidth -2 / towardsRight turnedAs dupVec towardsRight addVec towardsLeft rightSideWidth 2 / scaleVec dupVec towardsLeft perp addVec lineLineIntersection towardsRight sideLength longScale * scaleVec addVec"
+        },
+        {
+            "type": "L",
+            "params": "sideLength shortScale * rightSideWidth 2 / + sideLength 2 / towardsLeft turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "sideLength shortScale * rightSideWidth 2 / - sideLength 2 / towardsLeft turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "towardsLeft sideLength shortScale * rightSideWidth 2 / - scaleVec dupVec towardsLeft perp addVec towardsVertical sideLength shortScale * bottomSideWidth 2 / - scaleVec dupVec towardsVertical perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "sideLength shortScale * bottomSideWidth 2 / - sideLength -2 / towardsVertical turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "sideLength shortScale * bottomSideWidth 2 / + sideLength -2 / towardsVertical turnedAs"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": true
+}

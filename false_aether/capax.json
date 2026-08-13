@@ -1,0 +1,418 @@
+{
+    "output": "capax_symbol",
+    "dump": "dump",
+    "definitions": [
+        {
+            "name": "TAU",
+            "definition": "0 1 atan 4 *"
+        },
+        {
+            "name": "abs",
+            "definition": "dup 0 compare *"
+        },
+        {
+            "name": "addVec",
+            "definition": "3 pull 2 pull + 2 push +"
+        },
+        {
+            "name": "circle",
+            "definition": "dup cos 1 pull sin"
+        },
+        {
+            "name": "distDup",
+            "definition": "1 + dup pull dup 2 pull push"
+        },
+        {
+            "name": "dot",
+            "definition": "2 pull * 2 push * +"
+        },
+        {
+            "name": "dupVec",
+            "definition": "dup 2 pull dup 3 push 1 push"
+        },
+        {
+            "name": "lerp",
+            "definition": "1 pull 2 pull dup 3 push - * +"
+        },
+        {
+            "name": "min",
+            "definition": "dupVec compare dup dup * + 2 / lerp"
+        },
+        {
+            "name": "multiplyMat",
+            "definition": "5 pull 5 pull dupVec 13 distDup 12 distDup dot 12 push 10 distDup 9 distDup dot 10 push 3 pull 3 pull dupVec 11 distDup 10 distDup dot 10 push 8 distDup 7 distDup dot 8 push dupVec 9 pull 8 pull dot 6 push 5 pull 5 pull dot 2 push addVec"
+        },
+        {
+            "name": "multiplyVec",
+            "definition": "3 pull 2 pull * 2 push *"
+        },
+        {
+            "name": "normalize",
+            "definition": "atan circle"
+        },
+        {
+            "name": "perp",
+            "definition": "_ 1 pull"
+        },
+        {
+            "name": "scaleVec",
+            "definition": "dup 2 pull * 2 push * 1 pull"
+        },
+        {
+            "name": "square",
+            "definition": "dup *"
+        },
+        {
+            "name": "squareMag",
+            "definition": "dupVec dot"
+        },
+        {
+            "name": "toDegrees",
+            "definition": "360 TAU / *"
+        },
+        {
+            "name": "toRadians",
+            "definition": "TAU 360 / *"
+        },
+
+
+        {
+            "name": "lineTest",
+            "definition": "5 pull 5 pull -1 scaleVec dupVec 7 pull 7 pull addVec perp 5 push 5 push addVec dot"
+        },
+        {
+            "name": "lineLineIntersection",
+            "definition": "7 distDup 6 distDup _ 6 distDup 9 distDup dot 4 distDup 3 distDup _ 3 distDup 6 distDup dot dupVec 7 distDup 6 distDup - 10 distDup 13 distDup - dot 2 push 5 distDup 4 distDup - 8 distDup 11 distDup - dot 9 pull 8 pull - 6 pull 5 pull - 5 pull 5 pull - 5 pull 6 pull - dot dup 3 pull 1 pull / 2 push /"
+        },
+        {
+            "name": "mag",
+            "definition": "squareMag sqrt"
+        },
+        {
+            "name": "rotateVec",
+            "definition": "circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurvePos",
+            "definition": "dup dup _ 1 + dup 9 pull 9 pull 2 pull square scaleVec 8 pull 8 pull 5 pull 5 pull 2 * * scaleVec addVec 4 push 4 push square scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurveVel",
+            "definition": "dup dup 1 - 8 pull 8 pull 2 pull scaleVec 7 pull 7 pull 1 5 pull 2 * - scaleVec addVec 4 push 4 push scaleVec addVec 2 scaleVec"
+        },
+        {
+            "name": "ellipseCenter",
+            "definition": "4 push 4 push drop drop drop"
+        },
+        {
+            "name": "ellipseCenterX",
+            "definition": "ellipseCenter drop"
+        },
+        {
+            "name": "ellipseCenterY",
+            "definition": "ellipseCenter 1 pull drop"
+        },
+        {
+            "name": "ellipseCurvePos",
+            "definition": "circle 6 pull 6 pull multiplyVec 4 pull toRadians rotateVec addVec"
+        },
+        {
+            "name": "ellipseCurveVel",
+            "definition": "2 push drop drop circle perp 4 pull 4 pull multiplyVec 2 pull toRadians rotateVec"
+        },
+        {
+            "name": "ellipseTest",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+        },
+        {
+            "name": "turnedAs",
+            "definition": "3 distDup 3 distDup 3 pull scaleVec 4 pull 4 pull perp 4 pull scaleVec addVec"
+        },
+
+        {
+            "name": "UpperEyelidOuterEllipseData",
+            "definition": "15 10 0 0 5"
+        },
+        {
+            "name": "UpperEyelidInnerEllipseData",
+            "definition": "12 8.5 20 0 5"
+        },
+        {
+            "name": "LowerEyelidOuterEllipseData",
+            "definition": "15 10 0 0 -5"
+        },
+        {
+            "name": "LowerEyelidInnerEllipseData",
+            "definition": "12 8.5 20 0 -5"
+        },
+        {
+            "name": "LeftSideWidth",
+            "definition": "1"
+        },
+        {
+            "name": "RightSideWidth",
+            "definition": "3.5"
+        },
+        {
+            "name": "TrianglePeak",
+            "definition": "-15"
+        },
+        {
+            "name": "TriangleSideLength",
+            "definition": "25"
+        },
+        {
+            "name": "LeftSideTangent",
+            "definition": "TAU 3 / circle"
+        },
+        {
+            "name": "RightSideTangent",
+            "definition": "TAU 6 / circle"
+        },
+        {
+            "name": "centerStrokeWidth",
+            "definition": "3"
+        },
+        {
+            "name": "stemBottom",
+            "definition": "25"
+        },
+        {
+            "name": "footerWidth",
+            "definition": "4"
+        },
+        {
+            "name": "footerHeight",
+            "definition": "1.5"
+        },
+        {
+            "name": "CircletOuterEllipseData",
+            "definition": "5 5 0 0 LowerEyelidOuterCenterCollisionY stemBottom + 2 /"
+        },
+        {
+            "name": "CircletInnerEllipseData",
+            "definition": "3.5 4 -20 0 LowerEyelidOuterCenterCollisionY stemBottom + 2 /"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["LowerEyelidOuterLeftLineCollisionX", "LowerEyelidOuterLeftLineCollisionY"],
+            "assertions": [
+                "LowerEyelidOuterEllipseData LowerEyelidOuterLeftLineCollisionX LowerEyelidOuterLeftLineCollisionY ellipseTest",
+                "LeftSideTangent perp LeftSideWidth -2 / scaleVec TrianglePeak + dupVec LeftSideTangent addVec LowerEyelidOuterLeftLineCollisionX LowerEyelidOuterLeftLineCollisionY lineTest"
+            ],
+            "restrictions": [
+                "LowerEyelidOuterLeftLineCollisionY _"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidOuterRightLineCollisionX", "LowerEyelidOuterRightLineCollisionY"],
+            "assertions": [
+                "LowerEyelidOuterEllipseData LowerEyelidOuterRightLineCollisionX LowerEyelidOuterRightLineCollisionY ellipseTest",
+                "RightSideTangent perp RightSideWidth 2 / scaleVec TrianglePeak + dupVec RightSideTangent addVec LowerEyelidOuterRightLineCollisionX LowerEyelidOuterRightLineCollisionY lineTest"
+            ],
+            "restrictions": [
+                "LowerEyelidOuterRightLineCollisionY _"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidInnerLeftLineCollisionX", "LowerEyelidInnerLeftLineCollisionY"],
+            "assertions": [
+                "LowerEyelidInnerEllipseData LowerEyelidInnerLeftLineCollisionX LowerEyelidInnerLeftLineCollisionY ellipseTest",
+                "LeftSideTangent perp LeftSideWidth -2 / scaleVec TrianglePeak + dupVec LeftSideTangent addVec LowerEyelidInnerLeftLineCollisionX LowerEyelidInnerLeftLineCollisionY lineTest"
+            ],
+            "restrictions": [
+                "LowerEyelidInnerLeftLineCollisionY _"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidInnerRightLineCollisionX", "LowerEyelidInnerRightLineCollisionY"],
+            "assertions": [
+                "LowerEyelidInnerEllipseData LowerEyelidInnerRightLineCollisionX LowerEyelidInnerRightLineCollisionY ellipseTest",
+                "RightSideTangent perp RightSideWidth 2 / scaleVec TrianglePeak + dupVec RightSideTangent addVec LowerEyelidInnerRightLineCollisionX LowerEyelidInnerRightLineCollisionY lineTest"
+            ],
+            "restrictions": [
+                "LowerEyelidInnerRightLineCollisionY _"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidOuterCenterLeftCollisionY"],
+            "assertions": [
+                "LowerEyelidOuterEllipseData centerStrokeWidth -2 / LowerEyelidOuterCenterLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "LowerEyelidOuterCenterLeftCollisionY _"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidOuterCenterCollisionY"],
+            "assertions": [
+                "LowerEyelidOuterEllipseData 0 LowerEyelidOuterCenterCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "LowerEyelidOuterCenterCollisionY _"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidOuterCenterRightCollisionY"],
+            "assertions": [
+                "LowerEyelidOuterEllipseData centerStrokeWidth 2 / LowerEyelidOuterCenterRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "LowerEyelidOuterCenterRightCollisionY _"
+            ]
+        },
+        {
+            "variables": ["CircletOuterCenterTopLeftCollisionY"],
+            "assertions": [
+                "CircletOuterEllipseData centerStrokeWidth -2 / CircletOuterCenterTopLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "CircletOuterCenterTopLeftCollisionY LowerEyelidOuterCenterCollisionY stemBottom + 2 / -"
+            ]
+        },
+        {
+            "variables": ["CircletOuterCenterTopRightCollisionY"],
+            "assertions": [
+                "CircletOuterEllipseData centerStrokeWidth 2 / CircletOuterCenterTopRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "CircletOuterCenterTopRightCollisionY LowerEyelidOuterCenterCollisionY stemBottom + 2 / -"
+            ]
+        },
+        {
+            "variables": ["CircletOuterCenterBottomLeftCollisionY"],
+            "assertions": [
+                "CircletOuterEllipseData centerStrokeWidth -2 / CircletOuterCenterBottomLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "LowerEyelidOuterCenterCollisionY stemBottom + 2 / CircletOuterCenterBottomLeftCollisionY -"
+            ]
+        },
+        {
+            "variables": ["CircletOuterCenterBottomRightCollisionY"],
+            "assertions": [
+                "CircletOuterEllipseData centerStrokeWidth 2 / CircletOuterCenterBottomRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "LowerEyelidOuterCenterCollisionY stemBottom + 2 / CircletOuterCenterBottomRightCollisionY -"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "LeftSideTangent perp LeftSideWidth 2 / scaleVec dupVec LeftSideTangent addVec RightSideTangent perp RightSideWidth -2 / scaleVec dupVec RightSideTangent addVec lineLineIntersection TrianglePeak +"
+        },
+        {
+            "type": "L",
+            "params": "TriangleSideLength LeftSideWidth 2 / LeftSideTangent turnedAs TrianglePeak +"
+        },
+        {
+            "type": "L",
+            "params": "TriangleSideLength LeftSideWidth -2 / LeftSideTangent turnedAs TrianglePeak +"
+        },
+        {
+            "type": "L",
+            "params": "LowerEyelidOuterLeftLineCollisionX LowerEyelidOuterLeftLineCollisionY"
+        },
+        {
+            "type":"A",
+            "params": "LowerEyelidOuterEllipseData drop drop 0 0 centerStrokeWidth -2 / LowerEyelidOuterCenterLeftCollisionY"
+        },
+        {
+            "type": "V",
+            "params": "CircletOuterCenterTopLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "CircletOuterEllipseData drop drop 0 0 centerStrokeWidth -2 / CircletOuterCenterBottomLeftCollisionY"
+        },
+        {
+            "type": "V",
+            "params": "stemBottom footerHeight -"
+        },
+        {
+            "type": "H",
+            "params": "footerWidth _"
+        },
+        {
+            "type": "V",
+            "params": "stemBottom"
+        },
+        {
+            "type": "H",
+            "params": "footerWidth"
+        },
+        {
+            "type": "V",
+            "params": "stemBottom footerHeight -"
+        },
+        {
+            "type": "H",
+            "params": "centerStrokeWidth 2 /"
+        },
+        {
+            "type": "V",
+            "params": "CircletOuterCenterBottomRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "CircletOuterEllipseData drop drop 0 0 centerStrokeWidth 2 / CircletOuterCenterTopLeftCollisionY"
+        },
+        {
+            "type": "V",
+            "params": "LowerEyelidOuterCenterRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "LowerEyelidOuterEllipseData drop drop 0 0 LowerEyelidOuterRightLineCollisionX LowerEyelidOuterRightLineCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "TriangleSideLength RightSideWidth 2 / RightSideTangent turnedAs TrianglePeak +"
+        },
+        {
+            "type": "L",
+            "params": "TriangleSideLength RightSideWidth -2 / RightSideTangent turnedAs TrianglePeak +"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "LeftSideTangent perp LeftSideWidth -2 / scaleVec dupVec LeftSideTangent addVec RightSideTangent perp RightSideWidth 2 / scaleVec dupVec RightSideTangent addVec lineLineIntersection TrianglePeak +"
+        },
+        {
+            "type": "L",
+            "params": "LowerEyelidInnerRightLineCollisionX LowerEyelidInnerRightLineCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "LowerEyelidInnerEllipseData drop drop 0 1 LowerEyelidInnerLeftLineCollisionX LowerEyelidInnerLeftLineCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "CircletInnerEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "CircletInnerEllipseData drop drop 0 1 CircletInnerEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "CircletInnerEllipseData drop drop 0 1 CircletInnerEllipseData 0 ellipseCurvePos"
+        }
+    ],
+    "transform": "1 0 0 1 0 LeftSideTangent perp LeftSideWidth 2 / scaleVec dupVec LeftSideTangent addVec RightSideTangent perp RightSideWidth -2 / scaleVec dupVec RightSideTangent addVec lineLineIntersection 1 pull drop TrianglePeak + stemBottom + -2 /",
+    "export": true
+}

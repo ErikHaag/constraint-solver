@@ -7,6 +7,7 @@ import random
 import statistics
 import sys
 from typing import Literal
+from timeit import default_timer as timer
 
 class InsuffientArguments(ArithmeticError):
     def __init__(self, *args: object) -> None:
@@ -318,6 +319,8 @@ dependency_data:list[dependency_data_model] = []
 
 dump_lines:list[str] = [f"Output results: {data.output}.svg"]
 
+contraint_index = 1
+
 reflect_const = 1
 expand_const = 2
 contract_const = 0.5
@@ -358,13 +361,16 @@ try:
                         raise last_exception # type: ignore
                     # end of iteration
                     break
+                print("looking at constraint #" + str(contraint_index))
                 (solution_found, best_solution) = load_previous_solution(next_constraint)
                 best_solution_result:constraint_result = constraint_result(0, 0, 0)
                 if not solution_found:
+                    print("starting...")
+                    stopwatch_start = timer()
                     # Nelder–Mead method
                     potential_solutions:list[list[float]] = []
                     potential_solutions_results:list[constraint_result] = []
-                    for _ in range(100):
+                    for _ in range(50):
                         variable_count = len(next_constraint.variables)
                         current_amoeba:list[list[float]] = [[random.uniform(-500, 500) for i in range(variable_count)]]
                         for i in range(variable_count):
@@ -433,8 +439,11 @@ try:
                     (potential_solutions_results, potential_solutions) = sort_evaluations(potential_solutions_results, potential_solutions)
                     best_solution = potential_solutions[0]
                     best_solution_result = potential_solutions_results[0]
+                    stopwatch_end = timer()
+                    print(f"took {stopwatch_end - stopwatch_start:2f} seconds")
                 else:
                     best_solution_result = evaluate_constraint_set(next_constraint, best_solution)
+                contraint_index += 1
                 if dumping:
                     for assertion in next_constraint.assertions:
                         dump_lines.append(f"{assertion} == 0")

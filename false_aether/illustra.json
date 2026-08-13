@@ -1,0 +1,407 @@
+{
+    "output": "illustra_symbol",
+    "dump": "dump",
+    "definitions": [
+        {
+            "name": "TAU",
+            "definition": "0 1 atan 4 *"
+        },
+        {
+            "name": "abs",
+            "definition": "dup 0 compare *"
+        },
+        {
+            "name": "addVec",
+            "definition": "3 pull 2 pull + 2 push +"
+        },
+        {
+            "name": "circle",
+            "definition": "dup cos 1 pull sin"
+        },
+        {
+            "name": "distDup",
+            "definition": "1 + dup pull dup 2 pull push"
+        },
+        {
+            "name": "dot",
+            "definition": "2 pull * 2 push * +"
+        },
+        {
+            "name": "dupVec",
+            "definition": "dup 2 pull dup 3 push 1 push"
+        },
+        {
+            "name": "lerp",
+            "definition": "1 pull 2 pull dup 3 push - * +"
+        },
+        {
+            "name": "min",
+            "definition": "dupVec compare dup dup * + 2 / lerp"
+        },
+        {
+            "name": "multiplyMat",
+            "definition": "5 pull 5 pull dupVec 13 distDup 12 distDup dot 12 push 10 distDup 9 distDup dot 10 push 3 pull 3 pull dupVec 11 distDup 10 distDup dot 10 push 8 distDup 7 distDup dot 8 push dupVec 9 pull 8 pull dot 6 push 5 pull 5 pull dot 2 push addVec"
+        },
+        {
+            "name": "multiplyVec",
+            "definition": "3 pull 2 pull * 2 push *"
+        },
+        {
+            "name": "normalize",
+            "definition": "atan circle"
+        },
+        {
+            "name": "perp",
+            "definition": "_ 1 pull"
+        },
+        {
+            "name": "scaleVec",
+            "definition": "dup 2 pull * 2 push * 1 pull"
+        },
+        {
+            "name": "square",
+            "definition": "dup *"
+        },
+        {
+            "name": "squareMag",
+            "definition": "dupVec dot"
+        },
+        {
+            "name": "toDegrees",
+            "definition": "360 TAU / *"
+        },
+        {
+            "name": "toRadians",
+            "definition": "TAU 360 / *"
+        },
+
+
+        {
+            "name": "lineTest",
+            "definition": "5 pull 5 pull -1 scaleVec dupVec 7 pull 7 pull addVec perp 5 push 5 push addVec dot"
+        },
+        {
+            "name": "lineLineIntersection",
+            "definition": "7 distDup 6 distDup _ 6 distDup 9 distDup dot 4 distDup 3 distDup _ 3 distDup 6 distDup dot dupVec 7 distDup 6 distDup - 10 distDup 13 distDup - dot 2 push 5 distDup 4 distDup - 8 distDup 11 distDup - dot 9 pull 8 pull - 6 pull 5 pull - 5 pull 5 pull - 5 pull 6 pull - dot dup 3 pull 1 pull / 2 push /"
+        },
+        {
+            "name": "mag",
+            "definition": "squareMag sqrt"
+        },
+        {
+            "name": "rotateVec",
+            "definition": "circle dupVec perp 4 pull scaleVec 4 push 4 push 2 pull scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurvePos",
+            "definition": "dup dup _ 1 + dup 9 pull 9 pull 2 pull square scaleVec 8 pull 8 pull 5 pull 5 pull 2 * * scaleVec addVec 4 push 4 push square scaleVec addVec"
+        },
+        {
+            "name": "quadraticCurveVel",
+            "definition": "dup dup 1 - 8 pull 8 pull 2 pull scaleVec 7 pull 7 pull 1 5 pull 2 * - scaleVec addVec 4 push 4 push scaleVec addVec 2 scaleVec"
+        },
+        {
+            "name": "ellipseCenter",
+            "definition": "4 push 4 push drop drop drop"
+        },
+        {
+            "name": "ellipseCenterX",
+            "definition": "ellipseCenter drop"
+        },
+        {
+            "name": "ellipseCenterY",
+            "definition": "ellipseCenter 1 pull drop"
+        },
+        {
+            "name": "ellipseCurvePos",
+            "definition": "circle 6 pull 6 pull multiplyVec 4 pull toRadians rotateVec addVec"
+        },
+        {
+            "name": "ellipseCurveVel",
+            "definition": "2 push drop drop circle perp 4 pull 4 pull multiplyVec 2 pull toRadians rotateVec"
+        },
+        {
+            "name": "ellipseTest",
+            "definition": "3 pull 3 pull -1 scaleVec addVec 2 pull _ toRadians rotateVec 1 pull 3 pull / 1 pull 2 pull / mag 1 -"
+        },
+        {
+            "name": "turnedAs",
+            "definition": "3 distDup 3 distDup 3 pull scaleVec 4 pull 4 pull perp 4 pull scaleVec addVec"
+        },
+
+        {
+            "name": "OuterEllipseData",
+            "definition": "14 14 0 0 0"
+        },
+        {
+            "name": "InnerEllipseData",
+            "definition": "11 13.5 -20 0 0"
+        },
+        {
+            "name": "UpperEyelidOuterEllipseData",
+            "definition": "15 10 0 0 5"
+        },
+        {
+            "name": "UpperEyelidInnerEllipseData",
+            "definition": "12 8.5 20 0 5"
+        },
+        {
+            "name": "LowerEyelidOuterEllipseData",
+            "definition": "15 10 0 0 -5"
+        },
+        {
+            "name": "LowerEyelidInnerEllipseData",
+            "definition": "12 8.5 20 0 -5"
+        },
+        {
+            "name": "IrisOuterEllipseData",
+            "definition": "5 5 0 0 0"
+        },
+        {
+            "name": "IrisInnerEllipseData",
+            "definition": "3 4.5 -20 0 0"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["InnerEllipseUpperEyelidOuterLeftCollisionX", "InnerEllipseUpperEyelidOuterLeftCollisionY"],
+            "assertions": [
+                "InnerEllipseData InnerEllipseUpperEyelidOuterLeftCollisionX InnerEllipseUpperEyelidOuterLeftCollisionY ellipseTest",
+                "UpperEyelidOuterEllipseData InnerEllipseUpperEyelidOuterLeftCollisionX InnerEllipseUpperEyelidOuterLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipseUpperEyelidOuterLeftCollisionX",
+                "InnerEllipseUpperEyelidOuterLeftCollisionY"
+            ]
+        },
+        {
+            "variables": ["InnerEllipseUpperEyelidOuterRightCollisionX", "InnerEllipseUpperEyelidOuterRightCollisionY"],
+            "assertions": [
+                "InnerEllipseData InnerEllipseUpperEyelidOuterRightCollisionX InnerEllipseUpperEyelidOuterRightCollisionY ellipseTest",
+                "UpperEyelidOuterEllipseData InnerEllipseUpperEyelidOuterRightCollisionX InnerEllipseUpperEyelidOuterRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipseUpperEyelidOuterRightCollisionX _",
+                "InnerEllipseUpperEyelidOuterRightCollisionY"
+            ]
+        },
+        {
+            "variables": ["InnerEllipseLowerEyelidOuterLeftCollisionX", "InnerEllipseLowerEyelidOuterLeftCollisionY"],
+            "assertions": [
+                "InnerEllipseData InnerEllipseLowerEyelidOuterLeftCollisionX InnerEllipseLowerEyelidOuterLeftCollisionY ellipseTest",
+                "LowerEyelidOuterEllipseData InnerEllipseLowerEyelidOuterLeftCollisionX InnerEllipseLowerEyelidOuterLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipseLowerEyelidOuterLeftCollisionX",
+                "InnerEllipseLowerEyelidOuterLeftCollisionY _"
+            ]
+        },
+        {
+            "variables": ["InnerEllipseLowerEyelidOuterRightCollisionX", "InnerEllipseLowerEyelidOuterRightCollisionY"],
+            "assertions": [
+                "InnerEllipseData InnerEllipseLowerEyelidOuterRightCollisionX InnerEllipseLowerEyelidOuterRightCollisionY ellipseTest",
+                "LowerEyelidOuterEllipseData InnerEllipseLowerEyelidOuterRightCollisionX InnerEllipseLowerEyelidOuterRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipseLowerEyelidOuterRightCollisionX _",
+                "InnerEllipseLowerEyelidOuterRightCollisionY _"
+            ]
+        },
+        {
+            "variables": ["UpperEyelidInnerLowerEyelidInnerLeftCollisionX", "UpperEyelidInnerLowerEyelidInnerLeftCollisionY"],
+            "assertions": [
+                "UpperEyelidInnerEllipseData UpperEyelidInnerLowerEyelidInnerLeftCollisionX UpperEyelidInnerLowerEyelidInnerLeftCollisionY ellipseTest",
+                "LowerEyelidInnerEllipseData UpperEyelidInnerLowerEyelidInnerLeftCollisionX UpperEyelidInnerLowerEyelidInnerLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "UpperEyelidInnerLowerEyelidInnerLeftCollisionX"
+            ]
+        },
+        {
+            "variables": ["UpperEyelidInnerLowerEyelidInnerRightCollisionX", "UpperEyelidInnerLowerEyelidInnerRightCollisionY"],
+            "assertions": [
+                "UpperEyelidInnerEllipseData UpperEyelidInnerLowerEyelidInnerRightCollisionX UpperEyelidInnerLowerEyelidInnerRightCollisionY ellipseTest",
+                "LowerEyelidInnerEllipseData UpperEyelidInnerLowerEyelidInnerRightCollisionX UpperEyelidInnerLowerEyelidInnerRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "UpperEyelidInnerLowerEyelidInnerRightCollisionX _"
+            ]
+        },
+        {
+            "variables": ["UpperEyelidInnerIrisOuterLeftCollisionX", "UpperEyelidInnerIrisOuterLeftCollisionY"],
+            "assertions": [
+                "UpperEyelidInnerEllipseData UpperEyelidInnerIrisOuterLeftCollisionX UpperEyelidInnerIrisOuterLeftCollisionY ellipseTest",
+                "IrisOuterEllipseData UpperEyelidInnerIrisOuterLeftCollisionX UpperEyelidInnerIrisOuterLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "UpperEyelidInnerIrisOuterLeftCollisionX"
+            ]
+        },
+        {
+            "variables": ["UpperEyelidInnerIrisOuterRightCollisionX", "UpperEyelidInnerIrisOuterRightCollisionY"],
+            "assertions": [
+                "UpperEyelidInnerEllipseData UpperEyelidInnerIrisOuterRightCollisionX UpperEyelidInnerIrisOuterRightCollisionY ellipseTest",
+                "IrisOuterEllipseData UpperEyelidInnerIrisOuterRightCollisionX UpperEyelidInnerIrisOuterRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "UpperEyelidInnerIrisOuterRightCollisionX _"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidInnerIrisOuterLeftCollisionX", "LowerEyelidInnerIrisOuterLeftCollisionY"],
+            "assertions": [
+                "LowerEyelidInnerEllipseData LowerEyelidInnerIrisOuterLeftCollisionX LowerEyelidInnerIrisOuterLeftCollisionY ellipseTest",
+                "IrisOuterEllipseData LowerEyelidInnerIrisOuterLeftCollisionX LowerEyelidInnerIrisOuterLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "LowerEyelidInnerIrisOuterLeftCollisionX"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidInnerIrisOuterRightCollisionX", "LowerEyelidInnerIrisOuterRightCollisionY"],
+            "assertions": [
+                "LowerEyelidInnerEllipseData LowerEyelidInnerIrisOuterRightCollisionX LowerEyelidInnerIrisOuterRightCollisionY ellipseTest",
+                "IrisOuterEllipseData LowerEyelidInnerIrisOuterRightCollisionX LowerEyelidInnerIrisOuterRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "LowerEyelidInnerIrisOuterRightCollisionX _"
+            ]
+        },
+        {
+            "variables": ["UpperEyelidInnerIrisInnerLeftCollisionX", "UpperEyelidInnerIrisInnerLeftCollisionY"],
+            "assertions": [
+                "UpperEyelidInnerEllipseData UpperEyelidInnerIrisInnerLeftCollisionX UpperEyelidInnerIrisInnerLeftCollisionY ellipseTest",
+                "IrisInnerEllipseData UpperEyelidInnerIrisInnerLeftCollisionX UpperEyelidInnerIrisInnerLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "UpperEyelidInnerIrisInnerLeftCollisionX"
+            ]
+        },
+        {
+            "variables": ["UpperEyelidInnerIrisInnerRightCollisionX", "UpperEyelidInnerIrisInnerRightCollisionY"],
+            "assertions": [
+                "UpperEyelidInnerEllipseData UpperEyelidInnerIrisInnerRightCollisionX UpperEyelidInnerIrisInnerRightCollisionY ellipseTest",
+                "IrisInnerEllipseData UpperEyelidInnerIrisInnerRightCollisionX UpperEyelidInnerIrisInnerRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "UpperEyelidInnerIrisInnerRightCollisionX _"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidInnerIrisInnerLeftCollisionX", "LowerEyelidInnerIrisInnerLeftCollisionY"],
+            "assertions": [
+                "LowerEyelidInnerEllipseData LowerEyelidInnerIrisInnerLeftCollisionX LowerEyelidInnerIrisInnerLeftCollisionY ellipseTest",
+                "IrisInnerEllipseData LowerEyelidInnerIrisInnerLeftCollisionX LowerEyelidInnerIrisInnerLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "LowerEyelidInnerIrisInnerLeftCollisionX"
+            ]
+        },
+        {
+            "variables": ["LowerEyelidInnerIrisInnerRightCollisionX", "LowerEyelidInnerIrisInnerRightCollisionY"],
+            "assertions": [
+                "LowerEyelidInnerEllipseData LowerEyelidInnerIrisInnerRightCollisionX LowerEyelidInnerIrisInnerRightCollisionY ellipseTest",
+                "IrisInnerEllipseData LowerEyelidInnerIrisInnerRightCollisionX LowerEyelidInnerIrisInnerRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "LowerEyelidInnerIrisInnerRightCollisionX _"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "OuterEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 0 1 OuterEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 0 1 OuterEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "M",
+            "params": "InnerEllipseUpperEyelidOuterLeftCollisionX InnerEllipseUpperEyelidOuterLeftCollisionY"
+        },
+        {
+            "type":"A",
+            "params": "UpperEyelidOuterEllipseData drop drop 0 1 InnerEllipseUpperEyelidOuterRightCollisionX InnerEllipseUpperEyelidOuterRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipseData drop drop 0 0 InnerEllipseUpperEyelidOuterLeftCollisionX InnerEllipseUpperEyelidOuterLeftCollisionY"
+        },
+        {
+            "type": "M",
+            "params": "InnerEllipseLowerEyelidOuterRightCollisionX InnerEllipseLowerEyelidOuterRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "LowerEyelidOuterEllipseData drop drop 0 1 InnerEllipseLowerEyelidOuterLeftCollisionX InnerEllipseLowerEyelidOuterLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipseData drop drop 0 0 InnerEllipseLowerEyelidOuterRightCollisionX InnerEllipseLowerEyelidOuterRightCollisionY"
+        },
+        {
+            "type": "M",
+            "params": "UpperEyelidInnerLowerEyelidInnerLeftCollisionX UpperEyelidInnerLowerEyelidInnerLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "LowerEyelidInnerEllipseData drop drop 0 0 LowerEyelidInnerIrisOuterLeftCollisionX LowerEyelidInnerIrisOuterLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "IrisOuterEllipseData drop drop 0 1 UpperEyelidInnerIrisOuterLeftCollisionX UpperEyelidInnerIrisOuterLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "UpperEyelidInnerEllipseData drop drop 0 0 UpperEyelidInnerLowerEyelidInnerLeftCollisionX UpperEyelidInnerLowerEyelidInnerLeftCollisionY"
+        },
+        {
+            "type": "M",
+            "params": "UpperEyelidInnerLowerEyelidInnerRightCollisionX UpperEyelidInnerLowerEyelidInnerRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "UpperEyelidInnerEllipseData drop drop 0 0 UpperEyelidInnerIrisOuterRightCollisionX UpperEyelidInnerIrisOuterRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "IrisOuterEllipseData drop drop 0 1 LowerEyelidInnerIrisOuterRightCollisionX LowerEyelidInnerIrisOuterRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "LowerEyelidInnerEllipseData drop drop 0 0 UpperEyelidInnerLowerEyelidInnerRightCollisionX UpperEyelidInnerLowerEyelidInnerRightCollisionY"
+        },
+        {
+            "type": "M",
+            "params": "UpperEyelidInnerIrisInnerLeftCollisionX UpperEyelidInnerIrisInnerLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "IrisInnerEllipseData drop drop 0 0 LowerEyelidInnerIrisInnerLeftCollisionX LowerEyelidInnerIrisInnerLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "LowerEyelidInnerEllipseData drop drop 0 0 LowerEyelidInnerIrisInnerRightCollisionX LowerEyelidInnerIrisInnerRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "IrisInnerEllipseData drop drop 0 0 UpperEyelidInnerIrisInnerRightCollisionX UpperEyelidInnerIrisInnerRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "UpperEyelidInnerEllipseData drop drop 0 0 UpperEyelidInnerIrisInnerLeftCollisionX UpperEyelidInnerIrisInnerLeftCollisionY"
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": true
+}

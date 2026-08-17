@@ -1,8 +1,30 @@
 {
     "output": "debugTest",
     "dump": "dump",
-    "definitions": [],
-    "constraints": [],
+    "definitions": [
+        {
+            "name": "testVal",
+            "definition": "5 2 7 + *"
+        },
+        {
+            "name": "dot",
+            "definition": "2 pull halt * 2 push * +"
+        },
+        {
+            "name": "",
+            "definition": "1 2 3 4 dot"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["X"],
+            "assertions": [
+                "X X * X 1 + -"
+            ],
+            "restrictions": []
+        }
+
+    ],
     "width": 60,
     "height": 60,
     "curves": [

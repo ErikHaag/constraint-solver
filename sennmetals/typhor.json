@@ -1,0 +1,288 @@
+{
+    "output":"typhor_symbol",
+    "dump": "dump",
+    "imports": [
+        "standardLib",
+        "sennmetals/common"
+    ],
+    "definitions": [
+        {
+            "name": "indexToDir",
+            "definition": "TAU 1 push 5 % 5 / * circle 1 push _"
+        },
+        {
+            "name": "spearWidth",
+            "definition": "3"
+        },
+        {
+            "name": "spearTailLength",
+            "definition": "25"
+        },
+        {
+            "name": "arrowHeadP0",
+            "definition": "20 0"
+        },
+        {
+            "name": "arrowHeadP1",
+            "definition": "17 5"
+        },
+        {
+            "name": "arrowHeadP2",
+            "definition": "20 2"
+        },
+        {
+            "name": "arrowHeadP3",
+            "definition": "25 0"
+        },
+        {
+            "name": "arrowHeadP4",
+            "definition": "arrowHeadP2 _"
+        },
+        {
+            "name": "arrowHeadP5",
+            "definition": "arrowHeadP1 _"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["OuterShieldGapLeftX", "OuterShieldGapLeftY"],
+            "assertions": [
+                "1 indexToDir perp spearWidth 2 / margin + _ scaleVec dupVec 1 indexToDir addVec OuterShieldGapLeftX OuterShieldGapLeftY lineTest",
+                "OuterShieldEllipseData OuterShieldGapLeftX OuterShieldGapLeftY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir OuterShieldGapLeftX OuterShieldGapLeftY dot _"
+            ]
+        },
+        {
+            "variables": ["OuterShieldGapRightX", "OuterShieldGapRightY"],
+            "assertions": [
+                "1 indexToDir perp spearWidth 2 / margin + scaleVec dupVec 1 indexToDir addVec OuterShieldGapRightX OuterShieldGapRightY lineTest",
+                "OuterShieldEllipseData OuterShieldGapRightX OuterShieldGapRightY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir OuterShieldGapRightX OuterShieldGapRightY dot _"
+            ]
+        },
+        {
+            "variables": ["InnerShieldGapLeftX", "InnerShieldGapLeftY"],
+            "assertions": [
+                "1 indexToDir perp spearWidth 2 / margin + _ scaleVec dupVec 1 indexToDir addVec InnerShieldGapLeftX InnerShieldGapLeftY lineTest",
+                "InnerShieldEllipseData InnerShieldGapLeftX InnerShieldGapLeftY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir InnerShieldGapLeftX InnerShieldGapLeftY dot _"
+            ]
+        },
+        {
+            "variables": ["InnerShieldGapRightX", "InnerShieldGapRightY"],
+            "assertions": [
+                "1 indexToDir perp spearWidth 2 / margin + scaleVec dupVec 1 indexToDir addVec InnerShieldGapRightX InnerShieldGapRightY lineTest",
+                "InnerShieldEllipseData InnerShieldGapRightX InnerShieldGapRightY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir InnerShieldGapRightX InnerShieldGapRightY dot _"
+            ]
+        },
+        {
+            "variables": ["OuterShaftLeftCollisonX", "OuterShaftLeftCollisonY"],
+            "assertions": [
+                "1 indexToDir perp spearWidth 2 / _ scaleVec dupVec 1 indexToDir addVec OuterShaftLeftCollisonX OuterShaftLeftCollisonY lineTest",
+                "ExpandedOuterShieldEllipseData OuterShaftLeftCollisonX OuterShaftLeftCollisonY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir OuterShaftLeftCollisonX OuterShaftLeftCollisonY dot"
+            ]
+        },
+        {
+            "variables": ["OuterShaftRightCollisonX", "OuterShaftRightCollisonY"],
+            "assertions": [
+                "1 indexToDir perp spearWidth 2 / scaleVec dupVec 1 indexToDir addVec OuterShaftRightCollisonX OuterShaftRightCollisonY lineTest",
+                "ExpandedOuterShieldEllipseData OuterShaftRightCollisonX OuterShaftRightCollisonY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir OuterShaftRightCollisonX OuterShaftRightCollisonY dot"
+            ]
+        },
+        {
+            "variables": ["InnerShaftLeftCollisonX", "InnerShaftLeftCollisonY"],
+            "assertions": [
+                "1 indexToDir perp spearWidth 2 / _ scaleVec dupVec 1 indexToDir addVec InnerShaftLeftCollisonX InnerShaftLeftCollisonY lineTest",
+                "ContractedInnerShieldEllipseData InnerShaftLeftCollisonX InnerShaftLeftCollisonY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir InnerShaftLeftCollisonX InnerShaftLeftCollisonY dot"
+            ]
+        },
+        {
+            "variables": ["InnerShaftRightCollisonX", "InnerShaftRightCollisonY"],
+            "assertions": [
+                "1 indexToDir perp spearWidth 2 / scaleVec dupVec 1 indexToDir addVec InnerShaftRightCollisonX InnerShaftRightCollisonY lineTest",
+                "ContractedInnerShieldEllipseData InnerShaftRightCollisonX InnerShaftRightCollisonY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir InnerShaftRightCollisonX InnerShaftRightCollisonY dot"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "OuterShieldGapLeftX OuterShieldGapLeftY"
+        },
+        {
+            "type": "A",
+            "params": "OuterShieldEllipseData drop drop 1 0 OuterShieldGapRightX OuterShieldGapRightY"
+        },
+        {
+            "type": "L",
+            "params": "InnerShieldGapRightX InnerShieldGapRightY"
+        },
+        {
+            "type": "A",
+            "params": "InnerShieldEllipseData drop drop 1 1 InnerShieldGapLeftX InnerShieldGapLeftY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "OuterShaftLeftCollisonX OuterShaftLeftCollisonY"
+        },
+        {
+            "type": "A",
+            "params": "ExpandedOuterShieldEllipseData drop drop 0 0 OuterShaftRightCollisonX OuterShaftRightCollisonY"
+        },
+        {
+            "type": "L",
+            "params": "spearTailLength _ spearWidth 2 / 1 indexToDir turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "spearTailLength _ spearWidth 2 / _ 1 indexToDir turnedAs"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "arrowHeadP0 0 indexToDir turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "arrowHeadP1 0 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP2 0 indexToDir turnedAs arrowHeadP3 0 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP4 0 indexToDir turnedAs arrowHeadP5 0 indexToDir turnedAs"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "arrowHeadP5 arrowHeadP0 0 spearWidth 2 / _ 1 spearWidth 2 / _ lineLineIntersection 1 indexToDir turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "InnerShaftLeftCollisonX InnerShaftLeftCollisonY"
+        },
+        {
+            "type": "A",
+            "params": "ContractedInnerShieldEllipseData drop drop 0 0 InnerShaftRightCollisonX InnerShaftRightCollisonY"
+        },
+        {
+            "type": "L",
+            "params": "arrowHeadP0 arrowHeadP1 0 spearWidth 2 / 1 spearWidth 2 / lineLineIntersection 1 indexToDir turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "arrowHeadP1 1 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP2 1 indexToDir turnedAs arrowHeadP3 1 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP4 1 indexToDir turnedAs arrowHeadP5 1 indexToDir turnedAs"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "arrowHeadP0 2 indexToDir turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "arrowHeadP1 2 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP2 2 indexToDir turnedAs arrowHeadP3 2 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP4 2 indexToDir turnedAs arrowHeadP5 2 indexToDir turnedAs"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "arrowHeadP0 3 indexToDir turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "arrowHeadP1 3 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP2 3 indexToDir turnedAs arrowHeadP3 3 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP4 3 indexToDir turnedAs arrowHeadP5 3 indexToDir turnedAs"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "arrowHeadP0 4 indexToDir turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "arrowHeadP1 4 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP2 4 indexToDir turnedAs arrowHeadP3 4 indexToDir turnedAs"
+        },
+        {
+            "type": "Q",
+            "params": "arrowHeadP4 4 indexToDir turnedAs arrowHeadP5 4 indexToDir turnedAs"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": true
+}

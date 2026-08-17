@@ -22,6 +22,7 @@ class curve_model:
 class input_data_model:
     output : str
     dump : str
+    imports: list[str]
     definitions: list[definition_model]
     constraits: list[constraint_model]
     curves: list[curve_model]
@@ -37,6 +38,7 @@ class input_data_model:
         return input_data_model(
             output = obj.get("output", ""),
             dump = obj.get("dump", ""),
+            imports=obj.get("imports", []),
             definitions = [definition_model(**i) for i in obj.get("definitions")],
             constraits = [constraint_model(**i) for i in obj.get("constraints")],
             curves = [curve_model(**i) for i in obj.get("curves")],
@@ -46,6 +48,18 @@ class input_data_model:
             height = obj.get("height", 100),
             transform = obj.get("transform", ""),
             export = obj.get("export", False)
+        )
+
+@dataclass
+class library_model:
+    imports: list[str]
+    definitions: list[definition_model]
+
+    @staticmethod
+    def from_dict(obj):
+        return library_model(
+            imports = obj.get("imports", []),
+            definitions = [definition_model(**i) for i in obj.get("definitions")]
         )
 
 @dataclass

@@ -202,7 +202,7 @@
                 "LeftSideTangent perp LeftSideWidth -2 / scaleVec TrianglePeak + dupVec LeftSideTangent addVec LowerEyelidOuterLeftLineCollisionX LowerEyelidOuterLeftLineCollisionY lineTest"
             ],
             "restrictions": [
-                "LowerEyelidOuterLeftLineCollisionY _"
+                "LowerEyelidOuterEllipseData ellipseCenterY LowerEyelidOuterLeftLineCollisionY -"
             ]
         },
         {
@@ -212,7 +212,7 @@
                 "RightSideTangent perp RightSideWidth 2 / scaleVec TrianglePeak + dupVec RightSideTangent addVec LowerEyelidOuterRightLineCollisionX LowerEyelidOuterRightLineCollisionY lineTest"
             ],
             "restrictions": [
-                "LowerEyelidOuterRightLineCollisionY _"
+                "LowerEyelidOuterEllipseData ellipseCenterY LowerEyelidOuterRightLineCollisionY -"
             ]
         },
         {
@@ -222,7 +222,7 @@
                 "LeftSideTangent perp LeftSideWidth -2 / scaleVec TrianglePeak + dupVec LeftSideTangent addVec LowerEyelidInnerLeftLineCollisionX LowerEyelidInnerLeftLineCollisionY lineTest"
             ],
             "restrictions": [
-                "LowerEyelidInnerLeftLineCollisionY _"
+                "LowerEyelidInnerEllipseData ellipseCenterY LowerEyelidInnerLeftLineCollisionY -"
             ]
         },
         {
@@ -232,7 +232,7 @@
                 "RightSideTangent perp RightSideWidth 2 / scaleVec TrianglePeak + dupVec RightSideTangent addVec LowerEyelidInnerRightLineCollisionX LowerEyelidInnerRightLineCollisionY lineTest"
             ],
             "restrictions": [
-                "LowerEyelidInnerRightLineCollisionY _"
+                "LowerEyelidInnerEllipseData ellipseCenterY LowerEyelidInnerRightLineCollisionY -"
             ]
         },
         {
@@ -241,7 +241,7 @@
                 "LowerEyelidOuterEllipseData centerStrokeWidth -2 / LowerEyelidOuterCenterLeftCollisionY ellipseTest"
             ],
             "restrictions": [
-                "LowerEyelidOuterCenterLeftCollisionY _"
+                "LowerEyelidOuterEllipseData ellipseCenterY LowerEyelidOuterCenterLeftCollisionY -"
             ]
         },
         {
@@ -250,7 +250,7 @@
                 "LowerEyelidOuterEllipseData 0 LowerEyelidOuterCenterCollisionY ellipseTest"
             ],
             "restrictions": [
-                "LowerEyelidOuterCenterCollisionY _"
+                "LowerEyelidOuterEllipseData ellipseCenterY LowerEyelidOuterCenterCollisionY -"
             ]
         },
         {
@@ -259,7 +259,7 @@
                 "LowerEyelidOuterEllipseData centerStrokeWidth 2 / LowerEyelidOuterCenterRightCollisionY ellipseTest"
             ],
             "restrictions": [
-                "LowerEyelidOuterCenterRightCollisionY _"
+                "LowerEyelidOuterEllipseData ellipseCenterY LowerEyelidOuterCenterRightCollisionY -"
             ]
         },
         {

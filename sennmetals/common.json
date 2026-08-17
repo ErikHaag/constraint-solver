@@ -1,0 +1,26 @@
+{
+    "imports":[
+    ],
+    "definitions": [
+        {
+            "name":"OuterShieldEllipseData",
+            "definition": "15 15 0 0 0"
+        },
+        {
+            "name": "InnerShieldEllipseData",
+            "definition": "OuterShieldEllipseData 4 pull 4 - 4 push 3 pull 0.5 - 3 push 2 pull 20 - 2 push"
+        },
+        {
+            "name": "margin",
+            "definition": "2"
+        },
+        {
+            "name": "ExpandedOuterShieldEllipseData",
+            "definition": "OuterShieldEllipseData 4 pull margin + 4 push 3 pull margin + 3 push"
+        },
+        {
+            "name": "ContractedInnerShieldEllipseData",
+            "definition": "InnerShieldEllipseData 4 pull margin - 4 push 3 pull margin - 3 push"
+        }
+    ]
+}

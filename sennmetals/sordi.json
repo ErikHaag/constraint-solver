@@ -1,0 +1,435 @@
+{
+    "output": "sordi_symbol",
+    "dump": "dump",
+    "imports": [
+        "standardLib",
+        "sennmetals/common"
+    ],
+    "definitions": [
+        {
+            "name": "spineWidth",
+            "definition": "1"
+        },
+        {
+            "name": "hookBarb",
+            "definition": "6 -16"
+        },
+        {
+            "name": "innerBarbCorner",
+            "definition": "23 spineWidth -2 / -40 toRadians circle turnedAs"
+        },
+        {
+            "name": "innerBarbEllipseInfo",
+            "definition": "14 10 0 0 0"
+        },
+        {
+            "name": "outerBarbCorner",
+            "definition": "26 spineWidth 2 / -40 toRadians circle turnedAs"
+        },
+        {
+            "name": "outerBarbEllipseInfo",
+            "definition": "17 5 0 0 1"
+        },
+        {
+            "name": "innerControlPoint",
+            "definition": "innerBarbCorner 95 toRadians circle 12 scaleVec addVec"
+        },
+        {
+            "name": "outerControlPoint",
+            "definition": "outerBarbCorner 95 toRadians circle 14 scaleVec addVec"
+        },
+        {
+            "name": "LeftSpineCurveData",
+            "definition": "innerBarbCorner innerControlPoint outerControlPoint -1 scaleVec outerBarbCorner -1 scaleVec"
+        },
+        {
+            "name": "RightSpineCurveData",
+            "definition": "innerBarbCorner -1 scaleVec innerControlPoint -1 scaleVec outerControlPoint outerBarbCorner"
+        },
+        {
+            "name": "crossStrokeWidth",
+            "definition": "1.5"
+        },
+        {
+            "name": "crossStrokeTangent",
+            "definition": "20 toRadians circle"
+        },
+        {
+            "name": "shortCrossStrokeHeight",
+            "definition": "-3"
+        },
+        {
+            "name": "longCrossStrokeHeight",
+            "definition": "shortCrossStrokeHeight _"
+        },
+        {
+            "name": "shortCrossStrokeLength",
+            "definition": "15"
+        },
+        {
+            "name": "longCrossStrokeLength",
+            "definition": "25"
+        },
+        {
+            "name": "shortCrossStrokeCenter",
+            "definition": "LeftSpineCurveData ShortCrossStrokeMiddleLeftSpineCollisionT cubicCurvePos RightSpineCurveData ShortCrossStrokeMiddleRightSpineCollisionT cubicCurvePos addVec 0.5 scaleVec"
+        },
+        {
+            "name": "longCrossStrokeCenter",
+            "definition": "LeftSpineCurveData LongCrossStrokeMiddleLeftSpineCollisionT cubicCurvePos RightSpineCurveData LongCrossStrokeMiddleRightSpineCollisionT cubicCurvePos addVec 0.5 scaleVec"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["StartingExpandedOuterShieldCollisionT"],
+            "assertions": [
+                "ExpandedOuterShieldEllipseData LeftSpineCurveData StartingExpandedOuterShieldCollisionT cubicCurvePos ellipseTest"
+            ],
+            "restrictions": [
+                "StartingExpandedOuterShieldCollisionT _",
+                "StartingExpandedOuterShieldCollisionT 0.5 -"
+            ]
+        },
+        {
+            "variables": ["StartingContractedInnerShieldCollisionT"],
+            "assertions": [
+                "ContractedInnerShieldEllipseData innerBarbCorner innerControlPoint outerControlPoint -1 scaleVec outerBarbCorner -1 scaleVec StartingContractedInnerShieldCollisionT cubicCurvePos ellipseTest"
+            ],
+            "restrictions": [
+                "StartingContractedInnerShieldCollisionT _",
+                "StartingContractedInnerShieldCollisionT 0.5 -"
+            ]
+        },
+        {
+            "variables": ["EndingExpandedOuterShieldCollisionT"],
+            "assertions": [
+                "ExpandedOuterShieldEllipseData innerBarbCorner innerControlPoint outerControlPoint -1 scaleVec outerBarbCorner -1 scaleVec EndingExpandedOuterShieldCollisionT cubicCurvePos ellipseTest"
+            ],
+            "restrictions": [
+                "0.5 EndingExpandedOuterShieldCollisionT -",
+                "EndingExpandedOuterShieldCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["EndingContractedInnerShieldCollisionT"],
+            "assertions": [
+                "ContractedInnerShieldEllipseData innerBarbCorner innerControlPoint outerControlPoint -1 scaleVec outerBarbCorner -1 scaleVec EndingContractedInnerShieldCollisionT cubicCurvePos ellipseTest"
+            ],
+            "restrictions": [
+                "0.5 EndingContractedInnerShieldCollisionT -",
+                "EndingContractedInnerShieldCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["StartingOuterShieldFattenedLeftCenterCollisionT"],
+            "assertions": [
+                "OuterShieldEllipseData LeftSpineCurveData StartingOuterShieldFattenedLeftCenterCollisionT cubicCurvePos LeftSpineCurveData StartingOuterShieldFattenedLeftCenterCollisionT cubicCurveVel normalize perp margin scaleVec addVec ellipseTest"
+            ],
+            "restrictions": [
+                "StartingOuterShieldFattenedLeftCenterCollisionT _",
+                "StartingOuterShieldFattenedLeftCenterCollisionT 0.5 -"
+            ]
+        },
+        {
+            "variables": ["StartingInnerShieldFattenedLeftCenterCollisionT"],
+            "assertions": [
+                "InnerShieldEllipseData LeftSpineCurveData StartingInnerShieldFattenedLeftCenterCollisionT cubicCurvePos LeftSpineCurveData StartingInnerShieldFattenedLeftCenterCollisionT cubicCurveVel normalize perp margin scaleVec addVec ellipseTest"
+            ],
+            "restrictions": [
+                "StartingInnerShieldFattenedLeftCenterCollisionT _",
+                "StartingInnerShieldFattenedLeftCenterCollisionT 0.5 -"
+            ]
+        },
+        {
+            "variables": ["EndingOuterShieldFattenedRightCenterCollisionT"],
+            "assertions": [
+                "OuterShieldEllipseData RightSpineCurveData EndingOuterShieldFattenedRightCenterCollisionT cubicCurvePos RightSpineCurveData EndingOuterShieldFattenedRightCenterCollisionT cubicCurveVel normalize perp margin scaleVec addVec ellipseTest"
+            ],
+            "restrictions": [
+                "0.5 EndingOuterShieldFattenedRightCenterCollisionT -",
+                "EndingOuterShieldFattenedRightCenterCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["EndingInnerShieldFattenedRightCenterCollisionT"],
+            "assertions": [
+                "InnerShieldEllipseData RightSpineCurveData EndingInnerShieldFattenedRightCenterCollisionT cubicCurvePos RightSpineCurveData EndingInnerShieldFattenedRightCenterCollisionT cubicCurveVel normalize perp margin scaleVec addVec ellipseTest"
+            ],
+            "restrictions": [
+                "0.5 EndingInnerShieldFattenedRightCenterCollisionT -",
+                "EndingInnerShieldFattenedRightCenterCollisionT 1 -"
+            ]
+        },
+
+        {
+            "variables": ["ShortCrossStrokeMiddleLeftSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp shortCrossStrokeHeight scaleVec dupVec crossStrokeTangent addVec LeftSpineCurveData ShortCrossStrokeMiddleLeftSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "ShortCrossStrokeMiddleLeftSpineCollisionT _",
+                "ShortCrossStrokeMiddleLeftSpineCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["ShortCrossStrokeMiddleRightSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp shortCrossStrokeHeight scaleVec dupVec crossStrokeTangent addVec RightSpineCurveData ShortCrossStrokeMiddleRightSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "ShortCrossStrokeMiddleRightSpineCollisionT _",
+                "ShortCrossStrokeMiddleRightSpineCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["LongCrossStrokeMiddleLeftSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp longCrossStrokeHeight scaleVec dupVec crossStrokeTangent addVec LeftSpineCurveData LongCrossStrokeMiddleLeftSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "LongCrossStrokeMiddleLeftSpineCollisionT _",
+                "LongCrossStrokeMiddleLeftSpineCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["LongCrossStrokeMiddleRightSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp longCrossStrokeHeight scaleVec dupVec crossStrokeTangent addVec RightSpineCurveData LongCrossStrokeMiddleRightSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "LongCrossStrokeMiddleRightSpineCollisionT _",
+                "LongCrossStrokeMiddleRightSpineCollisionT 1 -"
+            ]
+        },
+
+        {
+            "variables": ["ShortCrossStrokeTopLeftSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp shortCrossStrokeHeight crossStrokeWidth 2 / - scaleVec dupVec crossStrokeTangent addVec LeftSpineCurveData ShortCrossStrokeTopLeftSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "ShortCrossStrokeTopLeftSpineCollisionT _",
+                "ShortCrossStrokeTopLeftSpineCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["ShortCrossStrokeTopRightSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp shortCrossStrokeHeight crossStrokeWidth 2 / - scaleVec dupVec crossStrokeTangent addVec RightSpineCurveData ShortCrossStrokeTopRightSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "ShortCrossStrokeTopRightSpineCollisionT _",
+                "ShortCrossStrokeTopRightSpineCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["ShortCrossStrokeBottomLeftSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp shortCrossStrokeHeight crossStrokeWidth 2 / + scaleVec dupVec crossStrokeTangent addVec LeftSpineCurveData ShortCrossStrokeBottomLeftSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "ShortCrossStrokeBottomLeftSpineCollisionT _",
+                "ShortCrossStrokeBottomLeftSpineCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["ShortCrossStrokeBottomRightSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp shortCrossStrokeHeight crossStrokeWidth 2 / + scaleVec dupVec crossStrokeTangent addVec RightSpineCurveData ShortCrossStrokeBottomRightSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "ShortCrossStrokeBottomRightSpineCollisionT _",
+                "ShortCrossStrokeBottomRightSpineCollisionT 1 -"
+            ]
+        },
+
+        {
+            "variables": ["LongCrossStrokeTopLeftSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp longCrossStrokeHeight crossStrokeWidth 2 / - scaleVec dupVec crossStrokeTangent addVec LeftSpineCurveData LongCrossStrokeTopLeftSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "LongCrossStrokeTopLeftSpineCollisionT _",
+                "LongCrossStrokeTopLeftSpineCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["LongCrossStrokeTopRightSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp longCrossStrokeHeight crossStrokeWidth 2 / - scaleVec dupVec crossStrokeTangent addVec RightSpineCurveData LongCrossStrokeTopRightSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "LongCrossStrokeTopRightSpineCollisionT _",
+                "LongCrossStrokeTopRightSpineCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["LongCrossStrokeBottomLeftSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp longCrossStrokeHeight crossStrokeWidth 2 / + scaleVec dupVec crossStrokeTangent addVec LeftSpineCurveData LongCrossStrokeBottomLeftSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "LongCrossStrokeBottomLeftSpineCollisionT _",
+                "LongCrossStrokeBottomLeftSpineCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": ["LongCrossStrokeBottomRightSpineCollisionT"],
+            "assertions": [
+                "crossStrokeTangent perp longCrossStrokeHeight crossStrokeWidth 2 / + scaleVec dupVec crossStrokeTangent addVec RightSpineCurveData LongCrossStrokeBottomRightSpineCollisionT cubicCurvePos lineTest"
+            ],
+            "restrictions": [
+                "LongCrossStrokeBottomRightSpineCollisionT _",
+                "LongCrossStrokeBottomRightSpineCollisionT 1 -"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "LeftSpineCurveData StartingOuterShieldFattenedLeftCenterCollisionT cubicCurvePos LeftSpineCurveData StartingOuterShieldFattenedLeftCenterCollisionT cubicCurveVel normalize perp margin scaleVec addVec"
+        },
+        {
+            "type": "A",
+            "params": "OuterShieldEllipseData drop drop 1 0 RightSpineCurveData EndingOuterShieldFattenedRightCenterCollisionT cubicCurvePos RightSpineCurveData EndingOuterShieldFattenedRightCenterCollisionT cubicCurveVel normalize perp margin scaleVec addVec"
+        },
+        {
+            "type": "L",
+            "params": "RightSpineCurveData EndingInnerShieldFattenedRightCenterCollisionT cubicCurvePos RightSpineCurveData EndingInnerShieldFattenedRightCenterCollisionT cubicCurveVel normalize perp margin scaleVec addVec"
+        },
+        {
+            "type": "A",
+            "params": "InnerShieldEllipseData drop drop 1 1 LeftSpineCurveData StartingInnerShieldFattenedLeftCenterCollisionT cubicCurvePos LeftSpineCurveData StartingInnerShieldFattenedLeftCenterCollisionT cubicCurveVel normalize perp margin scaleVec addVec"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "outerBarbCorner"
+        },
+        {
+            "type": "A",
+            "params": "outerBarbEllipseInfo hookBarb"
+        },
+        {
+            "type": "A",
+            "params": "innerBarbEllipseInfo innerBarbCorner"
+        },
+        {
+            "type": "C",
+            "params": "LeftSpineCurveData 0 ShortCrossStrokeTopLeftSpineCollisionT cubicCurveCut"
+        },
+        {
+            "type": "L",
+            "params": "shortCrossStrokeLength -2 / crossStrokeWidth -2 / crossStrokeTangent turnedAs shortCrossStrokeCenter addVec"
+        },
+        {
+            "type": "L",
+            "params": "shortCrossStrokeLength -2 / crossStrokeWidth 2 / crossStrokeTangent turnedAs shortCrossStrokeCenter addVec"
+        },
+        {
+            "type": "L",
+            "params": "LeftSpineCurveData ShortCrossStrokeBottomLeftSpineCollisionT cubicCurvePos"
+        },
+        {
+            "type": "C",
+            "params": "LeftSpineCurveData ShortCrossStrokeBottomLeftSpineCollisionT LongCrossStrokeTopLeftSpineCollisionT cubicCurveCut"
+        },
+        {
+            "type": "L",
+            "params": "longCrossStrokeLength -2 / crossStrokeWidth -2 / crossStrokeTangent turnedAs longCrossStrokeCenter addVec"
+        },
+        {
+            "type": "L",
+            "params": "longCrossStrokeLength -2 / crossStrokeWidth 2 / crossStrokeTangent turnedAs longCrossStrokeCenter addVec"
+        },
+        {
+            "type": "L",
+            "params": "LeftSpineCurveData LongCrossStrokeBottomLeftSpineCollisionT cubicCurvePos"
+        },
+        {
+            "type": "C",
+            "params": "LeftSpineCurveData LongCrossStrokeBottomLeftSpineCollisionT EndingContractedInnerShieldCollisionT cubicCurveCut"
+        },
+        {
+            "type": "A",
+            "params": "ContractedInnerShieldEllipseData drop drop 0 0 RightSpineCurveData StartingContractedInnerShieldCollisionT cubicCurvePos"
+        },
+        {
+            "type": "C",
+            "params": "RightSpineCurveData StartingContractedInnerShieldCollisionT LongCrossStrokeBottomRightSpineCollisionT cubicCurveCut"
+        },
+        {
+            "type": "L",
+            "params": "longCrossStrokeLength 2 / crossStrokeWidth 2 / crossStrokeTangent turnedAs longCrossStrokeCenter addVec"
+        },
+        {
+            "type": "L",
+            "params": "longCrossStrokeLength 2 / crossStrokeWidth -2 / crossStrokeTangent turnedAs longCrossStrokeCenter addVec"
+        },
+        {
+            "type": "L",
+            "params": "RightSpineCurveData LongCrossStrokeTopRightSpineCollisionT cubicCurvePos"
+        },
+        {
+            "type": "C",
+            "params": "RightSpineCurveData LongCrossStrokeTopRightSpineCollisionT ShortCrossStrokeBottomRightSpineCollisionT cubicCurveCut"
+        },
+        {
+            "type": "L",
+            "params": "shortCrossStrokeLength 2 / crossStrokeWidth 2 / crossStrokeTangent turnedAs shortCrossStrokeCenter addVec"
+        },
+        {
+            "type": "L",
+            "params": "shortCrossStrokeLength 2 / crossStrokeWidth -2 / crossStrokeTangent turnedAs shortCrossStrokeCenter addVec"
+        },
+        {
+            "type": "L",
+            "params": "RightSpineCurveData ShortCrossStrokeTopRightSpineCollisionT cubicCurvePos"
+        },
+        {
+            "type": "C",
+            "params": "RightSpineCurveData ShortCrossStrokeTopRightSpineCollisionT 1 cubicCurveCut"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "outerBarbCorner -1 scaleVec"
+        },
+        {
+            "type": "A",
+            "params": "outerBarbEllipseInfo hookBarb -1 scaleVec"
+        },
+        {
+            "type": "A",
+            "params": "innerBarbEllipseInfo innerBarbCorner -1 scaleVec"
+        },
+        {
+            "type": "C",
+            "params": "RightSpineCurveData 0 StartingExpandedOuterShieldCollisionT cubicCurveCut"
+        },
+        {
+            "type": "A",
+            "params": "ExpandedOuterShieldEllipseData drop drop 0 1 LeftSpineCurveData EndingExpandedOuterShieldCollisionT cubicCurvePos"
+        },
+        {
+            "type": "C",
+            "params": "LeftSpineCurveData EndingContractedInnerShieldCollisionT 1 cubicCurveCut"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": false
+}

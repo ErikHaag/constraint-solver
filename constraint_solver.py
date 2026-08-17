@@ -166,6 +166,7 @@ def evaluate_expression(expr:str, dependent:dict[str, float] = {}, max_substitut
                         commands = [j for i in [var_exp.strip().split(" "), commands] for j in i]
                         substitution_count += 1
                     else:
+                        print(expr)
                         raise NameError("Unknown variable or expression \"" + c + "\"")
         except InsuffientArguments:
             out_commands.extend([str(i) for i in stack])
@@ -279,20 +280,46 @@ def get_dependent_expressions(exprs:list[str], dependent_vars:list[str]) -> dict
 data : input_data_model
 
 data_file_location = sys.argv[1] if len(sys.argv) == 2 else "constraint_input.json"
+print(sys.argv[0])
 with open(data_file_location, "r") as f:
     print(f.name)
     data = input_data_model.from_dict(json.loads("\n".join(f.readlines())))
 
 dumping = data.dump != ""
 
-constraint_data_location = f"constraint_data.json"
+import_stack = data.imports
+imported_files:list[str] = []
+import_order:list[str] = []
+imported_definitions:dict[str,list[definition_model]] = {}
+
+while len(import_stack) > 0:
+    file = import_stack.pop()
+    if file in imported_files:
+        import_order.remove(file)
+        import_order.append(file)
+    else:
+        imported_files.append(file)
+        import_data:library_model
+        with open(file + ".json", "r") as f:
+            import_data = library_model.from_dict(json.loads("\n".join(f.readlines())))
+        import_stack.extend(import_data.imports)
+        import_order.append(file)
+        imported_definitions[file] = import_data.definitions
+
+imported_definitions_list:list[definition_model] = []
+
+for v in import_order[::-1]:
+    imported_definitions_list.extend(imported_definitions[v])
+
+data.definitions = [j for i in [imported_definitions_list, data.definitions] for j in i]
+
+constraint_data_location = "constraint_data.json"
 
 definition_iterator = iter(data.definitions)
 constraint_iterator = iter(data.constraits)
 
 next_definition : definition_model | None
 next_constraint: constraint_model | None
-
 
 try:
     next_definition = next(definition_iterator)
@@ -459,7 +486,8 @@ try:
                     variables[varName] = str(varValue)
                 if dumping:
                     dump_lines.append("-- Score --")
-                    dump_lines.append(f"{best_solution_result.success_count}, {best_solution_result.assertion_result}, {best_solution_result.restriction_result}\n")
+                    dump_lines.append(f"{best_solution_result.success_count}, {best_solution_result.assertion_result}, {best_solution_result.restriction_result}")
+                    dump_lines.append(f"{best_solution_result.success_count == 2} {best_solution_result.assertion_result < 0.01}, {best_solution_result.restriction_result < 0.01}\n")
                 
                 dependency_data.append(dependency_data_model(
                     constraint = next_constraint,

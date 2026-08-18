@@ -433,7 +433,7 @@
             "params": "tridentWoundPos tridentShaftLength _ tridentShaftWidth 2 / alongTridentShaft turnedAs addVec"
         },
         {
-            "type": "z",
+            "type": "Z",
             "params": ""
         }
     ],

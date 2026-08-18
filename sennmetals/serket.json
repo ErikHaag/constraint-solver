@@ -1,0 +1,276 @@
+{
+    "output": "serket_symbol",
+    "dump": "dump",
+    "imports": [
+        "standardLib",
+        "sennmetals/common"
+    ],
+    "definitions": [
+        {
+            "name": "leftSideWidth",
+            "definition": "1"
+        },
+        {
+            "name": "rightSideWidth",
+            "definition": "2.5"
+        },
+        {
+            "name": "bottomSideWidth",
+            "definition": "2"
+        },
+        {
+            "name": "triangleOffset",
+            "definition": "0 -5"
+        },
+        {
+            "name": "triangleInradius",
+            "definition": "5"
+        },
+        {
+            "name": "towardsBottom",
+            "definition": "0 1"
+        },
+        {
+            "name": "towardsLeft",
+            "definition": "3 sqrt 2 / _ 1 2 / _"
+        },
+        {
+            "name": "towardsRight",
+            "definition": "3 sqrt 2 / 1 2 / _"
+        },
+        {
+            "name": "stemWidth",
+            "definition": "2"
+        },
+        {
+            "name": "shaftBottom",
+            "definition": "25"
+        },
+        {
+            "name": "crossbarHeight",
+            "definition": "1"
+        },
+        {
+            "name": "crossbarWidth",
+            "definition": "10"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["OuterShieldLeftTriangleCollisionX", "OuterShieldLeftTriangleCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldLeftTriangleCollisionX OuterShieldLeftTriangleCollisionY ellipseTest",
+                "towardsLeft triangleInradius leftSideWidth 2 / + margin + scaleVec triangleOffset addVec dupVec towardsLeft perp addVec OuterShieldLeftTriangleCollisionX OuterShieldLeftTriangleCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldLeftTriangleCollisionX OuterShieldLeftTriangleCollisionY towardsLeft perp dot _"
+            ]
+        },
+        {
+            "variables": ["OuterShieldRightTriangleCollisionX", "OuterShieldRightTriangleCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldRightTriangleCollisionX OuterShieldRightTriangleCollisionY ellipseTest",
+                "towardsRight triangleInradius rightSideWidth 2 / + margin + scaleVec triangleOffset addVec dupVec towardsRight perp addVec OuterShieldRightTriangleCollisionX OuterShieldRightTriangleCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldRightTriangleCollisionX OuterShieldRightTriangleCollisionY towardsRight perp dot"
+            ]
+        },
+        {
+            "variables": ["InnerShieldLeftTriangleCollisionX", "InnerShieldLeftTriangleCollisionY"],
+            "assertions": [
+                "InnerShieldEllipseData InnerShieldLeftTriangleCollisionX InnerShieldLeftTriangleCollisionY ellipseTest",
+                "towardsLeft triangleInradius leftSideWidth 2 / + margin + scaleVec triangleOffset addVec dupVec towardsLeft perp addVec InnerShieldLeftTriangleCollisionX InnerShieldLeftTriangleCollisionY lineTest"
+            ],
+            "restrictions": [
+                "InnerShieldLeftTriangleCollisionX InnerShieldLeftTriangleCollisionY towardsLeft perp dot _"
+            ]
+        },
+        {
+            "variables": ["InnerShieldRightTriangleCollisionX", "InnerShieldRightTriangleCollisionY"],
+            "assertions": [
+                "InnerShieldEllipseData InnerShieldRightTriangleCollisionX InnerShieldRightTriangleCollisionY ellipseTest",
+                "towardsRight triangleInradius rightSideWidth 2 / + margin + scaleVec triangleOffset addVec dupVec towardsRight perp addVec InnerShieldRightTriangleCollisionX InnerShieldRightTriangleCollisionY lineTest"
+            ],
+            "restrictions": [
+                "InnerShieldRightTriangleCollisionX InnerShieldRightTriangleCollisionY towardsRight perp dot"
+            ]
+        },
+        {
+            "variables": ["ContractedInnerShieldLeftStemCollisionY"],
+            "assertions": [
+                "ContractedInnerShieldEllipseData stemWidth 2 / _ triangleOffset drop + ContractedInnerShieldLeftStemCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "ContractedInnerShieldLeftStemCollisionY _"
+            ]
+        },
+        {
+            "variables": ["ContractedInnerShieldRightStemCollisionY"],
+            "assertions": [
+                "ContractedInnerShieldEllipseData stemWidth 2 / triangleOffset drop + ContractedInnerShieldRightStemCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "ContractedInnerShieldRightStemCollisionY _"
+            ]
+        },
+        {
+            "variables": ["ExpandedOuterShieldLeftStemCollisionY"],
+            "assertions": [
+                "ExpandedOuterShieldEllipseData stemWidth 2 / _ triangleOffset drop + ExpandedOuterShieldLeftStemCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "ExpandedOuterShieldLeftStemCollisionY _"
+            ]
+        },
+        {
+            "variables": ["ExpandedOuterShieldRightStemCollisionY"],
+            "assertions": [
+                "ExpandedOuterShieldEllipseData stemWidth 2 / triangleOffset drop + ExpandedOuterShieldRightStemCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "ExpandedOuterShieldRightStemCollisionY _"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "OuterShieldLeftTriangleCollisionX OuterShieldLeftTriangleCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "OuterShieldEllipseData drop drop 1 0 OuterShieldRightTriangleCollisionX OuterShieldRightTriangleCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "InnerShieldRightTriangleCollisionX InnerShieldRightTriangleCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "InnerShieldEllipseData drop drop 1 1 InnerShieldLeftTriangleCollisionX InnerShieldLeftTriangleCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "triangleInradius bottomSideWidth 2 / + stemWidth -2 / towardsBottom turnedAs triangleOffset addVec"
+        },
+        {
+            "type": "L",
+            "params": "towardsBottom triangleInradius bottomSideWidth 2 / + scaleVec dupVec towardsBottom perp addVec towardsRight triangleInradius rightSideWidth 2 / + scaleVec dupVec towardsRight perp addVec lineLineIntersection triangleOffset addVec"
+        },
+        {
+            "type": "L",
+            "params": "towardsRight triangleInradius rightSideWidth 2 / + scaleVec dupVec towardsRight perp addVec towardsLeft triangleInradius leftSideWidth 2 / + scaleVec dupVec towardsLeft perp addVec lineLineIntersection triangleOffset addVec"
+        },
+        {
+            "type": "L",
+            "params": "towardsLeft triangleInradius leftSideWidth 2 / + scaleVec dupVec towardsLeft perp addVec towardsBottom triangleInradius bottomSideWidth 2 / + scaleVec dupVec towardsBottom perp addVec lineLineIntersection triangleOffset addVec"
+        },
+        {
+            "type": "L",
+            "params": "triangleInradius bottomSideWidth 2 / + stemWidth 2 / towardsBottom turnedAs triangleOffset addVec"
+        },
+        {
+            "type": "V",
+            "params": "ContractedInnerShieldLeftStemCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "ContractedInnerShieldEllipseData drop drop 0 0 stemWidth 2 / triangleOffset drop + ContractedInnerShieldRightStemCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "towardsBottom triangleInradius bottomSideWidth 2 / - scaleVec dupVec towardsBottom perp addVec towardsLeft triangleInradius leftSideWidth 2 / - scaleVec dupVec towardsLeft perp addVec lineLineIntersection triangleOffset addVec"
+        },
+        {
+            "type": "L",
+            "params": "towardsLeft triangleInradius leftSideWidth 2 / - scaleVec dupVec towardsLeft perp addVec towardsRight triangleInradius rightSideWidth 2 / - scaleVec dupVec towardsRight perp addVec lineLineIntersection triangleOffset addVec"
+        },
+        {
+            "type": "L",
+            "params": "towardsRight triangleInradius rightSideWidth 2 / - scaleVec dupVec towardsRight perp addVec towardsBottom triangleInradius bottomSideWidth 2 / - scaleVec dupVec towardsBottom perp addVec lineLineIntersection triangleOffset addVec"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "stemWidth 2 / triangleOffset drop + ExpandedOuterShieldRightStemCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "ExpandedOuterShieldEllipseData drop drop 0 1 stemWidth 2 / _ triangleOffset drop + ExpandedOuterShieldLeftStemCollisionY"
+        },
+        {
+            "type": "V",
+            "params": "ExpandedOuterShieldLeftStemCollisionY ExpandedOuterShieldRightStemCollisionY + 2 / shaftBottom + crossbarHeight - 2 /"
+        },
+        {
+            "type": "H",
+            "params": "triangleOffset drop crossbarWidth 2 / -"
+        },
+        {
+            "type": "V",
+            "params": "ExpandedOuterShieldLeftStemCollisionY ExpandedOuterShieldRightStemCollisionY + 2 / shaftBottom + crossbarHeight + 2 /"
+        },
+        {
+            "type": "H",
+            "params": "stemWidth 2 / _ triangleOffset drop +"
+        },
+        {
+            "type": "V",
+            "params": "shaftBottom 2 -"
+        },
+        {
+            "type": "a",
+            "params": "3 3 0 0 1 -1 2"
+        },
+        {
+            "type": "H",
+            "params": "stemWidth 2 / triangleOffset drop + 1 +"
+        },
+        {
+            "type": "a",
+            "params": "3 3 0 0 1 -1 -2"
+        },
+        {
+            "type": "V",
+            "params": "ExpandedOuterShieldLeftStemCollisionY ExpandedOuterShieldRightStemCollisionY + 2 / shaftBottom + crossbarHeight + 2 /"
+        },
+        {
+            "type": "H",
+            "params": "triangleOffset drop crossbarWidth 2 / + 2 -"
+        },
+        {
+            "type": "a",
+            "params": "3 3 0 0 1 2 1"
+        },
+        {
+            "type": "V",
+            "params": "ExpandedOuterShieldLeftStemCollisionY ExpandedOuterShieldRightStemCollisionY + 2 / shaftBottom + crossbarHeight - 2 /"
+        },
+        {
+            "type": "H",
+            "params": "stemWidth 2 / triangleOffset drop +"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": true
+}

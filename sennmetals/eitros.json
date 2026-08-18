@@ -1,0 +1,442 @@
+{
+    "output": "eitros_symbol",
+    "dump": "dump",
+    "imports": [
+        "standardLib",
+        "sennmetals/common"
+    ],
+    "definitions": [
+        {
+            "name": "tridentWoundPos",
+            "definition": "3 -3"
+        },
+        {
+            "name": "tridentShaftLength",
+            "definition": "27"
+        },
+        {
+            "name": "tridentShaftWidth",
+            "definition": "2"
+        },
+        {
+            "name": "alongTridentShaft",
+            "definition": "-45 toRadians circle"
+        },
+        {
+            "name": "OuterTridentForkEllipseData",
+            "definition": "10 10 0 tridentWoundPos alongTridentShaft 7 scaleVec addVec"
+        },
+        {
+           "name": "InnerTridentForkEllipseData",
+           "definition": "8 9 -20 OuterTridentForkEllipseData ellipseCenter"
+        },
+        {
+            "name": "sideTineLength",
+            "definition": "15"
+        },
+        {
+            "name": "centerTineLength",
+            "definition": "20"
+        }, 
+        {
+            "name": "toLeftTineBarbOrigin",
+            "definition": "sideTineLength InnerTridentTineRadius OuterTridentTineRadius + 2 / addVec alongTridentShaft turnedAs tridentWoundPos addVec"
+        },
+        {
+            "name": "toCenterTineBarbOrigin",
+            "definition": "centerTineLength 0 addVec alongTridentShaft turnedAs tridentWoundPos addVec"
+        }, 
+        {
+            "name": "toRightTineBarbOrigin",
+            "definition": "sideTineLength InnerTridentTineRadius OuterTridentTineRadius + -2 / addVec alongTridentShaft turnedAs tridentWoundPos addVec"
+        },
+        {
+            "name": "tineBarbPoint1",
+            "definition": "0 0"
+        },
+        {
+            "name": "tineBarbPoint2",
+            "definition": "-2 3"
+        },
+        {
+            "name": "tineBarbPoint3",
+            "definition": "0 1"
+        },
+        {
+            "name": "tineBarbPoint4",
+            "definition": "2 0"
+        },
+        {
+            "name": "tineBarbPoint5",
+            "definition": "tineBarbPoint3 _"
+        },
+        {
+            "name": "tineBarbPoint6",
+            "definition": "tineBarbPoint2 _"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["OuterShieldLeftFattenedShaftCollisionX", "OuterShieldLeftFattenedShaftCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldLeftFattenedShaftCollisionX OuterShieldLeftFattenedShaftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / margin + _ scaleVec addVec dupVec alongTridentShaft addVec OuterShieldLeftFattenedShaftCollisionX OuterShieldLeftFattenedShaftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldLeftFattenedShaftCollisionX OuterShieldLeftFattenedShaftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot "
+            ]
+        },
+        {
+            "variables": ["OuterShieldRightFattenedShaftCollisionX", "OuterShieldRightFattenedShaftCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldRightFattenedShaftCollisionX OuterShieldRightFattenedShaftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / margin + scaleVec addVec dupVec alongTridentShaft addVec OuterShieldRightFattenedShaftCollisionX OuterShieldRightFattenedShaftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldRightFattenedShaftCollisionX OuterShieldRightFattenedShaftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot "
+            ]
+        },
+        {
+            "variables": ["InnerShieldLeftFattenedShaftCollisionX", "InnerShieldLeftFattenedShaftCollisionY"],
+            "assertions": [
+                "InnerShieldEllipseData InnerShieldLeftFattenedShaftCollisionX InnerShieldLeftFattenedShaftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / margin + _ scaleVec addVec dupVec alongTridentShaft addVec InnerShieldLeftFattenedShaftCollisionX InnerShieldLeftFattenedShaftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "InnerShieldLeftFattenedShaftCollisionX InnerShieldLeftFattenedShaftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot "
+            ]
+        },
+        {
+            "variables": ["InnerShieldRightFattenedShaftCollisionX", "InnerShieldRightFattenedShaftCollisionY"],
+            "assertions": [
+                "InnerShieldEllipseData InnerShieldRightFattenedShaftCollisionX InnerShieldRightFattenedShaftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / margin + scaleVec addVec dupVec alongTridentShaft addVec InnerShieldRightFattenedShaftCollisionX InnerShieldRightFattenedShaftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "InnerShieldRightFattenedShaftCollisionX InnerShieldRightFattenedShaftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot "
+            ]
+        },
+        {
+            "variables": ["OuterTridentForkLeftShaftCollisionX", "OuterTridentForkLeftShaftCollisionY"],
+            "assertions": [
+                "OuterTridentForkEllipseData OuterTridentForkLeftShaftCollisionX OuterTridentForkLeftShaftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / _ scaleVec addVec dupVec alongTridentShaft addVec OuterTridentForkLeftShaftCollisionX OuterTridentForkLeftShaftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterTridentForkLeftShaftCollisionX OuterTridentForkLeftShaftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot"
+            ]
+        },
+        {
+            "variables": ["OuterTridentForkRightShaftCollisionX", "OuterTridentForkRightShaftCollisionY"],
+            "assertions": [
+                "OuterTridentForkEllipseData OuterTridentForkRightShaftCollisionX OuterTridentForkRightShaftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / scaleVec addVec dupVec alongTridentShaft addVec OuterTridentForkRightShaftCollisionX OuterTridentForkRightShaftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterTridentForkRightShaftCollisionX OuterTridentForkRightShaftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot"
+            ]
+        },
+        {
+            "variables": ["InnerTridentForkLeftShaftCollisionX", "InnerTridentForkLeftShaftCollisionY"],
+            "assertions": [
+                "InnerTridentForkEllipseData InnerTridentForkLeftShaftCollisionX InnerTridentForkLeftShaftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / _ scaleVec addVec dupVec alongTridentShaft addVec InnerTridentForkLeftShaftCollisionX InnerTridentForkLeftShaftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "InnerTridentForkLeftShaftCollisionX InnerTridentForkLeftShaftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot"
+            ]
+        },
+        {
+            "variables": ["InnerTridentForkRightShaftCollisionX", "InnerTridentForkRightShaftCollisionY"],
+            "assertions": [
+                "InnerTridentForkEllipseData InnerTridentForkRightShaftCollisionX InnerTridentForkRightShaftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / scaleVec addVec dupVec alongTridentShaft addVec InnerTridentForkRightShaftCollisionX InnerTridentForkRightShaftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "InnerTridentForkRightShaftCollisionX InnerTridentForkRightShaftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot"
+            ]
+        },
+        {
+            "variables": ["OuterTridentLeftWoundLineCollisionX", "OuterTridentLeftWoundLineCollisionY"],
+            "assertions": [
+                "OuterTridentForkEllipseData OuterTridentLeftWoundLineCollisionX OuterTridentLeftWoundLineCollisionY ellipseTest",
+                "tridentWoundPos dupVec alongTridentShaft perp addVec OuterTridentLeftWoundLineCollisionX OuterTridentLeftWoundLineCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterTridentLeftWoundLineCollisionX OuterTridentLeftWoundLineCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft perp dot"
+            ]
+        },
+        {
+            "variables": ["OuterTridentRightWoundLineCollisionX", "OuterTridentRightWoundLineCollisionY"],
+            "assertions": [
+                "OuterTridentForkEllipseData OuterTridentRightWoundLineCollisionX OuterTridentRightWoundLineCollisionY ellipseTest",
+                "tridentWoundPos dupVec alongTridentShaft perp addVec OuterTridentRightWoundLineCollisionX OuterTridentRightWoundLineCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterTridentRightWoundLineCollisionX OuterTridentRightWoundLineCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft perp dot _"
+            ]
+        },
+        {
+            "variables": ["InnerTridentLeftWoundLineCollisionX", "InnerTridentLeftWoundLineCollisionY"],
+            "assertions": [
+                "InnerTridentForkEllipseData InnerTridentLeftWoundLineCollisionX InnerTridentLeftWoundLineCollisionY ellipseTest",
+                "tridentWoundPos dupVec alongTridentShaft perp addVec InnerTridentLeftWoundLineCollisionX InnerTridentLeftWoundLineCollisionY lineTest"
+            ],
+            "restrictions": [
+                "InnerTridentLeftWoundLineCollisionX InnerTridentLeftWoundLineCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft perp dot"
+            ]
+        },
+        {
+            "variables": ["InnerTridentRightWoundLineCollisionX", "InnerTridentRightWoundLineCollisionY"],
+            "assertions": [
+                "InnerTridentForkEllipseData InnerTridentRightWoundLineCollisionX InnerTridentRightWoundLineCollisionY ellipseTest",
+                "tridentWoundPos dupVec alongTridentShaft perp addVec InnerTridentRightWoundLineCollisionX InnerTridentRightWoundLineCollisionY lineTest"
+            ],
+            "restrictions": [
+                "InnerTridentRightWoundLineCollisionX InnerTridentRightWoundLineCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft perp dot _"
+            ]
+        },
+        {
+            "variables": ["OuterTridentTineRadius"],
+            "assertions": [
+                "OuterTridentForkEllipseData drop drop 0 0 alongTridentShaft perp OuterTridentTineRadius _ scaleVec ellipseTest"
+            ],
+            "restrictions": [
+                "OuterTridentTineRadius _"
+            ]
+        },
+        {
+            "variables": ["InnerTridentTineRadius"],
+            "assertions": [
+                "InnerTridentForkEllipseData drop drop 0 0 alongTridentShaft perp InnerTridentTineRadius _ scaleVec ellipseTest"
+            ],
+            "restrictions": [
+                "InnerTridentTineRadius _"
+            ]
+        },
+        {
+            "variables": ["OuterShieldLeftTineLeftCollisionX", "OuterShieldLeftTineLeftCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldLeftTineLeftCollisionX OuterShieldLeftTineLeftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp OuterTridentTineRadius _ scaleVec addVec dupVec alongTridentShaft addVec OuterShieldLeftTineLeftCollisionX OuterShieldLeftTineLeftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldLeftTineLeftCollisionX OuterShieldLeftTineLeftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot _"
+            ]
+        },
+        {
+            "variables": ["OuterShieldLeftTineRightCollisionX", "OuterShieldLeftTineRightCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldLeftTineRightCollisionX OuterShieldLeftTineRightCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp InnerTridentTineRadius _ scaleVec addVec dupVec alongTridentShaft addVec OuterShieldLeftTineRightCollisionX OuterShieldLeftTineRightCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldLeftTineRightCollisionX OuterShieldLeftTineRightCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot _"
+            ]
+        },
+        {
+            "variables": ["OuterShieldCenterTineLeftCollisionX", "OuterShieldCenterTineLeftCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldCenterTineLeftCollisionX OuterShieldCenterTineLeftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / _ scaleVec addVec dupVec alongTridentShaft addVec OuterShieldCenterTineLeftCollisionX OuterShieldCenterTineLeftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldCenterTineLeftCollisionX OuterShieldCenterTineLeftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot _"
+            ]
+        },
+        {
+            "variables": ["OuterShieldCenterTineRightCollisionX", "OuterShieldCenterTineRightCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldCenterTineRightCollisionX OuterShieldCenterTineRightCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / scaleVec addVec dupVec alongTridentShaft addVec OuterShieldCenterTineRightCollisionX OuterShieldCenterTineRightCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldCenterTineRightCollisionX OuterShieldCenterTineRightCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot _"
+            ]
+        },
+        {
+            "variables": ["OuterShieldRightTineLeftCollisionX", "OuterShieldRightTineLeftCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldRightTineLeftCollisionX OuterShieldRightTineLeftCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp InnerTridentTineRadius scaleVec addVec dupVec alongTridentShaft addVec OuterShieldRightTineLeftCollisionX OuterShieldRightTineLeftCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldRightTineLeftCollisionX OuterShieldRightTineLeftCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot _"
+            ]
+        },
+        {
+            "variables": ["OuterShieldRightTineRightCollisionX", "OuterShieldRightTineRightCollisionY"],
+            "assertions": [
+                "OuterShieldEllipseData OuterShieldRightTineRightCollisionX OuterShieldRightTineRightCollisionY ellipseTest",
+                "tridentWoundPos alongTridentShaft perp OuterTridentTineRadius scaleVec addVec dupVec alongTridentShaft addVec OuterShieldRightTineRightCollisionX OuterShieldRightTineRightCollisionY lineTest"
+            ],
+            "restrictions": [
+                "OuterShieldRightTineRightCollisionX OuterShieldRightTineRightCollisionY tridentWoundPos -1 scaleVec addVec alongTridentShaft dot _"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "OuterShieldRightFattenedShaftCollisionX OuterShieldRightFattenedShaftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "OuterShieldEllipseData drop drop 0 0 OuterShieldRightTineRightCollisionX OuterShieldRightTineRightCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "0 OuterTridentTineRadius InnerTridentTineRadius - 2 / dup 1 1 push tineBarbPoint1 tineBarbPoint2 lineLineIntersection toLeftTineBarbOrigin"
+        },
+        {
+            "type": "L",
+            "params": "tineBarbPoint2 toLeftTineBarbOrigin"
+        },
+        {
+            "type": "Q",
+            "params": "tineBarbPoint3 toLeftTineBarbOrigin tineBarbPoint4 toLeftTineBarbOrigin"
+        },
+        {
+            "type": "Q",
+            "params": "tineBarbPoint5 toLeftTineBarbOrigin tineBarbPoint6 toLeftTineBarbOrigin"
+        },
+        {
+            "type": "L",
+            "params": "0 InnerTridentTineRadius OuterTridentTineRadius - 2 / dup 1 1 push tineBarbPoint6 tineBarbPoint1 lineLineIntersection toLeftTineBarbOrigin"
+        },
+        {
+            "type": "L",
+            "params": "OuterShieldRightTineLeftCollisionX OuterShieldRightTineLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "OuterShieldEllipseData drop drop 0 0 OuterShieldCenterTineRightCollisionX OuterShieldCenterTineRightCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "0 tridentShaftWidth 2 / dup 1 1 push tineBarbPoint1 tineBarbPoint2 lineLineIntersection toCenterTineBarbOrigin"
+        },
+        {
+            "type": "L",
+            "params": "tineBarbPoint2 toCenterTineBarbOrigin"
+        },
+        {
+            "type": "Q",
+            "params": "tineBarbPoint3 toCenterTineBarbOrigin tineBarbPoint4 toCenterTineBarbOrigin"
+        },
+        {
+            "type": "Q",
+            "params": "tineBarbPoint5 toCenterTineBarbOrigin tineBarbPoint6 toCenterTineBarbOrigin"
+        },
+        {
+            "type": "L",
+            "params": "0 tridentShaftWidth -2 / dup 1 1 push tineBarbPoint6 tineBarbPoint1 lineLineIntersection toCenterTineBarbOrigin"
+        },
+        {
+            "type": "L",
+            "params": "OuterShieldCenterTineLeftCollisionX OuterShieldCenterTineLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "OuterShieldEllipseData drop drop 0 0 OuterShieldLeftTineRightCollisionX OuterShieldLeftTineRightCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "0 OuterTridentTineRadius InnerTridentTineRadius - 2 / dup 1 1 push tineBarbPoint1 tineBarbPoint2 lineLineIntersection toRightTineBarbOrigin"
+        },
+        {
+            "type": "L",
+            "params": "tineBarbPoint2 toRightTineBarbOrigin"
+        },
+        {
+            "type": "Q",
+            "params": "tineBarbPoint3 toRightTineBarbOrigin tineBarbPoint4 toRightTineBarbOrigin"
+        },
+        {
+            "type": "Q",
+            "params": "tineBarbPoint5 toRightTineBarbOrigin tineBarbPoint6 toRightTineBarbOrigin"
+        },
+        {
+            "type": "L",
+            "params": "0 InnerTridentTineRadius OuterTridentTineRadius - 2 / dup 1 1 push tineBarbPoint6 tineBarbPoint1 lineLineIntersection toRightTineBarbOrigin"
+        },
+        {
+            "type": "L",
+            "params": "OuterShieldLeftTineLeftCollisionX OuterShieldLeftTineLeftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "OuterShieldEllipseData drop drop 0 0 OuterShieldLeftFattenedShaftCollisionX OuterShieldLeftFattenedShaftCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "InnerShieldLeftFattenedShaftCollisionX InnerShieldLeftFattenedShaftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "InnerShieldEllipseData drop drop 1 1 InnerShieldRightFattenedShaftCollisionX InnerShieldRightFattenedShaftCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "OuterTridentForkRightShaftCollisionX OuterTridentForkRightShaftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "OuterTridentForkEllipseData drop drop 0 0 OuterTridentRightWoundLineCollisionX OuterTridentRightWoundLineCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "InnerTridentRightWoundLineCollisionX InnerTridentRightWoundLineCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "InnerTridentForkEllipseData drop drop 0 1 InnerTridentForkRightShaftCollisionX InnerTridentForkRightShaftCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / scaleVec addVec"
+        },
+        {
+            "type": "L",
+            "params": "tridentWoundPos alongTridentShaft perp tridentShaftWidth 2 / _ scaleVec addVec"
+        },
+        {
+            "type": "L",
+            "params": "InnerTridentForkLeftShaftCollisionX InnerTridentForkLeftShaftCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "InnerTridentForkEllipseData drop drop 0 1 InnerTridentLeftWoundLineCollisionX InnerTridentLeftWoundLineCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "OuterTridentLeftWoundLineCollisionX OuterTridentLeftWoundLineCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "OuterTridentForkEllipseData drop drop 0 0 OuterTridentForkLeftShaftCollisionX OuterTridentForkLeftShaftCollisionY"
+        },
+        {
+            "type": "L",
+            "params": "tridentWoundPos tridentShaftLength _ tridentShaftWidth 2 / _ alongTridentShaft turnedAs addVec"
+        },
+        {
+            "type": "L",
+            "params": "tridentWoundPos tridentShaftLength _ tridentShaftWidth 2 / alongTridentShaft turnedAs addVec"
+        },
+        {
+            "type": "z",
+            "params": ""
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": true
+}

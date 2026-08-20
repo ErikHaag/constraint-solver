@@ -1,0 +1,115 @@
+{
+    "output": "ether_symbol",
+    "dump": "dump",
+    "imports": [
+        "standardLib",
+        "false_aether/heavenlyCardinalsCommon"
+    ],
+    "definitions": [
+        {
+            "name": "",
+            "definition": "strikethroughInnerEllipseBRCollisionY"
+        },
+        {
+            "name": "symbolWidth",
+            "definition": "20"
+        },
+        {
+            "name": "indexToDir",
+            "definition": "12 % 12 / TAU * circle"
+        },
+        {
+            "name": "indexToThickness",
+            "definition": "12 % 12 / indexToThicknessCurve"
+        }
+    ],
+    "constraints": [],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "11 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 7 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "7 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 5 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "5 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 1 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "1 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 11 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "7 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 11 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "11 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 10 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "10 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 8 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "8 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 7 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "8 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 10 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "10 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 2 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "2 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 4 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "4 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 8 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "4 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 2 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "2 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 1 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "1 symbolWidth 2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 5 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "5 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness -2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec 4 symbolWidth -2 / 0 2 distDup indexToDir 4 distDup indexToThickness 2 / scaleVec addVec dupVec 4 pull indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": true
+}

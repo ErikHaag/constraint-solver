@@ -1,0 +1,123 @@
+{
+    "output": "mind_symbol",
+    "dump": "dump",
+    "imports": [
+        "standardLib",
+        "false_aether/heavenlyCardinalsCommon"
+    ],
+    "definitions": [
+        {
+            "name": "",
+            "definition": "0 indexToThickness 1 indexToThickness 2 indexToThickness 3 indexToThickness 4 indexToThickness 5 indexToThickness 6 indexToThickness 7 indexToThickness"
+        }
+    ],
+    "constraints": [],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "6 indexToDir inscribedCircleRadius 6 indexToThickness 2 / + scaleVec dupVec 6 indexToDir perp addVec 4 indexToDir inscribedCircleRadius 4 indexToThickness 2 / + scaleVec dupVec 4 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "4 indexToDir inscribedCircleRadius 4 indexToThickness 2 / + scaleVec dupVec 4 indexToDir perp addVec 2 indexToDir inscribedCircleRadius 2 indexToThickness 2 / + scaleVec dupVec 2 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "2 indexToDir inscribedCircleRadius 2 indexToThickness 2 / + scaleVec dupVec 2 indexToDir perp addVec 0 indexToDir inscribedCircleRadius 0 indexToThickness 2 / + scaleVec dupVec 0 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "0 indexToDir inscribedCircleRadius 0 indexToThickness 2 / + scaleVec dupVec 0 indexToDir perp addVec 6 indexToDir inscribedCircleRadius 6 indexToThickness 2 / + scaleVec dupVec 6 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "4 indexToDir inscribedCircleRadius 4 indexToThickness 2 / - scaleVec dupVec 4 indexToDir perp addVec 6 indexToDir inscribedCircleRadius 6 indexToThickness 2 / - scaleVec dupVec 6 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "line6LeftEllipseCollisionX line6LeftEllipseCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 line4RightEllipseCollisionX line4RightEllipseCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "2 indexToDir inscribedCircleRadius 2 indexToThickness 2 / - scaleVec dupVec 2 indexToDir perp addVec 4 indexToDir inscribedCircleRadius 4 indexToThickness 2 / - scaleVec dupVec 4 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "line4LeftEllipseCollisionX line4LeftEllipseCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 line2RightEllipseCollisionX line2RightEllipseCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "0 indexToDir inscribedCircleRadius 0 indexToThickness 2 / - scaleVec dupVec 0 indexToDir perp addVec 2 indexToDir inscribedCircleRadius 2 indexToThickness 2 / - scaleVec dupVec 2 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "line2LeftEllipseCollisionX line2LeftEllipseCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 line0RightEllipseCollisionX line0RightEllipseCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "6 indexToDir inscribedCircleRadius 6 indexToThickness 2 / - scaleVec dupVec 6 indexToDir perp addVec 0 indexToDir inscribedCircleRadius 0 indexToThickness 2 / - scaleVec dupVec 0 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "line0LeftEllipseCollisionX line0LeftEllipseCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 line6RightEllipseCollisionX line6RightEllipseCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "innerEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 innerEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 innerEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": true
+}

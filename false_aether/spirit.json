@@ -1,0 +1,224 @@
+{
+    "output": "spirit_symbol",
+    "dump": "dump",
+    "imports": [
+        "standardLib",
+        "false_aether/heavenlyCardinalsCommon"
+    ],
+    "definitions": [
+        {
+            "name": "",
+            "definition": "0 indexToThickness 1 indexToThickness 2 indexToThickness 3 indexToThickness 4 indexToThickness 5 indexToThickness 6 indexToThickness 7 indexToThickness"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["strikethroughOuterEllipseTLCollisionY"],
+            "assertions": [
+                "outerEllipseData strikethroughBarWidth -2 / strikethroughOuterEllipseTLCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "strikethroughOuterEllipseTLCollisionY"
+            ]
+        },
+        {
+            "variables": ["strikethroughOuterEllipseTRCollisionY"],
+            "assertions": [
+                "outerEllipseData strikethroughBarWidth 2 / strikethroughOuterEllipseTRCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "strikethroughOuterEllipseTRCollisionY"
+            ]
+        },
+        {
+            "variables": ["strikethroughOuterEllipseBLCollisionY"],
+            "assertions": [
+                "outerEllipseData strikethroughBarWidth -2 / strikethroughOuterEllipseBLCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "strikethroughOuterEllipseBLCollisionY _"
+            ]
+        },
+        {
+            "variables": ["strikethroughOuterEllipseBRCollisionY"],
+            "assertions": [
+                "outerEllipseData strikethroughBarWidth 2 / strikethroughOuterEllipseBRCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "strikethroughOuterEllipseBRCollisionY _"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "strikethroughBarWidth -2 / dup 0 2 pull 1 5 indexToDir inscribedCircleRadius 5 indexToThickness 2 / + scaleVec dupVec 5 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "5 indexToDir inscribedCircleRadius 5 indexToThickness 2 / + scaleVec dupVec 5 indexToDir perp addVec 3 indexToDir inscribedCircleRadius 3 indexToThickness 2 / + scaleVec dupVec 3 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "3 indexToDir inscribedCircleRadius 3 indexToThickness 2 / + scaleVec dupVec 3 indexToDir perp addVec strikethroughBarWidth -2 / dup 0 2 pull 1 lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "strikethroughBarWidth -2 / strikethroughBarHeight 2 /"
+        },
+        {
+            "type": "H",
+            "params": "strikethroughBarWidth 2 /"
+        },
+        {
+            "type": "L",
+            "params": "strikethroughBarWidth 2 / dup 0 2 pull 1 1 indexToDir inscribedCircleRadius 1 indexToThickness 2 / + scaleVec dupVec 1 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "1 indexToDir inscribedCircleRadius 1 indexToThickness 2 / + scaleVec dupVec 1 indexToDir perp addVec 7 indexToDir inscribedCircleRadius 7 indexToThickness 2 / + scaleVec dupVec 7 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "7 indexToDir inscribedCircleRadius 7 indexToThickness 2 / + scaleVec dupVec 7 indexToDir perp addVec strikethroughBarWidth 2 / dup 0 2 pull 1 lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "strikethroughBarWidth 2 / strikethroughBarHeight -2 /"
+        },
+        {
+            "type": "H",
+            "params": "strikethroughBarWidth -2 /"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "3 indexToDir inscribedCircleRadius 3 indexToThickness 2 / - scaleVec dupVec 3 indexToDir perp addVec 5 indexToDir inscribedCircleRadius 5 indexToThickness 2 / - scaleVec dupVec 5 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "line5LeftEllipseCollisionX line5LeftEllipseCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 line3RightEllipseCollisionX line3RightEllipseCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "strikethroughBarWidth -2 / dup 0 1 pull 1 3 indexToDir inscribedCircleRadius 3 indexToThickness 2 / - scaleVec dupVec 3 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "line3LeftEllipseCollisionX line3LeftEllipseCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 strikethroughBarWidth -2 / strikethroughOuterEllipseBLCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "1 indexToDir inscribedCircleRadius 1 indexToThickness 2 / - scaleVec dupVec 1 indexToDir perp addVec strikethroughBarWidth 2 / dup 0 1 pull 1 lineLineIntersection"
+        },
+        {
+            "type": "V",
+            "params": "strikethroughOuterEllipseBRCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 line1RightEllipseCollisionX line1RightEllipseCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "7 indexToDir inscribedCircleRadius 7 indexToThickness 2 / - scaleVec dupVec 7 indexToDir perp addVec 1 indexToDir inscribedCircleRadius 1 indexToThickness 2 / - scaleVec dupVec 1 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "line1LeftEllipseCollisionX line1LeftEllipseCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 line7RightEllipseCollisionX line7RightEllipseCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "strikethroughBarWidth 2 / dup 0 1 pull 1 7 indexToDir inscribedCircleRadius 7 indexToThickness 2 / - scaleVec dupVec 7 indexToDir perp addVec lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "line7LeftEllipseCollisionX line7LeftEllipseCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 strikethroughBarWidth 2 / strikethroughOuterEllipseTRCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "5 indexToDir inscribedCircleRadius 5 indexToThickness 2 / - scaleVec dupVec 5 indexToDir perp addVec strikethroughBarWidth -2 / dup 0 1 pull 1 lineLineIntersection"
+        },
+        {
+            "type": "L",
+            "params": "strikethroughBarWidth -2 / strikethroughOuterEllipseTLCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 line5RightEllipseCollisionX line5RightEllipseCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "strikethroughBarWidth -2 / strikethroughInnerEllipseBLCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 strikethroughBarWidth -2 / strikethroughInnerEllipseTLCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "strikethroughBarWidth 2 / strikethroughInnerEllipseTRCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 strikethroughBarWidth 2 / strikethroughInnerEllipseBRCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "transform": "1 0 0 1 0 0",
+    "export": true
+}

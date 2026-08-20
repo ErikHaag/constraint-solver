@@ -290,7 +290,7 @@ dumping = data.dump != ""
 import_stack = data.imports
 imported_files:list[str] = []
 import_order:list[str] = []
-imported_definitions:dict[str,list[definition_model]] = {}
+imported_statements:dict[str,tuple[list[definition_model],list[constraint_model]]] = {}
 
 while len(import_stack) > 0:
     file = import_stack.pop()
@@ -304,19 +304,22 @@ while len(import_stack) > 0:
             import_data = library_model.from_dict(json.loads("\n".join(f.readlines())))
         import_stack.extend(import_data.imports)
         import_order.append(file)
-        imported_definitions[file] = import_data.definitions
+        imported_statements[file] = (import_data.definitions,import_data.constraints)
 
 imported_definitions_list:list[definition_model] = []
+imported_constraints_list:list[constraint_model] = []
 
 for v in import_order[::-1]:
-    imported_definitions_list.extend(imported_definitions[v])
+    imported_definitions_list.extend(imported_statements[v][0])
+    imported_constraints_list.extend(imported_statements[v][1])
 
 data.definitions = [j for i in [imported_definitions_list, data.definitions] for j in i]
+data.constraints = [j for i in [imported_constraints_list, data.constraints] for j in i]
 
 constraint_data_location = "constraint_data.json"
 
 definition_iterator = iter(data.definitions)
-constraint_iterator = iter(data.constraits)
+constraint_iterator = iter(data.constraints)
 
 next_definition : definition_model | None
 next_constraint: constraint_model | None
@@ -390,6 +393,7 @@ try:
                     break
                 print("looking at constraint #" + str(contraint_index))
                 (solution_found, best_solution) = load_previous_solution(next_constraint)
+                good_solution_found = False
                 best_solution_result:constraint_result = constraint_result(0, 0, 0)
                 if not solution_found:
                     print("starting...")
@@ -397,7 +401,7 @@ try:
                     # Nelder–Mead method
                     potential_solutions:list[list[float]] = []
                     potential_solutions_results:list[constraint_result] = []
-                    for _ in range(50):
+                    for _ in range(100):
                         variable_count = len(next_constraint.variables)
                         current_amoeba:list[list[float]] = [[random.uniform(-500, 500) for i in range(variable_count)]]
                         for i in range(variable_count):
@@ -418,8 +422,10 @@ try:
                             #order
                             (current_results, current_amoeba) = sort_evaluations(current_results, current_amoeba)
                             # termination
-                            if amoeba_steps >= 200:
-                            # or (all([r[0] == 2 and r[1] == 0 for r in current_results]) and statistics.pvariance(data=[r[2] for r in current_results])) <= 0.01:
+                            if current_results[-2].ok_success_count() and current_results[-2].ok_assertion_result() and current_results[-2].ok_restriction_result():
+                                good_solution_found = True
+                                break
+                            if amoeba_steps >= 500 * variable_count:
                                 break
                             amoeba_steps += 1
                             # calcuate centroid
@@ -468,6 +474,7 @@ try:
                     best_solution_result = potential_solutions_results[0]
                     stopwatch_end = timer()
                     print(f"took {stopwatch_end - stopwatch_start:2f} seconds")
+                    print("good solution found" if good_solution_found else "overran loop")
                 else:
                     best_solution_result = evaluate_constraint_set(next_constraint, best_solution)
                 contraint_index += 1
@@ -487,13 +494,14 @@ try:
                 if dumping:
                     dump_lines.append("-- Score --")
                     dump_lines.append(f"{best_solution_result.success_count}, {best_solution_result.assertion_result}, {best_solution_result.restriction_result}")
-                    dump_lines.append(f"{best_solution_result.success_count == 2} {best_solution_result.assertion_result < 0.01}, {best_solution_result.restriction_result < 0.01}\n")
-                
-                dependency_data.append(dependency_data_model(
-                    constraint = next_constraint,
-                    dependentVariables = get_dependent_expressions([*next_constraint.assertions, *next_constraint.restrictions], next_constraint.variables),
-                    evaluations= best_solution
-                ))
+                    dump_lines.append(f"{best_solution_result.ok_success_count()} {best_solution_result.ok_assertion_result()}, {best_solution_result.ok_restriction_result()}\n")
+
+                if best_solution_result.ok_success_count() and best_solution_result.ok_assertion_result() and best_solution_result.ok_restriction_result():
+                    dependency_data.append(dependency_data_model(
+                        constraint = next_constraint,
+                        dependentVariables = get_dependent_expressions([*next_constraint.assertions, *next_constraint.restrictions], next_constraint.variables),
+                        evaluations= best_solution
+                    ))
 
                 try:
                     next_constraint = next(constraint_iterator)

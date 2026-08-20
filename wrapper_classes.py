@@ -4,6 +4,16 @@ class constraint_result:
         self.restriction_result = restriction_result
         self.assertion_result = assertion_result
 
+    def ok_success_count(self):
+        return self.success_count == 2
+
+    def ok_restriction_result(self):
+        return self.restriction_result < 0.001
+
+    def ok_assertion_result(self):
+        return self.assertion_result < 0.01
+    
+
 class curve_data:
     def __init__(self, command:str, params:list[float], debug:bool) -> None:
         self.command = command

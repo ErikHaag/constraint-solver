@@ -24,7 +24,7 @@ class input_data_model:
     dump : str
     imports: list[str]
     definitions: list[definition_model]
-    constraits: list[constraint_model]
+    constraints: list[constraint_model]
     curves: list[curve_model]
     minX:float
     minY:float
@@ -40,7 +40,7 @@ class input_data_model:
             dump = obj.get("dump", ""),
             imports=obj.get("imports", []),
             definitions = [definition_model(**i) for i in obj.get("definitions")],
-            constraits = [constraint_model(**i) for i in obj.get("constraints")],
+            constraints = [constraint_model(**i) for i in obj.get("constraints")],
             curves = [curve_model(**i) for i in obj.get("curves")],
             minX = obj.get("minX", 0),
             minY = obj.get("minY", 0),
@@ -54,12 +54,14 @@ class input_data_model:
 class library_model:
     imports: list[str]
     definitions: list[definition_model]
+    constraints: list[constraint_model]
 
     @staticmethod
     def from_dict(obj):
         return library_model(
             imports = obj.get("imports", []),
-            definitions = [definition_model(**i) for i in obj.get("definitions")]
+            definitions = [definition_model(**i) for i in obj.get("definitions", [])],
+            constraints = [constraint_model(**i) for i in obj.get("constraints", [])]
         )
 
 @dataclass

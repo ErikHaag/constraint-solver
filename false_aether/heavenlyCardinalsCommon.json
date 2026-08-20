@@ -1,0 +1,244 @@
+{
+    "imports": [],
+    "definitions": [
+        {
+            "name": "inscribedCircleRadius",
+            "definition": "10"
+        },
+        {
+            "name": "outerEllipseData",
+            "definition": "inscribedCircleRadius inscribedCircleRadius 0 0 0"
+        },
+        {
+            "name": "innerEllipseData",
+            "definition": "inscribedCircleRadius 2 - inscribedCircleRadius 1 - -20 0 0"
+        },
+        {
+            "name": "indexToDir",
+            "definition": "8 % 8 / TAU * circle"
+        },
+        {
+            "name": "indexToThicknessCurve",
+            "delayed": true,
+            "definition": "TAU * cos indexToThicknessCurveA * indexToThicknessCurveB +"
+        },
+        {
+            "name": "indexToThickness",
+            "definition": "8 % 8 / indexToThicknessCurve"
+        },
+        {
+            "name": "strikethroughBarHeight",
+            "definition": "inscribedCircleRadius 2 * 2 sqrt * 5 +"
+        },
+        {
+            "name": "strikethroughBarWidth",
+            "definition": "1.5"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["indexToThicknessCurveA", "indexToThicknessCurveB"],
+            "assertions": [
+                "1 12 / indexToThicknessCurve 2.5 -",
+                "5 12 / indexToThicknessCurve 1 -"
+            ],
+            "restrictions": []
+        },
+        {
+            "variables": ["line0LeftEllipseCollisionX", "line0LeftEllipseCollisionY"],
+            "assertions": [
+                "0 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line0LeftEllipseCollisionX line0LeftEllipseCollisionY lineTest",
+                "outerEllipseData line0LeftEllipseCollisionX line0LeftEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "0 indexToDir perp line0LeftEllipseCollisionX line0LeftEllipseCollisionY dot"
+            ]
+        },
+        {
+            "variables": ["line0RightEllipseCollisionX", "line0RightEllipseCollisionY"],
+            "assertions": [
+                "0 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line0RightEllipseCollisionX line0RightEllipseCollisionY lineTest",
+                "outerEllipseData line0RightEllipseCollisionX line0RightEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "0 indexToDir perp line0RightEllipseCollisionX line0RightEllipseCollisionY dot _"
+            ]
+        },
+        {
+            "variables": ["line1LeftEllipseCollisionX", "line1LeftEllipseCollisionY"],
+            "assertions": [
+                "1 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line1LeftEllipseCollisionX line1LeftEllipseCollisionY lineTest",
+                "outerEllipseData line1LeftEllipseCollisionX line1LeftEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir perp line1LeftEllipseCollisionX line1LeftEllipseCollisionY dot"
+            ]
+        },
+        {
+            "variables": ["line1RightEllipseCollisionX", "line1RightEllipseCollisionY"],
+            "assertions": [
+                "1 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line1RightEllipseCollisionX line1RightEllipseCollisionY lineTest",
+                "outerEllipseData line1RightEllipseCollisionX line1RightEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "1 indexToDir perp line1RightEllipseCollisionX line1RightEllipseCollisionY dot _"
+            ]
+        },
+        {
+            "variables": ["line2LeftEllipseCollisionX", "line2LeftEllipseCollisionY"],
+            "assertions": [
+                "2 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line2LeftEllipseCollisionX line2LeftEllipseCollisionY lineTest",
+                "outerEllipseData line2LeftEllipseCollisionX line2LeftEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "2 indexToDir perp line2LeftEllipseCollisionX line2LeftEllipseCollisionY dot"
+            ]
+        },
+        {
+            "variables": ["line2RightEllipseCollisionX", "line2RightEllipseCollisionY"],
+            "assertions": [
+                "2 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line2RightEllipseCollisionX line2RightEllipseCollisionY lineTest",
+                "outerEllipseData line2RightEllipseCollisionX line2RightEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "2 indexToDir perp line2RightEllipseCollisionX line2RightEllipseCollisionY dot _"
+            ]
+        },
+        {
+            "variables": ["line3LeftEllipseCollisionX", "line3LeftEllipseCollisionY"],
+            "assertions": [
+                "3 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line3LeftEllipseCollisionX line3LeftEllipseCollisionY lineTest",
+                "outerEllipseData line3LeftEllipseCollisionX line3LeftEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "3 indexToDir perp line3LeftEllipseCollisionX line3LeftEllipseCollisionY dot"
+            ]
+        },
+        {
+            "variables": ["line3RightEllipseCollisionX", "line3RightEllipseCollisionY"],
+            "assertions": [
+                "3 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line3RightEllipseCollisionX line3RightEllipseCollisionY lineTest",
+                "outerEllipseData line3RightEllipseCollisionX line3RightEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "3 indexToDir perp line3RightEllipseCollisionX line3RightEllipseCollisionY dot _"
+            ]
+        },
+        {
+            "variables": ["line4LeftEllipseCollisionX", "line4LeftEllipseCollisionY"],
+            "assertions": [
+                "4 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line4LeftEllipseCollisionX line4LeftEllipseCollisionY lineTest",
+                "outerEllipseData line4LeftEllipseCollisionX line4LeftEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "4 indexToDir perp line4LeftEllipseCollisionX line4LeftEllipseCollisionY dot"
+            ]
+        },
+        {
+            "variables": ["line4RightEllipseCollisionX", "line4RightEllipseCollisionY"],
+            "assertions": [
+                "4 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line4RightEllipseCollisionX line4RightEllipseCollisionY lineTest",
+                "outerEllipseData line4RightEllipseCollisionX line4RightEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "4 indexToDir perp line4RightEllipseCollisionX line4RightEllipseCollisionY dot _"
+            ]
+        },
+        {
+            "variables": ["line5LeftEllipseCollisionX", "line5LeftEllipseCollisionY"],
+            "assertions": [
+                "5 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line5LeftEllipseCollisionX line5LeftEllipseCollisionY lineTest",
+                "outerEllipseData line5LeftEllipseCollisionX line5LeftEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "5 indexToDir perp line5LeftEllipseCollisionX line5LeftEllipseCollisionY dot"
+            ]
+        },
+        {
+            "variables": ["line5RightEllipseCollisionX", "line5RightEllipseCollisionY"],
+            "assertions": [
+                "5 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line5RightEllipseCollisionX line5RightEllipseCollisionY lineTest",
+                "outerEllipseData line5RightEllipseCollisionX line5RightEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "5 indexToDir perp line5RightEllipseCollisionX line5RightEllipseCollisionY dot _"
+            ]
+        },
+        {
+            "variables": ["line6LeftEllipseCollisionX", "line6LeftEllipseCollisionY"],
+            "assertions": [
+                "6 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line6LeftEllipseCollisionX line6LeftEllipseCollisionY lineTest",
+                "outerEllipseData line6LeftEllipseCollisionX line6LeftEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "6 indexToDir perp line6LeftEllipseCollisionX line6LeftEllipseCollisionY dot"
+            ]
+        },
+        {
+            "variables": ["line6RightEllipseCollisionX", "line6RightEllipseCollisionY"],
+            "assertions": [
+                "6 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line6RightEllipseCollisionX line6RightEllipseCollisionY lineTest",
+                "outerEllipseData line6RightEllipseCollisionX line6RightEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "6 indexToDir perp line6RightEllipseCollisionX line6RightEllipseCollisionY dot _"
+            ]
+        },
+        {
+            "variables": ["line7LeftEllipseCollisionX", "line7LeftEllipseCollisionY"],
+            "assertions": [
+                "7 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line7LeftEllipseCollisionX line7LeftEllipseCollisionY lineTest",
+                "outerEllipseData line7LeftEllipseCollisionX line7LeftEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "7 indexToDir perp line7LeftEllipseCollisionX line7LeftEllipseCollisionY dot"
+            ]
+        },
+        {
+            "variables": ["line7RightEllipseCollisionX", "line7RightEllipseCollisionY"],
+            "assertions": [
+                "7 dup indexToDir dupVec perp 3 pull 3 pull inscribedCircleRadius 5 pull indexToThickness 2 / - scaleVec dupVec 5 pull 5 pull addVec line7RightEllipseCollisionX line7RightEllipseCollisionY lineTest",
+                "outerEllipseData line7RightEllipseCollisionX line7RightEllipseCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "7 indexToDir perp line7RightEllipseCollisionX line7RightEllipseCollisionY dot _"
+            ]
+        },
+        {
+            "variables": ["strikethroughInnerEllipseTLCollisionY"],
+            "assertions": [
+                "innerEllipseData strikethroughBarWidth -2 / strikethroughInnerEllipseTLCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "strikethroughInnerEllipseTLCollisionY"
+            ]
+        },
+        {
+            "variables": ["strikethroughInnerEllipseTRCollisionY"],
+            "assertions": [
+                "innerEllipseData strikethroughBarWidth 2 / strikethroughInnerEllipseTRCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "strikethroughInnerEllipseTRCollisionY"
+            ]
+        },
+        {
+            "variables": ["strikethroughInnerEllipseBLCollisionY"],
+            "assertions": [
+                "innerEllipseData strikethroughBarWidth -2 / strikethroughInnerEllipseBLCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "strikethroughInnerEllipseBLCollisionY _"
+            ]
+        },
+        {
+            "variables": ["strikethroughInnerEllipseBRCollisionY"],
+            "assertions": [
+                "innerEllipseData strikethroughBarWidth 2 / strikethroughInnerEllipseBRCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "strikethroughInnerEllipseBRCollisionY _"
+            ]
+        }
+    ]
+}

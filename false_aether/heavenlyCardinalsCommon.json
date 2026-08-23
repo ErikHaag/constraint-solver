@@ -39,7 +39,7 @@
         {
             "variables": ["indexToThicknessCurveA", "indexToThicknessCurveB"],
             "assertions": [
-                "1 12 / indexToThicknessCurve 2.5 -",
+                "1 12 / indexToThicknessCurve 4.3 -",
                 "5 12 / indexToThicknessCurve 1 -"
             ],
             "restrictions": []

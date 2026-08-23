@@ -119,38 +119,6 @@
         },
         {
             "type": "M",
-            "params": "0 indexToDir inscribedCircleRadius 0 indexToThickness 2 / - scaleVec dupVec 0 indexToDir perp addVec 2 indexToDir inscribedCircleRadius 2 indexToThickness 2 / - scaleVec dupVec 2 indexToDir perp addVec lineLineIntersection"
-        },
-        {
-            "type": "L",
-            "params": "2 indexToDir inscribedCircleRadius 2 indexToThickness 2 / - scaleVec dupVec 2 indexToDir perp addVec 1 indexToDir inscribedCircleRadius 1 indexToThickness 2 / + scaleVec dupVec 1 indexToDir perp addVec lineLineIntersection"
-        },
-        {
-            "type": "L",
-            "params": "1 indexToDir inscribedCircleRadius 1 indexToThickness 2 / + scaleVec dupVec 1 indexToDir perp addVec 0 indexToDir inscribedCircleRadius 0 indexToThickness 2 / - scaleVec dupVec 0 indexToDir perp addVec lineLineIntersection"
-        },
-        {
-            "type": "Z",
-            "params": ""
-        },
-        {
-            "type": "M",
-            "params": "6 indexToDir inscribedCircleRadius 6 indexToThickness 2 / - scaleVec dupVec 6 indexToDir perp addVec 0 indexToDir inscribedCircleRadius 0 indexToThickness 2 / - scaleVec dupVec 0 indexToDir perp addVec lineLineIntersection"
-        },
-        {
-            "type": "L",
-            "params": "0 indexToDir inscribedCircleRadius 0 indexToThickness 2 / - scaleVec dupVec 0 indexToDir perp addVec 7 indexToDir inscribedCircleRadius 7 indexToThickness 2 / + scaleVec dupVec 7 indexToDir perp addVec lineLineIntersection"
-        },
-        {
-            "type": "L",
-            "params": "7 indexToDir inscribedCircleRadius 7 indexToThickness 2 / + scaleVec dupVec 7 indexToDir perp addVec 6 indexToDir inscribedCircleRadius 6 indexToThickness 2 / - scaleVec dupVec 6 indexToDir perp addVec lineLineIntersection"
-        },
-        {
-            "type": "Z",
-            "params": ""
-        },
-        {
-            "type": "M",
             "params": "3 indexToDir inscribedCircleRadius 3 indexToThickness 2 / - scaleVec dupVec 3 indexToDir perp addVec 5 indexToDir inscribedCircleRadius 5 indexToThickness 2 / - scaleVec dupVec 5 indexToDir perp addVec lineLineIntersection"
         },
         {

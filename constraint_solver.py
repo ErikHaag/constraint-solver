@@ -166,7 +166,6 @@ def evaluate_expression(expr:str, dependent:dict[str, float] = {}, max_substitut
                         commands = [j for i in [var_exp.strip().split(" "), commands] for j in i]
                         substitution_count += 1
                     else:
-                        print(expr)
                         raise NameError("Unknown variable or expression \"" + c + "\"")
         except InsuffientArguments:
             out_commands.extend([str(i) for i in stack])
@@ -690,6 +689,7 @@ try:
             svg_output += " />\n"
             svg_output += "\n".join(debug_data) + "\n"
         svg_output += "</svg>"
+        print("Writing file...")
         with open(data.output + ".svg", "w+") as f:
             f.write(svg_output)
 except Exception as e:

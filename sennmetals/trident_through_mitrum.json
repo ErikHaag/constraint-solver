@@ -81,7 +81,7 @@
 
         {
             "name": "tridentWoundPos",
-            "definition": "-1 -2"
+            "definition": "0 -2"
         },
         {
             "name": "tridentShaftLength",
@@ -93,7 +93,7 @@
         },
         {
             "name": "alongTridentShaft",
-            "definition": "-45 toRadians circle"
+            "definition": "-90 toRadians circle"
         },
         {
             "name": "OuterTridentForkEllipseData",
@@ -355,7 +355,7 @@
     "curves": [
         {
             "type": "M",
-            "params": "stemWidth 2 / stemTopY"
+            "params": "OuterShieldRightFattenedShaftCollisionX OuterShieldRightFattenedShaftCollisionY"
         },
         {
             "type": "A",
@@ -459,6 +459,22 @@
         },
         {
             "type": "A",
+            "params": "outerHeadEllipseData drop drop 0 0 C7 mirrorX"
+        },
+        {
+            "type": "C",
+            "params": "C6 C0 addVec mirrorX C4 C5 reflectControl C0 addVec mirrorX C5 C0 addVec mirrorX"
+        },
+        {
+            "type": "S",
+            "params": "C2 C3 reflectControl C0 addVec mirrorX C3 C0 addVec mirrorX"
+        },
+        {
+            "type": "S",
+            "params": "C1 C0 addVec mirrorX C0 mirrorX"
+        },
+        {
+            "type": "A",
             "params": "outerHeadEllipseData drop drop 0 0 OuterShieldLeftFattenedShaftCollisionX OuterShieldLeftFattenedShaftCollisionY"
         },
         {
@@ -469,34 +485,6 @@
         {
             "type": "A",
             "params": "innerHeadEllipseData drop drop 1 1 InnerShieldRightFattenedShaftCollisionX InnerShieldRightFattenedShaftCollisionY"
-        },
-        {
-            "type": "L",
-            "params": "OuterShieldRightFattenedShaftCollisionX OuterShieldRightFattenedShaftCollisionY"
-        },
-        {
-            "type": "A",
-            "params": "outerHeadEllipseData drop drop 0 0 stemWidth -2 / stemTopY"
-        },
-        {
-            "type": "V",
-            "params": "stemBottom baseSerifData 3 push drop drop drop -"
-        },
-        {
-            "type": "q",
-            "params": "baseSerifData 3 pull _ 3 push 1 pull _ 1 push"
-        },
-        {
-            "type": "H",
-            "params": "stemWidth 2 / baseSerifData 1 pull 3 push drop drop drop +"
-        },
-        {
-            "type": "q",
-            "params": "baseSerifData -1 scaleVec addVec baseSerifData 2 pull drop 2 pull drop -1 scaleVec"
-        },
-        {
-            "type": "Z",
-            "params": ""
         },
         {
             "type": "Z",

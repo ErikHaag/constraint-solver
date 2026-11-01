@@ -31,11 +31,11 @@
         },
         {
             "name": "ArrowHeadPosition",
-            "definition": "0 -15"
+            "definition": "2 -17"
         },
         {
             "name": "ArrowShaftWidth",
-            "definition": "2 2 sqrt *"
+            "definition": "1.5 2 sqrt *"
         },
         {
             "name": "AlongArrowShaft",
@@ -159,15 +159,27 @@
         },
         {
             "type": "C",
-            "params": "HornTopEllipseData TAU 2 / ellipseCurvePos HornTopEllipseData TAU 2 / ellipseCurveVel normalize 6 scaleVec addVec ArrowHeadPosition -5 ArrowShaftWidth -2 / AlongArrowShaft turnedAs"
+            "params": "HornTopEllipseData TAU 2 / ellipseCurvePos HornTopEllipseData TAU 2 / ellipseCurveVel normalize 3 scaleVec addVec ArrowHeadPosition -2 ArrowShaftWidth 2 / AlongArrowShaft turnedAs addVec ArrowHeadPosition 0 ArrowShaftWidth 2 / AlongArrowShaft turnedAs addVec"
         },
         {
             "type": "L",
-            "params": "-1 -15"
+            "params": "ArrowHeadPosition 0 ArrowShaftWidth 2 / AlongArrowShaft turnedAs addVec 0 5 addVec   "
+        },
+        {
+            "type": "L",
+            "params": "ArrowHeadPosition AlongArrowShaft 2 scaleVec addVec"
+        },
+        {
+            "type": "L",
+            "params": "ArrowHeadPosition 0 ArrowShaftWidth -2 / AlongArrowShaft turnedAs addVec -5 0 addVec"
+        },
+        {
+            "type": "L",
+            "params": "ArrowHeadPosition 0 ArrowShaftWidth -2 / AlongArrowShaft turnedAs addVec"
         },
         {
             "type": "C",
-            "params": "-1 -10 HornBottomEllipseData TAU 2 / 0.3 + ellipseCurvePos dupVec HornBottomEllipseData TAU 2 / 0.3 + ellipseCurveVel normalize 5 scaleVec addVec 3 pull 3 pull"
+            "params": "ArrowHeadPosition -2 ArrowShaftWidth -2 / AlongArrowShaft turnedAs addVec HornBottomEllipseData TAU 2 / 0.3 + ellipseCurvePos dupVec HornBottomEllipseData TAU 2 / 0.3 + ellipseCurveVel normalize 3 scaleVec addVec 3 pull 3 pull"
         },
         {
             "type": "A",
@@ -190,5 +202,5 @@
             "params": ""
         }
     ],
-    "export": false
+    "export": true
 }

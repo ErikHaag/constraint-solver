@@ -22,6 +22,14 @@ def convert_if_valid_float(potentialFloat:str) -> tuple[bool, float]:
         except ValueError:
             return (False, 0.0)
 
+def convert_if_valid_int(potentialInt:str) -> tuple[bool, int]:
+        try:
+            v = float(potentialInt)
+            v = int(v)
+            return (True, v)
+        except ValueError:
+            return (False, 0)
+
 def evaluate_expression(expr:str, dependent:dict[str, float] = {}, max_substitutions = 1000) -> str:
     stack : list[float] = []
     commands : list[str] = [i for i in expr.strip().split(" ")]
@@ -514,11 +522,12 @@ try:
         curve_output:list[curve_data] = []
         for curve in data.curves:
             param_count = 0
-            arcSpecial = False
+            arc_special = False
+            cubic_special = False
             match curve.type:
                 case "A" | "a":
                     param_count = 7
-                    arcSpecial = True
+                    arc_special = True
                 case "C" | "c":
                     param_count = 6
                 case "S" | "s" | "Q" | "q":
@@ -529,12 +538,65 @@ try:
                     param_count = 1
                 case "Z" | "z":
                     param_count = 0
+                case "CS" | "CSS":
+                    cubic_special = True
                 case _:
                     raise Exception("Unknown path type " + curve.type)
             params:list[float | int] = []
             if dumping:
                     dump_lines.append(f"{curve.type} {curve.params}")
-            if param_count != 0:
+            if cubic_special:
+                parametric_params = [a.strip() for a in curve.params.split(",")]
+                if len(parametric_params) < 4:
+                    raise Exception(f"Insuffient arguments in cubic spline; got {len(parametric_params)}, require 4")
+                if len(parametric_params) > 4:
+                    raise Exception(f"Excessive arguments in cubic spline; got {len(parametric_params)}, require 4")
+                (s, start_t) = convert_if_valid_float(evaluate_expression(parametric_params[1]))
+                if not s:
+                    raise Exception("start parameter contains expression")
+                (s, end_t) = convert_if_valid_float(evaluate_expression(parametric_params[2]))
+                if not s:
+                    raise Exception("end parameter contains expression")
+                (s, segment_count) = convert_if_valid_int(evaluate_expression(parametric_params[3]))
+                if not s:
+                    raise Exception("segment count contains expression")
+                if segment_count < 1:
+                    raise Exception("segment count must be positive")
+
+                control_scale = (end_t - start_t) / (3 * segment_count)
+                delta_t = 0.0001
+                positions:list[tuple[float, float]] = []
+                velocities:list[tuple[float, float]] = []
+                for i in range(segment_count + 1):
+                    t = (1 - i / segment_count) * start_t + (i / segment_count) * end_t
+                    o = evaluate_expression(f"{t} {parametric_params[0]}").split(" ")
+                    if len(o) != 2:
+                        raise Exception()
+                    (sx, x) = convert_if_valid_float(o[0])
+                    (sy, y) = convert_if_valid_float(o[1])
+                    if not (sx and sy):
+                        raise Exception()
+                    o_delta = evaluate_expression(str(t + delta_t) + " " + parametric_params[0]).split(" ")
+                    if len(o_delta) != 2:
+                        raise Exception()
+                    (sx, x_delta) = convert_if_valid_float(o_delta[0])
+                    (sy, y_delta) = convert_if_valid_float(o_delta[1])
+                    if not (sx and sy):
+                        raise Exception()
+                    x_delta = (x_delta - x) / delta_t
+                    y_delta = (y_delta - y) / delta_t
+                    x_delta *= control_scale
+                    y_delta *= control_scale
+                    positions.append((x, y))
+                    velocities.append((x_delta, y_delta))
+                if curve.type == "CS":
+                   curve_output.append(curve_data("C", [positions[0][0] + velocities[0][0], positions[0][1] + velocities[0][1], positions[1][0] - velocities[1][0], positions[1][1] - velocities[1][1], positions[1][0], positions[1][1]], curve.debug))
+                else:
+                   curve_output.append(curve_data("S", [positions[1][0] - velocities[1][0], positions[1][1] - velocities[1][1], positions[1][0], positions[1][1]], curve.debug))
+                for i in range(segment_count - 1):
+                    curve_output.append(curve_data("S", [positions[i + 2][0] - velocities[i + 2][0], positions[i + 2][1] - velocities[i + 2][1], positions[i + 2][0], positions[i + 2][1]], curve.debug))
+                continue
+            elif param_count != 0:
                 o = evaluate_expression(curve.params).split(" ")
                 if dumping:
                     dump_lines.append(f"-> {curve.type} {" ".join(o)}\n")
@@ -546,7 +608,7 @@ try:
                     (s, f) = convert_if_valid_float(o.pop(0))
                     if not s:
                         raise Exception("Parameters contains expression")
-                    if arcSpecial and (i == 3 or i == 4):
+                    if arc_special and (i == 3 or i == 4):
                         params.append(int(f))
                     else:
                         params.append(f)
@@ -555,6 +617,9 @@ try:
             curve_output.append(curve_data(curve.type, params, curve.debug))
         path_d:list[str] = []
         debug_data:list[str] = []
+        
+        bounding_box = bounds()
+        
         current_x = 0
         current_y = 0
         start_x = 0
@@ -650,6 +715,10 @@ try:
                         debug_data.append(f"<circle cx=\"{current_x}\" cy=\"{current_y}\" r=\"1\" fill=\"lime\" />")
                         debug_data.append(f"<circle cx=\"{curve.discrete_params[0]}\" cy=\"{curve.discrete_params[1]}\" r=\"1\" fill=\"#d0a800\" />")
                         debug_data.append(f"<circle cx=\"{curve.discrete_params[2]}\" cy=\"{curve.discrete_params[3]}\" r=\"1\" fill=\"red\" />")
+            
+            #bounds
+            bounding_box.includeBounds(curve.getBounds(current_x, current_y))
+            
             match curve.command:
                 case "A" | "C" | "L" | "S" | "T" | "Q":
                     current_x = curve.params[-2]
@@ -669,6 +738,11 @@ try:
                     current_x = start_x
                     current_y = start_y
             i += 1
+
+        if dumping:
+            dump_lines.append(f"Bounding box: {bounding_box.min_x} {bounding_box.min_y} {bounding_box.max_x} {bounding_box.max_y}")
+            dump_lines.append(f"Translation to center: {(bounding_box.max_x - bounding_box.min_x - data.width) / 4 - data.minX / 2}, {(bounding_box.max_y - bounding_box.min_y- data.height) / 4 - data.minY / 2}")
+        
         svg_output = f"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{data.minX} {data.minY} {data.width} {data.height}\""
         if data.export:
             svg_output += f" width=\"{data.width}\" height=\"{data.height}\""

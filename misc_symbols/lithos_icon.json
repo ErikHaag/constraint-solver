@@ -1,0 +1,274 @@
+{
+    "output": "lithos_icon",
+    "dump": "dump",
+    "imports": [
+        "standardLib"
+    ],
+    "definitions": [
+        {
+            "name": "VerticalWidth",
+            "definition": "5"
+        },
+        {
+            "name": "HorizontalWidth",
+            "definition": "3"
+        },
+        {
+            "name": "OuterEllipse1Data",
+            "definition": "48 48 0 0 0"
+        },
+        {
+            "name": "InnerEllipse1Data",
+            "definition": "40 45 -20 0 0"
+        },
+        {
+            "name": "OuterEllipse2Data",
+            "definition": "30 30 0 0 0"
+        },
+        {
+            "name": "InnerEllipse2Data",
+            "definition": "24 27 -20 0 0"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": [
+                "InnerEllipse1VerticalTLHitY"
+            ],
+            "assertions": [
+                "InnerEllipse1Data VerticalWidth -2 / InnerEllipse1VerticalTLHitY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse1VerticalTLHitY"
+            ]
+        },
+        {
+            "variables": [
+                "InnerEllipse1VerticalTRHitY"
+            ],
+            "assertions": [
+                "InnerEllipse1Data VerticalWidth 2 / InnerEllipse1VerticalTRHitY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse1VerticalTRHitY"
+            ]
+        },
+        {
+            "variables": [
+                "InnerEllipse1VerticalBLHitY"
+            ],
+            "assertions": [
+                "InnerEllipse1Data VerticalWidth -2 / InnerEllipse1VerticalBLHitY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse1VerticalBLHitY _"
+            ]
+        },
+        {
+            "variables": [
+                "InnerEllipse1VerticalBRHitY"
+            ],
+            "assertions": [
+                "InnerEllipse1Data VerticalWidth 2 / InnerEllipse1VerticalBRHitY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse1VerticalBRHitY _"
+            ]
+        },
+        {
+            "variables": [
+                "InnerEllipse1HorizontalTLHitX"
+            ],
+            "assertions": [
+                "InnerEllipse1Data InnerEllipse1HorizontalTLHitX HorizontalWidth -2 / ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse1HorizontalTLHitX"
+            ]
+        },
+        {
+            "variables": [
+                "InnerEllipse1HorizontalTRHitX"
+            ],
+            "assertions": [
+                "InnerEllipse1Data InnerEllipse1HorizontalTRHitX HorizontalWidth -2 / ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse1HorizontalTRHitX _"
+            ]
+        },
+        {
+            "variables": [
+                "InnerEllipse1HorizontalBLHitX"
+            ],
+            "assertions": [
+                "InnerEllipse1Data InnerEllipse1HorizontalBLHitX HorizontalWidth 2 / ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse1HorizontalBLHitX"
+            ]
+        },
+        {
+            "variables": [
+                "InnerEllipse1HorizontalBRHitX"
+            ],
+            "assertions": [
+                "InnerEllipse1Data InnerEllipse1HorizontalBRHitX HorizontalWidth 2 / ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse1HorizontalBRHitX _"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipse2VerticalTLHitY"
+            ],
+            "assertions": [
+                "OuterEllipse2Data VerticalWidth -2 / OuterEllipse2VerticalTLHitY ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipse2VerticalTLHitY"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipse2HorizontalTLHitX"
+            ],
+            "assertions": [
+                "OuterEllipse2Data OuterEllipse2HorizontalTLHitX HorizontalWidth -2 / ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipse2HorizontalTLHitX"
+            ]
+        },
+        {
+            "variables": [
+                "InnerEllipse2VerticalTLHitY"
+            ],
+            "assertions": [
+                "InnerEllipse2Data VerticalWidth -2 / InnerEllipse2VerticalTLHitY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse2VerticalTLHitY"
+            ]
+        },
+        {
+            "variables": [
+                "InnerEllipse2HorizontalTLHitX"
+            ],
+            "assertions": [
+                "InnerEllipse2Data InnerEllipse2HorizontalTLHitX HorizontalWidth -2 / ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipse2HorizontalTLHitX"
+            ]
+        }
+    ],
+    "minX": -64,
+    "minY": -64,
+    "width": 128,
+    "height": 128,
+    "curves": [
+        {
+            "type": "M",
+            "params": "OuterEllipse1Data 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipse1Data drop drop 0 0 OuterEllipse1Data TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipse1Data drop drop 0 0 OuterEllipse1Data 0 ellipseCurvePos"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "InnerEllipse1HorizontalTLHitX HorizontalWidth -2 /"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipse1Data drop drop 0 1 VerticalWidth -2 / InnerEllipse1VerticalTLHitY"
+        },
+        {
+            "type": "V",
+            "params": "OuterEllipse2VerticalTLHitY"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipse2Data drop drop 0 0 OuterEllipse2HorizontalTLHitX HorizontalWidth -2 /"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "InnerEllipse2HorizontalTLHitX HorizontalWidth -2 /"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipse2Data drop drop 0 1 VerticalWidth -2 / InnerEllipse2VerticalTLHitY"
+        },
+        {
+            "type": "V",
+            "params": "HorizontalWidth -2 /"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "VerticalWidth 2 / InnerEllipse1VerticalTRHitY"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipse1Data drop drop 0 1 InnerEllipse1HorizontalTRHitX HorizontalWidth -2 /"
+        },
+        {
+            "type": "H",
+            "params": "VerticalWidth 2 /"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "InnerEllipse1HorizontalBRHitX HorizontalWidth 2 /"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipse1Data drop drop 0 1 VerticalWidth 2 / InnerEllipse1VerticalBRHitY"
+        },
+        {
+            "type": "V",
+            "params": "HorizontalWidth 2 /"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "VerticalWidth -2 / InnerEllipse1VerticalBRHitY"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipse1Data drop drop 0 1 InnerEllipse1HorizontalBLHitX HorizontalWidth 2 /"
+        },
+        {
+            "type": "H",
+            "params": "VerticalWidth -2 /"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "export": true
+}

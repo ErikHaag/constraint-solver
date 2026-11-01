@@ -34,8 +34,16 @@
             "definition": "1 pull 2 pull dup 3 push - * +"
         },
         {
+            "name": "lerpVec",
+            "definition": "dup 5 pull 4 pull 2 pull lerp 3 push lerp"
+        },
+        {
+            "name": "max",
+            "definition": "dupVec compare _ 1 + 2 / lerp"
+        },
+        {
             "name": "min",
-            "definition": "dupVec compare dup dup * + 2 / lerp"
+            "definition": "dupVec compare 1 + 2 / lerp"
         },
         {
             "name": "multiplyMat",

@@ -1,0 +1,178 @@
+{
+    "output": "sanplumbeus",
+    "dump": "dump",
+    "imports": [
+        "blood_of_metals/bom_common"
+    ],
+    "definitions": [
+        {
+            "name": "StemWidth",
+            "definition": "2"
+        },
+        {
+            "name": "StemX",
+            "definition": "-10 6.131484451732396 +"
+        },
+        {
+            "name": "StemTopY",
+            "definition": "-18"
+        },
+        {
+            "name": "StemBottomY",
+            "definition": "3"
+        },
+        {
+            "name": "HornBottomEllipseData",
+            "definition": "7 6 0 StemX StemTopY"
+        },
+        {
+            "name": "HornTopEllipseData",
+            "definition": "6 5 0 StemX 1 + StemTopY"
+        },
+        {
+            "name": "CurveSection1Data",
+            "definition": "StemX -5 dupVec 5 -10 addVec dupVec 8 4 addVec dupVec 2.5 7.9 addVec"
+        },
+        {
+            "name": "CurveSection1Top",
+            "definition": "dup dup CurveSection1Data 8 pull cubicCurvePos CurveSection1Data 10 pull cubicCurveVel atan dup circle perp 2 pull dirToThickness _ 2 6 pull - 2 * 0 max 1 min * scaleVec addVec"
+        },
+        {
+            "name": "CurveSection1Bottom",
+            "definition": "dup dup CurveSection1Data 8 pull cubicCurvePos CurveSection1Data 10 pull cubicCurveVel atan dup circle perp 2 pull dirToThickness 2 6 pull - 2 * 0 max 1 min * scaleVec addVec"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["HornBottomRightHitY"],
+            "assertions":[
+                "HornBottomEllipseData StemX StemWidth 2 / + HornBottomRightHitY ellipseTest"
+            ],
+            "restrictions": [
+                "HornBottomEllipseData ellipseCenterY HornBottomRightHitY -"
+            ]
+        },
+        {
+            "variables": ["HornBottomLeftHitY"],
+            "assertions":[
+                "HornBottomEllipseData StemX StemWidth 2 / - HornBottomLeftHitY ellipseTest"
+            ],
+            "restrictions": [
+                "HornBottomEllipseData ellipseCenterY HornBottomLeftHitY -"
+            ]
+        },
+        {
+            "variables": ["HornTopRightHitY"],
+            "assertions":[
+                "HornTopEllipseData StemX StemWidth 2 / + HornTopRightHitY ellipseTest"
+            ],
+            "restrictions": [
+                "HornTopEllipseData ellipseCenterY HornTopRightHitY -"
+            ]
+        },
+        {
+            "variables": ["HornTopLeftHitY"],
+            "assertions":[
+                "HornTopEllipseData StemX StemWidth 2 / - HornTopLeftHitY ellipseTest"
+            ],
+            "restrictions": [
+                "HornTopEllipseData ellipseCenterY HornTopLeftHitY -"
+            ]
+        },
+        {
+            "variables": ["CurveSection1TopStart"],
+            "assertions": [
+                "CurveSection1TopStart CurveSection1Top drop StemX StemWidth 2 / + -"
+            ],
+            "restrictions": [
+                "CurveSection1TopStart _",
+                "CurveSection1TopStart 0.5 -"
+            ]
+        },
+        {
+            "variables": ["CurveSection1BottomStart"],
+            "assertions": [
+                "CurveSection1BottomStart CurveSection1Bottom drop StemX StemWidth 2 / + -"
+            ],
+            "restrictions": [
+                "CurveSection1BottomStart _",
+                "CurveSection1BottomStart 0.5 -"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "StemX StemWidth 2 / + HornBottomRightHitY"
+        },
+        {
+            "type": "A",
+            "params": "HornBottomEllipseData drop drop 0 0 HornBottomEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "HornTopEllipseData drop drop 0 1 StemX StemWidth 2 / + HornTopRightHitY"
+        },
+        {
+            "type": "V",
+            "params": "StemTopY"
+        },
+        {
+            "type": "L",
+            "params": "StemX StemWidth 2 / - StemTopY 2 +"
+        },
+        {
+            "type": "V",
+            "params": "HornTopLeftHitY"
+        },
+        {
+            "type": "A",
+            "params": "HornTopEllipseData drop drop 0 1 HornTopEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "L",
+            "params": "HornBottomEllipseData TAU 2 / 0.3 + ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "HornBottomEllipseData drop drop 0 0 StemX StemWidth 2 / - HornBottomLeftHitY"
+        },
+        {
+            "type": "V",
+            "params": "StemBottomY 3 +"
+        },
+        {
+            "type": "q",
+            "params": "0 2 -2 3"
+        },
+        {
+            "type": "H",
+            "params": "StemX StemWidth 2 / + 2 +"
+        },
+        {
+            "type": "q",
+            "params": "-2 -1 -2 -3"
+        },
+        {
+            "type": "V",
+            "params": "CurveSection1BottomStart CurveSection1Bottom 1 pull drop"
+        },
+        {
+            "type": "CS",
+            "params": "CurveSection1Bottom, CurveSection1BottomStart, 2, 20"
+        },
+        {
+            "type": "CS",
+            "params": "CurveSection1Top, 2, CurveSection1TopStart, 20"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "export": true
+}

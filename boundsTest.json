@@ -1,0 +1,20 @@
+{
+    "output": "debugTest",
+    "dump": "dump",
+    "definitions": [],
+    "constraints": [],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type":"M",
+            "params": "3 -2"
+        },
+        {
+            "type": "A",
+            "params": "5 3 10 1 1 5 2"
+        }
+    ]
+} 

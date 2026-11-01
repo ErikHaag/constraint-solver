@@ -1,0 +1,11 @@
+{
+    "imports": [
+        "standardLib"
+    ],
+    "definitions": [
+        {
+            "name": "dirToThickness",
+            "definition": "TAU 6 / - cos square 0.5 +"
+        }
+    ]
+}

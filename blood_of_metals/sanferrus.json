@@ -1,0 +1,194 @@
+{
+    "output": "sanferrus",
+    "dump": "dump",
+    "imports": [
+        "blood_of_metals/bom_common"
+    ],
+    "definitions": [
+        {
+            "name": "OuterEllipseData",
+            "definition": "10 10 0 0 5"
+        },
+        {
+            "name": "InnerEllipseData",
+            "definition": "7.5 9.25 -20 0 5"
+        },
+        {
+            "name": "HornBottomEllipseData",
+            "definition": "7 6 0 0 -7"
+        },
+        {
+            "name": "HornTopEllipseData",
+            "definition": "6 5 0 1 -7"
+        },
+        {
+            "name": "HornBottomMarginCurve",
+            "definition": "dup HornBottomEllipseData 5 pull ellipseCurvePos HornBottomEllipseData 7 pull ellipseCurveVel normalize perp -1 scaleVec addVec"
+        },
+        {
+            "name": "HornTopMarginCurve",
+            "definition": "dup HornTopEllipseData 5 pull ellipseCurvePos HornTopEllipseData 7 pull ellipseCurveVel normalize perp 1 scaleVec addVec"
+        },
+        {
+            "name": "ArrowHeadPosition",
+            "definition": "0 -15"
+        },
+        {
+            "name": "ArrowShaftWidth",
+            "definition": "2 2 sqrt *"
+        },
+        {
+            "name": "AlongArrowShaft",
+            "definition": "TAU 8 / _ circle"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["OuterEllipseHornBottomCollisionX", "OuterEllipseHornBottomCollisionY"],
+            "assertions": [
+                "OuterEllipseData OuterEllipseHornBottomCollisionX OuterEllipseHornBottomCollisionY ellipseTest",
+                "HornBottomEllipseData OuterEllipseHornBottomCollisionX OuterEllipseHornBottomCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseData ellipseCenterX OuterEllipseHornBottomCollisionX -"
+            ]
+        },
+        {
+            "variables": ["OuterEllipseHornTopCollisionX", "OuterEllipseHornTopCollisionY"],
+            "assertions": [
+                "OuterEllipseData OuterEllipseHornTopCollisionX OuterEllipseHornTopCollisionY ellipseTest",
+                "HornTopEllipseData OuterEllipseHornTopCollisionX OuterEllipseHornTopCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseData ellipseCenterX OuterEllipseHornTopCollisionX -"
+            ]
+        },
+        {
+            "variables": ["InnerEllipseHornBottomCollisionX", "InnerEllipseHornBottomCollisionY"],
+            "assertions": [
+                "InnerEllipseData InnerEllipseHornBottomCollisionX InnerEllipseHornBottomCollisionY ellipseTest",
+                "HornBottomEllipseData InnerEllipseHornBottomCollisionX InnerEllipseHornBottomCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipseData ellipseCenterX InnerEllipseHornBottomCollisionX -"
+            ]
+        },
+        {
+            "variables": ["InnerEllipseHornTopCollisionX", "InnerEllipseHornTopCollisionY"],
+            "assertions": [
+                "InnerEllipseData InnerEllipseHornTopCollisionX InnerEllipseHornTopCollisionY ellipseTest",
+                "HornTopEllipseData InnerEllipseHornTopCollisionX InnerEllipseHornTopCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "InnerEllipseData ellipseCenterX InnerEllipseHornTopCollisionX -"
+            ]
+        },
+        {
+            "variables": ["OuterEllipseHornBottomMarginT"],
+            "assertions": [
+                "OuterEllipseData OuterEllipseHornBottomMarginT HornBottomMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "TAU 4 / OuterEllipseHornBottomMarginT -",
+                "OuterEllipseHornBottomMarginT TAU 2 / -"
+            ]
+        },
+        {
+            "variables": ["OuterEllipseHornTopMarginT"],
+            "assertions": [
+                "OuterEllipseData OuterEllipseHornTopMarginT HornTopMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "TAU 4 / OuterEllipseHornTopMarginT -",
+                "OuterEllipseHornTopMarginT TAU 2 / -"
+            ]
+        },
+        {
+            "variables": ["InnerEllipseHornBottomMarginT"],
+            "assertions": [
+                "InnerEllipseData InnerEllipseHornBottomMarginT HornBottomMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "TAU 4 / InnerEllipseHornBottomMarginT -",
+                "InnerEllipseHornBottomMarginT TAU 2 / -"
+            ]
+        },
+        {
+            "variables": ["InnerEllipseHornTopMarginT"],
+            "assertions": [
+                "InnerEllipseData InnerEllipseHornTopMarginT HornTopMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "TAU 4 / InnerEllipseHornTopMarginT -",
+                "InnerEllipseHornTopMarginT TAU 2 / -"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "OuterEllipseHornBottomCollisionX OuterEllipseHornBottomCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "HornBottomEllipseData drop drop 0 0 HornBottomEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "HornTopEllipseData drop drop 0 1 OuterEllipseHornTopCollisionX OuterEllipseHornTopCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 0 0 OuterEllipseHornTopMarginT HornTopMarginCurve"
+        },
+        {
+            "type": "CS",
+            "params": "HornTopMarginCurve, OuterEllipseHornTopMarginT, InnerEllipseHornTopMarginT, 2"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipseData drop drop 0 1 InnerEllipseHornTopCollisionX InnerEllipseHornTopCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "HornTopEllipseData drop drop 0 1 HornTopEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "C",
+            "params": "HornTopEllipseData TAU 2 / ellipseCurvePos HornTopEllipseData TAU 2 / ellipseCurveVel normalize 6 scaleVec addVec ArrowHeadPosition -5 ArrowShaftWidth -2 / AlongArrowShaft turnedAs"
+        },
+        {
+            "type": "L",
+            "params": "-1 -15"
+        },
+        {
+            "type": "C",
+            "params": "-1 -10 HornBottomEllipseData TAU 2 / 0.3 + ellipseCurvePos dupVec HornBottomEllipseData TAU 2 / 0.3 + ellipseCurveVel normalize 5 scaleVec addVec 3 pull 3 pull"
+        },
+        {
+            "type": "A",
+            "params": "HornBottomEllipseData drop drop 0 0 InnerEllipseHornBottomCollisionX InnerEllipseHornBottomCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipseData drop drop 1 1 InnerEllipseHornBottomMarginT HornBottomMarginCurve"
+        },
+        {
+            "type": "CS",
+            "params": "HornBottomMarginCurve, InnerEllipseHornBottomMarginT, OuterEllipseHornBottomMarginT, 2"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 1 0 OuterEllipseHornBottomCollisionX OuterEllipseHornBottomCollisionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "export": false
+}

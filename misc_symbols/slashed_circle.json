@@ -1,0 +1,113 @@
+{
+    "output": "slashed_circle",
+    "dump": "dump",
+    "imports": [
+        "standardLib"
+    ],
+    "definitions": [
+        {
+            "name": "outerEllipseData",
+            "definition": "30 30 0 0 0"
+        },
+        {
+            "name": "innerEllipseData",
+            "definition": "25 27.5 -20 0 0"
+        },
+        {
+            "name": "strokeThickness",
+            "definition": "5"
+        },
+        {
+            "name": "alongStroke",
+            "definition": "TAU 2 3 / * circle"
+        },
+        {
+            "name": "acrossStroke",
+            "definition": "alongStroke perp"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["TopRightIntersectionX", "TopRightIntersectionY"],
+            "assertions": [
+                "innerEllipseData TopRightIntersectionX TopRightIntersectionY ellipseTest",
+                "TopRightIntersectionX TopRightIntersectionY acrossStroke dot strokeThickness 2 / -"
+            ],
+            "restrictions": [
+                "TopRightIntersectionX TopRightIntersectionY alongStroke dot _"
+            ]
+        },
+        {
+            "variables": ["BottomRightIntersectionX", "BottomRightIntersectionY"],
+            "assertions": [
+                "innerEllipseData BottomRightIntersectionX BottomRightIntersectionY ellipseTest",
+                "BottomRightIntersectionX BottomRightIntersectionY acrossStroke dot strokeThickness 2 / -"
+            ],
+            "restrictions": [
+                "BottomRightIntersectionX BottomRightIntersectionY alongStroke dot"
+            ]
+        },
+        {
+            "variables": ["TopLeftIntersectionX", "TopLeftIntersectionY"],
+            "assertions": [
+                "innerEllipseData TopLeftIntersectionX TopLeftIntersectionY ellipseTest",
+                "TopLeftIntersectionX TopLeftIntersectionY acrossStroke dot strokeThickness 2 / +"
+            ],
+            "restrictions": [
+                "TopLeftIntersectionX TopLeftIntersectionY alongStroke dot _"
+            ]
+        },
+        {
+            "variables": ["BottomLeftIntersectionX", "BottomLeftIntersectionY"],
+            "assertions": [
+                "innerEllipseData BottomLeftIntersectionX BottomLeftIntersectionY ellipseTest",
+                "BottomLeftIntersectionX BottomLeftIntersectionY acrossStroke dot strokeThickness 2 / +"
+            ],
+            "restrictions": [
+                "BottomLeftIntersectionX BottomLeftIntersectionY alongStroke dot"
+            ]
+        }
+    ],
+    "minX": -35,
+    "minY": -35,
+    "width": 70,
+    "height": 70,
+    "curves": [
+        {
+            "type": "M",
+            "params": "outerEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 outerEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "outerEllipseData drop drop 0 0 outerEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "M",
+            "params": "TopRightIntersectionX TopRightIntersectionY"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 BottomRightIntersectionX BottomRightIntersectionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "BottomLeftIntersectionX BottomLeftIntersectionY"
+        },
+        {
+            "type": "A",
+            "params": "innerEllipseData drop drop 0 1 TopLeftIntersectionX TopLeftIntersectionY"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ]
+} 

@@ -1,0 +1,290 @@
+{
+    "output": "sanstanneus",
+    "dump": "dump",
+    "imports": [
+        "blood_of_metals/bom_common"
+    ],
+    "definitions": [
+        {
+            "name": "StemWidth",
+            "definition": "2"
+        },
+        {
+            "name": "StemX",
+            "definition": "10"
+        },
+        {
+            "name": "StemTopY",
+            "definition": "-15"
+        },
+        {
+            "name": "StemBottomY",
+            "definition": "5"
+        },
+        {
+            "name": "CrossbarHeight",
+            "definition": "0"
+        },
+        {
+            "name": "CrossbarWidth",
+            "definition": "1"
+        },
+        {
+            "name": "CrossbarLength",
+            "definition": "20"
+        },
+        {
+            "name": "HornBottomEllipseData",
+            "definition": "7 6 0 StemX StemTopY"
+        },
+        {
+            "name": "HornTopEllipseData",
+            "definition": "6 5 0 StemX 1 + StemTopY"
+        },
+        {
+            "name": "HornBottomEllipseMarginCurve",
+            "definition": "dup HornBottomEllipseData 5 pull ellipseCurvePos HornBottomEllipseData 7 pull ellipseCurveVel perp normalize -1 scaleVec addVec"
+        },
+        {
+            "name": "HornTopEllipseMarginCurve",
+            "definition": "dup HornTopEllipseData 5 pull ellipseCurvePos HornTopEllipseData 7 pull ellipseCurveVel perp normalize 1 scaleVec addVec"
+        },
+        {
+            "name": "Curve1Data",
+            "definition": "-2.84 CrossbarHeight CrossbarWidth 2 / - dupVec 3.26 -2.28 addVec 3 distDup 3 distDup 7.84 -5.19 addVec 5 distDup 5 distDup 10.1 -12.36 addVec"
+        },
+        {
+            "name": "Curve2Data",
+            "definition": "Curve1Data 4 pull drop 4 pull drop 4 pull drop 4 pull drop dupVec 5 pull 5 pull -1.95 lerpVec 3 distDup 3 distDup -9.7 -9.16 addVec 5 distDup 5 distDup -8.86 -2.43 addVec"
+        },
+        {
+            "name": "Curve3Data",
+            "definition": "Curve2Data 7 push 7 push drop drop drop drop drop drop 0.91 0 addVec dupVec -0.14 -0.5 addVec 3 distDup 3 distDup 0.43 -4.63 addVec 5 distDup 5 distDup 3.42 -6.01 addVec"
+        },
+        {
+            "name": "Curve4Data",
+            "definition": "Curve3Data 4 pull drop 4 pull drop 4 pull drop 4 pull drop dupVec 5 pull 5 pull -1.85 lerpVec 3 distDup 3 distDup 7.58 12.08 addVec 5 distDup -7.73 + CrossbarHeight CrossbarWidth 2 / -"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["HornBottomRightHitY"],
+            "assertions":[
+                "HornBottomEllipseData StemX StemWidth 2 / + HornBottomRightHitY ellipseTest"
+            ],
+            "restrictions": [
+                "HornBottomEllipseData ellipseCenterY HornBottomRightHitY -"
+            ]
+        },
+        {
+            "variables": ["HornBottomLeftHitY"],
+            "assertions":[
+                "HornBottomEllipseData StemX StemWidth 2 / - HornBottomLeftHitY ellipseTest"
+            ],
+            "restrictions": [
+                "HornBottomEllipseData ellipseCenterY HornBottomLeftHitY -"
+            ]
+        },
+        {
+            "variables": ["HornTopRightHitY"],
+            "assertions":[
+                "HornTopEllipseData StemX StemWidth 2 / + HornTopRightHitY ellipseTest"
+            ],
+            "restrictions": [
+                "HornTopEllipseData ellipseCenterY HornTopRightHitY -"
+            ]
+        },
+        {
+            "variables": ["HornTopLeftHitY"],
+            "assertions":[
+                "HornTopEllipseData StemX StemWidth 2 / - HornTopLeftHitY ellipseTest"
+            ],
+            "restrictions": [
+                "HornTopEllipseData ellipseCenterY HornTopLeftHitY -"
+            ]
+        },
+        {
+            "variables": ["HornBottomMarginCurve1T", "HornBottomMarginCurve1U"],
+            "assertions": [
+                "Curve1Data HornBottomMarginCurve1T cubicCurvePos HornBottomMarginCurve1U HornBottomEllipseMarginCurve -1 scaleVec addVec mag"
+            ],
+            "restrictions": [
+                "HornBottomMarginCurve1T _",
+                "HornBottomMarginCurve1T 1 -",
+                "HornBottomMarginCurve1U _",
+                "HornBottomMarginCurve1U TAU 2 / -"
+            ]
+        },
+        {
+            "variables": ["HornTopMarginCurve1T", "HornTopMarginCurve1U"],
+            "assertions": [
+                "Curve1Data HornTopMarginCurve1T cubicCurvePos HornTopMarginCurve1U HornTopEllipseMarginCurve -1 scaleVec addVec mag"
+            ],
+            "restrictions": [
+                "HornTopMarginCurve1T _",
+                "HornTopMarginCurve1T 1 -",
+                "HornTopMarginCurve1U _",
+                "HornTopMarginCurve1U TAU 2 / -"
+            ]
+        },
+        {
+            "variables": ["HornBottomMarginCurve4T", "HornBottomMarginCurve4U"],
+            "assertions": [
+                "Curve4Data HornBottomMarginCurve4T cubicCurvePos HornBottomMarginCurve4U HornBottomEllipseMarginCurve -1 scaleVec addVec mag"
+            ],
+            "restrictions": [
+                "HornBottomMarginCurve4T _",
+                "HornBottomMarginCurve4T 1 -",
+                "HornBottomMarginCurve4U _",
+                "HornBottomMarginCurve4U TAU 2 / -"
+            ]
+        },
+        {
+            "variables": ["HornTopMarginCurve4T", "HornTopMarginCurve4U"],
+            "assertions": [
+                "Curve4Data HornTopMarginCurve4T cubicCurvePos HornTopMarginCurve4U HornTopEllipseMarginCurve -1 scaleVec addVec mag"
+            ],
+            "restrictions": [
+                "HornTopMarginCurve4T _",
+                "HornTopMarginCurve4T 1 -",
+                "HornTopMarginCurve4U _",
+                "HornTopMarginCurve4U TAU 2 / -"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "StemX StemWidth 2 / + HornBottomRightHitY"
+        },
+        {
+            "type": "A",
+            "params": "HornBottomEllipseData drop drop 0 0 HornBottomEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "HornTopEllipseData drop drop 0 1 StemX StemWidth 2 / + HornTopRightHitY"
+        },
+        {
+            "type": "V",
+            "params": "StemTopY 3 +"
+        },
+        {
+            "type": "q",
+            "params": "0 -2 1 -3"
+        },
+        {
+            "type": "H",
+            "params": "StemX StemWidth 2 / -"
+        },
+        {
+            "type": "V",
+            "params": "HornTopLeftHitY"
+        },
+        {
+            "type": "A",
+            "params": "HornTopEllipseData drop drop 0 1 HornTopEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "L",
+            "params": "HornBottomEllipseData TAU 2 / 0.3 + ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "HornBottomEllipseData drop drop 0 0 StemX StemWidth 2 / - HornBottomLeftHitY"
+        },
+        {
+            "type": "V",
+            "params": "CrossbarHeight CrossbarWidth 2 / -"
+        },
+        {
+            "type": "H",
+            "params": "Curve1Data drop drop drop drop drop drop drop"
+        },
+        {
+            "type": "C",
+            "params": "Curve1Data 0 HornBottomMarginCurve1T cubicCurveCut"
+        },
+        {
+            "type": "CS",
+            "params": "HornBottomEllipseMarginCurve, HornBottomMarginCurve1U, HornBottomMarginCurve4U, 2"
+        },
+        {
+            "type": "C",
+            "params": "Curve4Data HornBottomMarginCurve4T 1 cubicCurveCut"
+        },
+        {
+            "type": "H",
+            "params": "StemX CrossbarLength -"
+        },
+        {
+            "type": "V",
+            "params": "CrossbarHeight CrossbarWidth 2 / + 1 +"
+        },
+        {
+            "type": "Q",
+            "params": "StemX CrossbarLength - 1 + CrossbarHeight CrossbarWidth 2 / + StemX CrossbarLength - 3 + CrossbarHeight CrossbarWidth 2 / +"
+        },
+        {
+            "type": "H",
+            "params": "StemX StemWidth 2 / -"
+        },
+        {
+            "type": "V",
+            "params": "StemBottomY 3 +"
+        },
+        {
+            "type": "q",
+            "params": "0 2 -2 3"
+        },
+        {
+            "type": "H",
+            "params": "StemX StemWidth 2 / + 2 +"
+        },
+        {
+            "type": "q",
+            "params": "-2 -1 -2 -3"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "Curve3Data drop drop drop drop drop drop"
+        },
+        {
+            "type": "C",
+            "params": "Curve3Data 7 pull 7 pull drop drop"
+        },
+        {
+            "type": "C",
+            "params": "Curve4Data 0 HornTopMarginCurve4T cubicCurveCut"
+        },
+        {
+            "type": "CS",
+            "params": "HornTopEllipseMarginCurve, HornTopMarginCurve4U, HornTopMarginCurve1U, 2"
+        },
+        {
+            "type": "C",
+            "params": "Curve1Data HornTopMarginCurve1T 1 cubicCurveCut"
+        },
+        {
+            "type": "C",
+            "params": "Curve2Data 7 pull 7 pull drop drop"
+        },
+        {
+            "type": "A",
+            "params": "1 1 0 1 0 Curve3Data drop drop drop drop drop drop"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "export": true
+}

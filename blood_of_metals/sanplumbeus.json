@@ -27,7 +27,7 @@
         },
         {
             "name": "HornTopEllipseData",
-            "definition": "6 5 0 StemX 1 + StemTopY"
+            "definition": "5.5 4.5 0 StemX 1 + StemTopY"
         },
         {
             "name": "CurveSection1Data",
@@ -35,11 +35,11 @@
         },
         {
             "name": "CurveSection1Top",
-            "definition": "dup dup CurveSection1Data 8 pull cubicCurvePos CurveSection1Data 10 pull cubicCurveVel atan dup circle perp 2 pull dirToThickness _ 2 6 pull - 2 * 0 max 1 min * scaleVec addVec"
+            "definition": "dup dup CurveSection1Data 8 pull cubicCurvePos CurveSection1Data 10 pull cubicCurveVel atan dup circle perp 2 pull dirToThickness _ 2 6 pull - 3 * 0 max 1 min * scaleVec addVec"
         },
         {
             "name": "CurveSection1Bottom",
-            "definition": "dup dup CurveSection1Data 8 pull cubicCurvePos CurveSection1Data 10 pull cubicCurveVel atan dup circle perp 2 pull dirToThickness 2 6 pull - 2 * 0 max 1 min * scaleVec addVec"
+            "definition": "dup dup CurveSection1Data 8 pull cubicCurvePos CurveSection1Data 10 pull cubicCurveVel atan dup circle perp 2 pull dirToThickness 2 6 pull - 3 * 0 max 1 min * scaleVec addVec"
         }
     ],
     "constraints": [

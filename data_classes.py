@@ -8,7 +8,7 @@ class definition_model:
 
 @dataclass
 class constraint_model:
-    variables:list[str]
+    variables: list[str]
     assertions: list[str]
     restrictions: list[str] = field(default_factory=list)
 

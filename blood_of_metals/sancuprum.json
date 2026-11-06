@@ -1,0 +1,209 @@
+{
+    "$schema": "https://raw.githubusercontent.com/ErikHaag/constraint-solver/refs/heads/main/constraint-solver-constructor-schema.json",
+    "output": "sancuprum",
+    "dump": "dump",
+    "imports": [
+        "standardLib"
+    ],
+    "definitions": [
+        {
+            "name": "EllipseCenters",
+            "definition": "0 -10"
+        },
+        {
+            "name": "OuterEllipseData",
+            "definition": "7 7 0 EllipseCenters"
+        },
+        {
+            "name": "InnerEllipseData",
+            "definition": "5.5 6.5 -20 EllipseCenters"
+        },
+        {
+            "name": "InnerHookEllipseData",
+            "definition": "7.5 8.5 -20 EllipseCenters"
+        },
+        {
+            "name": "OuterHookEllipseData",
+            "definition": "9.5 9.5 0 EllipseCenters 0.5 0 addVec"
+        },
+        {
+            "name": "OuterHookEllipseEndAngle",
+            "definition": "TAU 2 / 0.2 -"
+        },
+        {
+            "name": "InnerHookEllipseEndAngle",
+            "definition": "TAU 2 / 0.4 -"
+        },
+        {
+            "name": "StemWidth",
+            "definition": "1.5"
+        },
+        {
+            "name": "StemLeft",
+            "definition": "EllipseCenters drop StemWidth 2 / -"
+        },
+        {
+            "name": "StemRight",
+            "definition": "EllipseCenters drop StemWidth 2 / +"
+        },
+        {
+            "name": "StemBottomY",
+            "definition": "10"
+        },
+        {
+            "name": "OuterHookEndScale",
+            "definition": "7"
+        },
+        {
+            "name": "InnerHookEndScale",
+            "definition": "7"
+        },
+        {
+            "name": "LeftConnectorCurveData",
+            "definition": "OuterHookEllipseData OuterHookEllipseEndAngle ellipseCurvePos OuterHookEllipseData OuterHookEllipseEndAngle ellipseCurvePos OuterHookEllipseData OuterHookEllipseEndAngle ellipseCurveVel normalize OuterHookEndScale scaleVec subtractVec InnerHookEllipseData InnerHookEllipseEndAngle ellipseCurvePos InnerHookEllipseData InnerHookEllipseEndAngle ellipseCurveVel normalize InnerHookEndScale scaleVec subtractVec -1 scaleVec InnerHookEllipseData InnerHookEllipseEndAngle ellipseCurvePos -1 scaleVec"
+        },
+        {
+            "name": "RightConnectorCurveData",
+            "definition": "LeftConnectorCurveData 7 pull _ 7 pull _ 7 pull _ 7 pull _ 7 pull _ 7 pull _ 7 pull _ 7 pull _"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": ["OuterEllipseStemLeftCollisionY"],
+            "assertions": [
+                "OuterEllipseData StemLeft OuterEllipseStemLeftCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "EllipseCenters 1 push drop OuterEllipseStemLeftCollisionY -"
+            ]
+        },
+        {
+            "variables": ["OuterEllipseStemRightCollisionY"],
+            "assertions": [
+                "OuterEllipseData StemRight OuterEllipseStemRightCollisionY ellipseTest"
+            ],
+            "restrictions": [
+                "EllipseCenters 1 push drop OuterEllipseStemRightCollisionY -"
+            ]
+        },
+        {
+            "variables": ["ConnectorStemEarlyHit"],
+            "assertions": [
+                "LeftConnectorCurveData ConnectorStemEarlyHit cubicCurvePos drop StemLeft -"
+            ],
+            "restrictions": [
+                "ConnectorStemEarlyHit _",
+                "ConnectorStemEarlyHit 1 -"
+            ]
+        },
+        {
+            "variables": ["ConnectorStemLateHit"],
+            "assertions": [
+                "LeftConnectorCurveData ConnectorStemLateHit cubicCurvePos drop StemRight -"
+            ],
+            "restrictions": [
+                "ConnectorStemLateHit _",
+                "ConnectorStemLateHit 1 -"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "OuterHookEllipseData 0.1 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "OuterHookEllipseData drop drop 1 0 OuterHookEllipseData OuterHookEllipseEndAngle ellipseCurvePos"
+        },
+        {
+            "type": "C",
+            "params": "LeftConnectorCurveData 0 ConnectorStemEarlyHit cubicCurveCut"
+        },
+        {
+            "type": "V",
+            "params": "StemBottomY 3 -"
+        },
+        {
+            "type": "Q",
+            "params": "StemLeft StemBottomY 1 - StemLeft 1 - StemBottomY"
+        },
+        {
+            "type": "H",
+            "params": "StemRight 1 +"
+        },
+        {
+            "type": "Q",
+            "params": "StemRight StemBottomY 1 - StemRight StemBottomY 3 -"
+        },
+        {
+            "type": "V",
+            "params": "LeftConnectorCurveData ConnectorStemLateHit cubicCurvePos 1 push drop"
+        },
+        {
+            "type": "C",
+            "params": "LeftConnectorCurveData ConnectorStemLateHit 1 cubicCurveCut"
+        },
+        {
+            "type": "A",
+            "params": "InnerHookEllipseData drop drop 1 1 InnerHookEllipseData 0 ellipseCurvePos -1 scaleVec"
+        },
+        {
+            "type": "L",
+            "params": "OuterHookEllipseData 0.1 ellipseCurvePos -1 scaleVec"
+        },
+        {
+            "type": "A",
+            "params": "OuterHookEllipseData drop drop 1 0 OuterHookEllipseData OuterHookEllipseEndAngle ellipseCurvePos -1 scaleVec"
+        },
+        {
+            "type": "C",
+            "params": "RightConnectorCurveData 0 ConnectorStemEarlyHit cubicCurveCut"
+        },
+        {
+            "type": "V",
+            "params": "OuterEllipseStemRightCollisionY"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 1 0 StemLeft OuterEllipseStemLeftCollisionY"
+        },
+        {
+            "type": "V",
+            "params": "RightConnectorCurveData ConnectorStemLateHit cubicCurvePos 1 push drop"
+        },
+        {
+            "type": "C",
+            "params": "RightConnectorCurveData ConnectorStemLateHit 1 cubicCurveCut"
+        },
+        {
+            "type": "A",
+            "params": "InnerHookEllipseData drop drop 1 1 InnerHookEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "InnerEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipseData drop drop 0 1 InnerEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipseData drop drop 0 1 InnerEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "export": true
+}

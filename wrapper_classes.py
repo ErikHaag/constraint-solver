@@ -84,8 +84,12 @@ class curve_data:
                 petit_along_y = petit_p2_y - petit_p1_y
 
                 petit_semidist = math.sqrt(petit_along_x ** 2 + petit_along_y ** 2)
-                petit_along_x /= petit_semidist
-                petit_along_y /= petit_semidist
+                try:
+                    petit_along_x /= petit_semidist
+                    petit_along_y /= petit_semidist
+                except ZeroDivisionError:
+                    petit_along_x = 1
+                    petit_along_y = 0
                 petit_semidist /= 2
                 r_scale = max(1, petit_semidist)
                 petit_ascender = math.sqrt(1 - petit_semidist ** 2) if petit_semidist <= 1 else 0

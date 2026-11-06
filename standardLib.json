@@ -74,6 +74,10 @@
             "definition": "dupVec dot"
         },
         {
+            "name": "subtractVec",
+            "definition": "-1 scaleVec addVec"
+        },
+        {
             "name": "toDegrees",
             "definition": "360 TAU / *"
         },

@@ -1,0 +1,482 @@
+{
+    "$schema": "https://raw.githubusercontent.com/ErikHaag/constraint-solver/refs/heads/main/constraint-solver-constructor-schema.json",
+    "output": "sanaureum",
+    "dump": "dump",
+    "imports": [
+        "blood_of_metals/bom_common"
+    ],
+    "definitions": [
+        {
+            "name": "OuterEllipseData",
+            "definition": "20 20 0 0 14.4"
+        },
+        {
+            "name": "InnerEllipseData",
+            "definition": "17 19 -20 0 14.4"
+        },
+        {
+            "name": "DotEllipseData",
+            "definition": "2.5 2.5 0 InnerEllipseData ellipseCenter 6 -"
+        },
+        {
+            "name": "ArcWidth",
+            "definition": "TAU 4 / 0.7 *"
+        },
+        {
+            "name": "CrownArcWidth",
+            "definition": "ArcWidth 0.4 *"
+        },
+        {
+            "name": "indexToAngle",
+            "definition": "CrownArcWidth * TAU 0.75 * ArcWidth + - _"
+        },
+        {
+            "name": "rightRadial",
+            "definition": "0.3"
+        },
+        {
+            "name": "leftRadial",
+            "definition": "1 rightRadial -"
+        },
+        {
+            "name": "PeakHeight0",
+            "definition": "5"
+        },
+        {
+            "name": "PeakHeight1",
+            "definition": "6"
+        },
+        {
+            "name": "PeakHeight2",
+            "definition": "10"
+        },
+        {
+            "name": "CrownPeakRight",
+            "definition": "OuterEllipseData 6 distDup indexToAngle ellipseCurvePos dupVec OuterEllipseData 10 distDup indexToAngle ellipseCurveVel addVec OuterEllipseData 10 distDup rightRadial + indexToAngle ellipseCurvePos dupVec OuterEllipseData 14 distDup rightRadial + indexToAngle ellipseCurveVel perp addVec lineLineIntersection OuterEllipseData 8 distDup 0.5 + indexToAngle ellipseCurvePos OuterEllipseData 10 pull 0.5 + indexToAngle ellipseCurveVel normalize perp 6 pull scaleVec subtractVec"
+        },
+        {
+            "name": "CrownPeakLeft",
+            "definition": "OuterEllipseData 5 distDup 1 + indexToAngle ellipseCurvePos dupVec dupVec OuterEllipseData 11 distDup 1 + indexToAngle ellipseCurveVel addVec OuterEllipseData 11 distDup leftRadial + indexToAngle ellipseCurvePos dupVec OuterEllipseData 15 pull leftRadial + indexToAngle ellipseCurveVel perp addVec lineLineIntersection 3 pull 3 pull"
+        },
+        {
+            "name": "CrownPeakRightCurveData",
+            "definition": "1 pull dup 1 - CrownPeakLeft 4 push 4 push drop drop 3 pull CrownPeakRight"
+        },
+        {
+            "name": "CrownPeakLeftCurveData",
+            "definition": "1 pull dup 2 pull CrownPeakRight 4 push 4 push drop drop CrownPeakLeft"
+        },
+        {
+            "name": "CrownPeakRightMarginCurve",
+            "definition": "CrownPeakRightCurveData 5 distDup 5 distDup 5 distDup 5 distDup 5 distDup 5 distDup 12 distDup quadraticCurvePos 8 push 8 push 6 pull quadraticCurveVel normalize dupVec atan dirToThickness scaleVec perp subtractVec"
+        },
+        {
+            "name": "CrownPeakLeftMarginCurve",
+            "definition": "CrownPeakLeftCurveData 5 distDup 5 distDup 5 distDup 5 distDup 5 distDup 5 distDup 12 distDup quadraticCurvePos 8 push 8 push 6 pull quadraticCurveVel normalize dupVec atan dirToThickness scaleVec perp subtractVec"
+        }
+    ],
+    "constraints": [
+        {
+            "variables": [
+                "LeftmostInnerEllipseAngle"
+            ],
+            "assertions": [
+                "InnerEllipseData drop drop 0 0 LeftmostInnerEllipseAngle ellipseCurvePos atan TAU 0.75 * ArcWidth - - TAU 2 / + TAU % TAU 2 / -"
+            ],
+            "restrictions": [
+                "LeftmostInnerEllipseAngle _",
+                "LeftmostInnerEllipseAngle TAU -"
+            ]
+        },
+        {
+            "variables": [
+                "RightmostInnerEllipseAngle"
+            ],
+            "assertions": [
+                "InnerEllipseData drop drop 0 0 RightmostInnerEllipseAngle ellipseCurvePos atan TAU 0.75 * ArcWidth + - TAU 2 / + TAU % TAU 2 / -"
+            ],
+            "restrictions": [
+                "RightmostInnerEllipseAngle _",
+                "RightmostInnerEllipseAngle TAU -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakLeftMarginCurve0CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakLeftMarginCurve0CollisionT 0 PeakHeight0 CrownPeakLeftMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakLeftMarginCurve0CollisionT _",
+                "OuterEllipseCrownPeakLeftMarginCurve0CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakLeftMarginCurve1CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakLeftMarginCurve1CollisionT 1 PeakHeight1 CrownPeakLeftMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakLeftMarginCurve1CollisionT _",
+                "OuterEllipseCrownPeakLeftMarginCurve1CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakLeftMarginCurve2CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakLeftMarginCurve2CollisionT 2 PeakHeight2 CrownPeakLeftMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakLeftMarginCurve2CollisionT _",
+                "OuterEllipseCrownPeakLeftMarginCurve2CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakLeftMarginCurve3CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakLeftMarginCurve3CollisionT 3 PeakHeight1 CrownPeakLeftMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakLeftMarginCurve3CollisionT _",
+                "OuterEllipseCrownPeakLeftMarginCurve3CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakLeftMarginCurve4CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakLeftMarginCurve4CollisionT 4 PeakHeight0 CrownPeakLeftMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakLeftMarginCurve4CollisionT _",
+                "OuterEllipseCrownPeakLeftMarginCurve4CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakRightMarginCurve0CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakRightMarginCurve0CollisionT 0 PeakHeight0 CrownPeakRightMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakRightMarginCurve0CollisionT _",
+                "OuterEllipseCrownPeakRightMarginCurve0CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakRightMarginCurve1CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakRightMarginCurve1CollisionT 1 PeakHeight1 CrownPeakRightMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakRightMarginCurve1CollisionT _",
+                "OuterEllipseCrownPeakRightMarginCurve1CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakRightMarginCurve2CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakRightMarginCurve2CollisionT 2 PeakHeight2 CrownPeakRightMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakRightMarginCurve2CollisionT _",
+                "OuterEllipseCrownPeakRightMarginCurve2CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakRightMarginCurve3CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakRightMarginCurve3CollisionT 3 PeakHeight1 CrownPeakRightMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakRightMarginCurve3CollisionT _",
+                "OuterEllipseCrownPeakRightMarginCurve3CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "OuterEllipseCrownPeakRightMarginCurve4CollisionT"
+            ],
+            "assertions": [
+                "OuterEllipseData OuterEllipseCrownPeakRightMarginCurve4CollisionT 4 PeakHeight0 CrownPeakRightMarginCurve ellipseTest"
+            ],
+            "restrictions": [
+                "OuterEllipseCrownPeakRightMarginCurve4CollisionT _",
+                "OuterEllipseCrownPeakRightMarginCurve4CollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "PeakMarginCurves0LeftCollisionT",
+                "PeakMarginCurves0RightCollisionT"
+            ],
+            "assertions": [
+                "PeakMarginCurves0LeftCollisionT 0 PeakHeight0 CrownPeakLeftMarginCurve PeakMarginCurves0RightCollisionT 0 PeakHeight0 CrownPeakRightMarginCurve subtractVec mag"
+            ],
+            "restrictions": [
+                "PeakMarginCurves0LeftCollisionT _",
+                "PeakMarginCurves0LeftCollisionT 1 -",
+                "PeakMarginCurves0RightCollisionT _",
+                "PeakMarginCurves0RightCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "PeakMarginCurves1LeftCollisionT",
+                "PeakMarginCurves1RightCollisionT"
+            ],
+            "assertions": [
+                "PeakMarginCurves1LeftCollisionT 1 PeakHeight1 CrownPeakLeftMarginCurve PeakMarginCurves1RightCollisionT 1 PeakHeight1 CrownPeakRightMarginCurve subtractVec mag"
+            ],
+            "restrictions": [
+                "PeakMarginCurves1LeftCollisionT _",
+                "PeakMarginCurves1LeftCollisionT 1 -",
+                "PeakMarginCurves1RightCollisionT _",
+                "PeakMarginCurves1RightCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "PeakMarginCurves2LeftCollisionT",
+                "PeakMarginCurves2RightCollisionT"
+            ],
+            "assertions": [
+                "PeakMarginCurves2LeftCollisionT 2 PeakHeight2 CrownPeakLeftMarginCurve PeakMarginCurves2RightCollisionT 2 PeakHeight2 CrownPeakRightMarginCurve subtractVec mag"
+            ],
+            "restrictions": [
+                "PeakMarginCurves2LeftCollisionT _",
+                "PeakMarginCurves2LeftCollisionT 1 -",
+                "PeakMarginCurves2RightCollisionT _",
+                "PeakMarginCurves2RightCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "PeakMarginCurves3LeftCollisionT",
+                "PeakMarginCurves3RightCollisionT"
+            ],
+            "assertions": [
+                "PeakMarginCurves3LeftCollisionT 3 PeakHeight1 CrownPeakLeftMarginCurve PeakMarginCurves3RightCollisionT 3 PeakHeight1 CrownPeakRightMarginCurve subtractVec mag"
+            ],
+            "restrictions": [
+                "PeakMarginCurves3LeftCollisionT _",
+                "PeakMarginCurves3LeftCollisionT 1 -",
+                "PeakMarginCurves3RightCollisionT _",
+                "PeakMarginCurves3RightCollisionT 1 -"
+            ]
+        },
+        {
+            "variables": [
+                "PeakMarginCurves4LeftCollisionT",
+                "PeakMarginCurves4RightCollisionT"
+            ],
+            "assertions": [
+                "PeakMarginCurves4LeftCollisionT 4 PeakHeight0 CrownPeakLeftMarginCurve PeakMarginCurves4RightCollisionT 4 PeakHeight0 CrownPeakRightMarginCurve subtractVec mag"
+            ],
+            "restrictions": [
+                "PeakMarginCurves4LeftCollisionT _",
+                "PeakMarginCurves4LeftCollisionT 1 -",
+                "PeakMarginCurves4RightCollisionT _",
+                "PeakMarginCurves4RightCollisionT 1 -"
+            ]
+        }
+    ],
+    "minX": -30,
+    "minY": -30,
+    "width": 60,
+    "height": 60,
+    "curves": [
+        {
+            "type": "M",
+            "params": "DotEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "DotEllipseData drop drop 0 0 DotEllipseData TAU 2 / ellipseCurvePos"
+        },
+        {
+            "type": "A",
+            "params": "DotEllipseData drop drop 0 0 DotEllipseData 0 ellipseCurvePos"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "OuterEllipseData 0 indexToAngle ellipseCurvePos"
+        },
+        {
+            "type": "Q",
+            "params": "0 PeakHeight0 CrownPeakRight"
+        },
+        {
+            "type": "Q",
+            "params": "0 CrownPeakLeft"
+        },
+        {
+            "type": "Q",
+            "params": "1 PeakHeight1 CrownPeakRight"
+        },
+        {
+            "type": "Q",
+            "params": "1 CrownPeakLeft"
+        },
+        {
+            "type": "Q",
+            "params": "2 PeakHeight2 CrownPeakRight"
+        },
+        {
+            "type": "Q",
+            "params": "2 CrownPeakLeft"
+        },
+        {
+            "type": "Q",
+            "params": "3 PeakHeight1 CrownPeakRight"
+        },
+        {
+            "type": "Q",
+            "params": "3 CrownPeakLeft"
+        },
+        {
+            "type": "Q",
+            "params": "4 PeakHeight0 CrownPeakRight"
+        },
+        {
+            "type": "Q",
+            "params": "4 CrownPeakLeft"
+        },
+        {
+            "type": "L",
+            "params": "OuterEllipseData TAU 0.75 * ArcWidth - ellipseCurvePos OuterEllipseData TAU 0.75 * ArcWidth - ellipseCurveVel normalize perp 4 scaleVec addVec"
+        },
+        {
+            "type": "Q",
+            "params": "InnerEllipseData LeftmostInnerEllipseAngle 0.25 + ellipseCurvePos dupVec InnerEllipseData LeftmostInnerEllipseAngle 0.3 + ellipseCurveVel normalize 2 scaleVec subtractVec 3 pull 3 pull"
+        },
+        {
+            "type": "A",
+            "params": "InnerEllipseData drop drop 0 1 InnerEllipseData RightmostInnerEllipseAngle ellipseCurvePos"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "OuterEllipseCrownPeakRightMarginCurve0CollisionT 0 PeakHeight0 CrownPeakRightMarginCurve"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 0 0 OuterEllipseCrownPeakLeftMarginCurve0CollisionT 0 PeakHeight0 CrownPeakLeftMarginCurve"
+        },
+        {
+            "type": "CS",
+            "params": "0 PeakHeight0 CrownPeakLeftMarginCurve, OuterEllipseCrownPeakLeftMarginCurve0CollisionT, PeakMarginCurves0LeftCollisionT, 2"
+        },
+        {
+            "type": "CS",
+            "params": "0 PeakHeight0 CrownPeakRightMarginCurve, PeakMarginCurves0RightCollisionT, OuterEllipseCrownPeakRightMarginCurve0CollisionT, 2"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "OuterEllipseCrownPeakRightMarginCurve1CollisionT 1 PeakHeight1 CrownPeakRightMarginCurve"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 0 0 OuterEllipseCrownPeakLeftMarginCurve1CollisionT 1 PeakHeight1 CrownPeakLeftMarginCurve"
+        },
+        {
+            "type": "CS",
+            "params": "1 PeakHeight1 CrownPeakLeftMarginCurve, OuterEllipseCrownPeakLeftMarginCurve1CollisionT, PeakMarginCurves1LeftCollisionT, 2"
+        },
+        {
+            "type": "CS",
+            "params": "1 PeakHeight1 CrownPeakRightMarginCurve, PeakMarginCurves1RightCollisionT, OuterEllipseCrownPeakRightMarginCurve1CollisionT, 2"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "OuterEllipseCrownPeakRightMarginCurve2CollisionT 2 PeakHeight2 CrownPeakRightMarginCurve"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 0 0 OuterEllipseCrownPeakLeftMarginCurve2CollisionT 2 PeakHeight2 CrownPeakLeftMarginCurve"
+        },
+        {
+            "type": "CS",
+            "params": "2 PeakHeight2 CrownPeakLeftMarginCurve, OuterEllipseCrownPeakLeftMarginCurve2CollisionT, PeakMarginCurves2LeftCollisionT, 2"
+        },
+        {
+            "type": "CS",
+            "params": "2 PeakHeight2 CrownPeakRightMarginCurve, PeakMarginCurves2RightCollisionT, OuterEllipseCrownPeakRightMarginCurve2CollisionT, 2"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "OuterEllipseCrownPeakRightMarginCurve3CollisionT 3 PeakHeight1 CrownPeakRightMarginCurve"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 0 0 OuterEllipseCrownPeakLeftMarginCurve3CollisionT 3 PeakHeight1 CrownPeakLeftMarginCurve"
+        },
+        {
+            "type": "CS",
+            "params": "3 PeakHeight1 CrownPeakLeftMarginCurve, OuterEllipseCrownPeakLeftMarginCurve3CollisionT, PeakMarginCurves3LeftCollisionT, 2"
+        },
+        {
+            "type": "CS",
+            "params": "3 PeakHeight1 CrownPeakRightMarginCurve, PeakMarginCurves3RightCollisionT, OuterEllipseCrownPeakRightMarginCurve3CollisionT, 2"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        },
+        {
+            "type": "M",
+            "params": "OuterEllipseCrownPeakRightMarginCurve4CollisionT 4 PeakHeight0 CrownPeakRightMarginCurve"
+        },
+        {
+            "type": "A",
+            "params": "OuterEllipseData drop drop 0 0 OuterEllipseCrownPeakLeftMarginCurve4CollisionT 4 PeakHeight0 CrownPeakLeftMarginCurve"
+        },
+        {
+            "type": "CS",
+            "params": "4 PeakHeight0 CrownPeakLeftMarginCurve, OuterEllipseCrownPeakLeftMarginCurve4CollisionT, PeakMarginCurves4LeftCollisionT, 2"
+        },
+        {
+            "type": "CS",
+            "params": "4 PeakHeight0 CrownPeakRightMarginCurve, PeakMarginCurves4RightCollisionT, OuterEllipseCrownPeakRightMarginCurve4CollisionT, 2"
+        },
+        {
+            "type": "Z",
+            "params": ""
+        }
+    ],
+    "export": true
+}

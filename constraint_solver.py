@@ -741,7 +741,7 @@ try:
 
         if dumping:
             dump_lines.append(f"Bounding box: {bounding_box.min_x} {bounding_box.min_y} {bounding_box.max_x} {bounding_box.max_y}")
-            dump_lines.append(f"Translation to center: {(bounding_box.max_x - bounding_box.min_x - data.width) / 4 - data.minX / 2}, {(bounding_box.max_y - bounding_box.min_y- data.height) / 4 - data.minY / 2}")
+            dump_lines.append(f"Translation to center: {data.minX + (data.width - bounding_box.min_x - bounding_box.max_x) / 2} {data.minY + (data.height - bounding_box.min_y - bounding_box.max_y) / 2}")
         
         svg_output = f"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{data.minX} {data.minY} {data.width} {data.height}\""
         if data.export:

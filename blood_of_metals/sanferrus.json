@@ -7,19 +7,19 @@
     "definitions": [
         {
             "name": "OuterEllipseData",
-            "definition": "10 10 0 0 5"
+            "definition": "10 10 0 0 5 2 +"
         },
         {
             "name": "InnerEllipseData",
-            "definition": "7.5 9.25 -20 0 5"
+            "definition": "7.5 9.25 -20 0 5 2 +"
         },
         {
             "name": "HornBottomEllipseData",
-            "definition": "7 6 0 0 -7"
+            "definition": "7 6 0 0 -7 2 +"
         },
         {
             "name": "HornTopEllipseData",
-            "definition": "6 5 0 1 -7"
+            "definition": "6 4.5 0 1 -7 2 +"
         },
         {
             "name": "HornBottomMarginCurve",
@@ -31,7 +31,7 @@
         },
         {
             "name": "ArrowHeadPosition",
-            "definition": "2 -17"
+            "definition": "2 -17 2 +"
         },
         {
             "name": "ArrowShaftWidth",
@@ -163,15 +163,23 @@
         },
         {
             "type": "L",
-            "params": "ArrowHeadPosition 0 ArrowShaftWidth 2 / AlongArrowShaft turnedAs addVec 0 5 addVec   "
+            "params": "ArrowHeadPosition 0 ArrowShaftWidth 2 / AlongArrowShaft turnedAs addVec 0 5 addVec"
+        },
+        {
+            "type": "h",
+            "params": "0.5"
         },
         {
             "type": "L",
-            "params": "ArrowHeadPosition AlongArrowShaft 2 scaleVec addVec"
+            "params": "ArrowHeadPosition AlongArrowShaft 3 scaleVec addVec"
         },
         {
             "type": "L",
-            "params": "ArrowHeadPosition 0 ArrowShaftWidth -2 / AlongArrowShaft turnedAs addVec -5 0 addVec"
+            "params": "ArrowHeadPosition 0 ArrowShaftWidth -2 / AlongArrowShaft turnedAs addVec -5 -0.5 addVec"
+        },
+        {
+            "type": "v",
+            "params": "0.5"
         },
         {
             "type": "L",
